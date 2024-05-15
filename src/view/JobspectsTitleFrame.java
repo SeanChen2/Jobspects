@@ -46,10 +46,10 @@ public class JobspectsTitleFrame extends JobspectsFrame {
 	public void displayScreen() {
 			
 			// Load the background image
-			ImageIcon backgroundImage = new ImageIcon("images/HomeFrame.png");
-
+			ImageIcon backgroundImage = new ImageIcon("./images/TitleFrame.png");
+			
 			// Create the buttons
-	        Icon gs = new ImageIcon("images/GetStartedButton.png");
+	        Icon gs = new ImageIcon("./images/GetStarted.png");
 	        JButton getStartedButton = new JButton(gs);
 	        getStartedButton.setBounds(44, 639, 301, 70);
 	        getStartedButton.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
