@@ -1,6 +1,7 @@
 package controller;
 
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import view.ImmigrationLabourChartFrame;
@@ -29,6 +30,17 @@ public class ImmigrationLabourChartController extends ChartController {
 	public void actionPerformed(ActionEvent event) {
 		
 		super.actionPerformed(event);
+		
+		
+		
+	}
+	
+	//This concrete method returns a list of values to calculate the average of.
+	//For the area chart, the average is calculated over the years, and the category
+	//combo box must be considered. For the histogram, the average is calculated over 
+	//the age groups. 
+	@Override
+	protected ArrayList<Double> getValuesForAverage() {
 		
 		
 		

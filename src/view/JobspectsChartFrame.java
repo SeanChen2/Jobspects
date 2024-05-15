@@ -24,12 +24,17 @@ public abstract class JobspectsChartFrame extends JobspectsFrame {
 	}
 	
 	//Necessary getters for GUI elements on the frame
+	
 	public JButton getBackButton() {
 		return backButton;
 	}
 
 	public ChartPanel getChartPanel() {
 		return chartPanel;
+	}
+	
+	public AverageCalculationPanel getAverageCalculationPanel() {
+		return averageCalculationPanel;
 	}
 	
 	//This method sets up a large, empty panel on the left side of the screen, used
