@@ -6,7 +6,7 @@ import org.jfree.chart.ChartPanel;
 //This is a general class for all 5 chart frames in the project.
 //Each data sub-topic has its own chart frame, all of which share
 //common design elements that are defined in this abstract class.
-public abstract class ChartFrame extends JobspectsFrame {
+public abstract class JobspectsChartFrame extends JobspectsFrame {
 	
 	//Object references
 	private AverageCalculationPanel averageCalculationPanel;
@@ -17,7 +17,7 @@ public abstract class ChartFrame extends JobspectsFrame {
 	private ChartPanel chartPanel;
 	
 	//Constructor method:
-	public ChartFrame() {
+	public JobspectsChartFrame() {
 		
 		
 		

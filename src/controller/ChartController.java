@@ -8,6 +8,7 @@ import org.jfree.chart.JFreeChart;
 
 import model.AverageCalculator;
 import model.DatasetManager;
+import view.JobspectsChartFrame;
 import view.JobspectsMenuFrame;
 
 //This is a general class for all the chart controllers.
@@ -21,7 +22,7 @@ public abstract class ChartController implements ActionListener {
 	private AverageCalculator averageCalculator;
 	
 	//Reference to the chart screen that this controller is controlling
-	private ChartFrame chartFrame;
+	private JobspectsChartFrame chartFrame;
 	
 	//Fields
 	private JFreeChart chart;
@@ -31,6 +32,11 @@ public abstract class ChartController implements ActionListener {
 		
 		
 		
+	}
+	
+	//This method shows the chart frame that this controller is controlling
+	public void showChartFrame() {
+		chartFrame.setVisible(true);
 	}
 	
 	//This method handles what happens when a button in this controller's 

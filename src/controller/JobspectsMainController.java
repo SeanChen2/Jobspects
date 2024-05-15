@@ -23,7 +23,9 @@ public class JobspectsMainController implements ActionListener {
 	private JobspectsTitleFrame titleFrame = new JobspectsTitleFrame();
 	private JobspectsMenuFrame menuFrame = new JobspectsMenuFrame();
 	
-	//A field to keep track of which frame (screen) the user is currently on
+	//A field to keep track of which frame (screen) the user is currently on.
+	//This does NOT include the chart frames, since these are controlled by
+	//separate controllers
 	private JobspectsFrame currentFrame;
 	
 	//Constructor
@@ -51,21 +53,28 @@ public class JobspectsMainController implements ActionListener {
 		if (event.getSource() == titleFrame.getStartButton())
 			switchToFrame(menuFrame);
 		
-		//Menu frame: if any of the chart selection panels were pressed, activate the
-		//corrersponding controller to open the chart screen
+		//Menu frame: if any of the chart selection panels were pressed, let the corresponding
+		//controller activate the correct chart frame
 		for (int index = 0; index < NUM_CHARTS; index++) {
 			
-			if (event.getSource() == menuFrame.getSelectionPanels()[index].getSelectionButton())
-				
+			if (event.getSource() == menuFrame.getSelectionPanels()[index].getSelectionButton()) {
+				currentFrame.setVisible(false);
+				chartControllers[index].showChartFrame();
+			}
 			
 		}
 		
 	}
 	
 	//This method navigates from one frame (screen) to another
-	private void switchToFrame(JobspectsFrame frame) {
+	private void switchToFrame(JobspectsFrame newFrame) {
 		
+		//Hide the current frame
+		currentFrame.setVisible(false);
 		
+		//Set the current frame to the new frame, then show the new frame
+		currentFrame = newFrame;
+		newFrame.setVisible(true);
 		
 	}
 	

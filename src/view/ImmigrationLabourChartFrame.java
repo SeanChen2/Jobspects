@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 //This is a general frame that holds common GUI elements between
 //the two chart screens for the immigration labour force sub-topic:
 //area chart and histogram
-public abstract class ImmigrationLabourChartFrame extends ChartFrame {
+public abstract class ImmigrationLabourChartFrame extends JobspectsChartFrame {
 	
 	//Fields
 	private JButton[] chartNavButtons;
