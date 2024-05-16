@@ -8,7 +8,8 @@ import javax.swing.JButton;
 
 public class UnemploymentDurationChartController extends ChartController implements ActionListener{
 	
-	JButton[] chartNavButtons;;
+	JButton[] chartNavButtons;
+	
 	
 	public UnemploymentDurationChartController() {
 		
