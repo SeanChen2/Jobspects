@@ -18,7 +18,7 @@ public abstract class ChartController implements ActionListener {
 	
 	//Object references
 	private JobspectsMenuFrame menuFrame;
-	private DatasetManager dataset;
+	private DatasetManager datasetManager;
 	private AverageCalculator averageCalculator;
 	
 	//Reference to the chart screen that this controller is controlling
@@ -36,6 +36,11 @@ public abstract class ChartController implements ActionListener {
 		chartFrame.getBackButton().addActionListener(this);
 		chartFrame.getAverageCalculationPanel().getCalculateAverageButton().addActionListener(this);
 		
+	}
+	
+	//Getter for the dataset manager
+	public DatasetManager getDatasetManager() {
+		return datasetManager;
 	}
 	
 	//This method shows the chart frame that this controller is controlling

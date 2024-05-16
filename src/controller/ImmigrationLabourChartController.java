@@ -2,14 +2,23 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
+import javax.swing.JButton;
+import javax.swing.JRadioButton;
+
+import view.ImmigrationLabourAreaChartFrame;
 import view.ImmigrationLabourChartFrame;
+import view.ImmigrationLabourHistogramFrame;
+import view.JobspectsFrame;
 
 //This is the controller class for the immigration labour chart screens.
 //This controller handles the navigation between the area chart and histogram frames,
 //as well as the button presses for both frames.
 public class ImmigrationLabourChartController extends ChartController {
+	
+	//References to 
 
 	//Reference to the current immigration labour chart screen (area chart or histogram)
 	private ImmigrationLabourChartFrame currentChartFrame;
@@ -20,7 +29,14 @@ public class ImmigrationLabourChartController extends ChartController {
 	//Constructor
 	public ImmigrationLabourChartController() {
 		
+		//Open the area chart frame by default
+		currentChartFrame = new ImmigrationLabourAreaChartFrame();
+		currentChartFrame.setVisible(true);
 		
+		//By default, show the employment figures for the entire labour force
+		getDatasetManager().getFilteredRows().put("Char", "Labour force");
+		getDatasetManager().getFilteredRows().put("Immig", new ArrayList<>());
+		getDatasetManager().getFilteredRows().get("Immig").add("Total");
 		
 	}
 	
@@ -29,7 +45,84 @@ public class ImmigrationLabourChartController extends ChartController {
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		
+		//Check the back button and the "calculate average" button in the superclass
 		super.actionPerformed(event);
+		
+		//Handle navigation between the area chart frame and the histogram frame
+		
+		//If we are on the histogram frame and want to navigate to the area chart, do so here
+		if (currentChartFrame instanceof ImmigrationLabourHistogramFrame &&
+				event.getSource() == currentChartFrame.getChartNavButtons()[0])
+			switchToFrame(new ImmigrationLabourAreaChartFrame());
+		
+		//If we are on the area chart frame and want to navigate to the histogram, do so here
+		else if (currentChartFrame instanceof ImmigrationLabourAreaChartFrame &&
+				event.getSource() == currentChartFrame.getChartNavButtons()[1])
+			switchToFrame(new ImmigrationLabourHistogramFrame());
+		
+		//AREA CHART EXCLUSIVE: handle the "compare by" buttons
+		if (currentChartFrame instanceof ImmigrationLabourAreaChartFrame) {
+			
+			//Downcast the chart frame to an area chart frame, then check all the "compare by" buttons
+			ImmigrationLabourAreaChartFrame areaChartFrame = (ImmigrationLabourAreaChartFrame) currentChartFrame;
+			checkCompareCategoryButtons(areaChartFrame.getCompareCategorySection().getCompareCategoryButtons(), event);
+			
+		}
+		
+		//For both chart frames: handle the "filter by" buttons
+		checkChartFilterButtons(event);
+		
+	}
+	
+	//This method is an extension of the actionPerformed() method. It performs actions for
+	//all the "compare by" buttons, which are found only in the area chart frame.
+	private void checkCompareCategoryButtons(JRadioButton[] compareCategoryButtons, ActionEvent event) {
+		
+		//If the "education level" radio button was pressed, and education level isn't already being compared,
+		//filter the dataset so that it includes all the education level columns
+		if (event.getSource() == compareCategoryButtons[0] && !getDatasetManager().getFilteredColumns().contains("High school graduate"))
+			filterEducationLevelColumns();
+		
+		//If the "immigrant status" radio button was pressed, and immigrant status isn't already being compared,
+		//filter the dataset so that it includes all the available immigrant status rows
+		else if (event.getSource() == compareCategoryButtons[1])
+			filterImmigrantStatusRows();
+		
+	}
+	
+	//This method adds all the education level columns into the dataset
+	private void filterEducationLevelColumns() {
+		
+		ArrayList<String> filteredColumns = getDatasetManager().getFilteredColumns();
+		
+		filteredColumns.add("No degree, certificate or diploma");
+		filteredColumns.add("High school graduate");
+		filteredColumns.add("High school graduate, some post-secondary");
+		filteredColumns.add("Post-secondary certificate or diploma");
+		filteredColumns.add("University degree");
+		filteredColumns.add("Bachelor's degree");
+		filteredColumns.add("Above bachelor's degree");
+		
+	}
+	
+	//This method adds all the immigrant status rows into the dataset
+	private void filterImmigrantStatusRows() {
+		
+		HashMap<String, ArrayList<String>> filteredRows = getDatasetManager().getFilteredRows();
+		
+		filteredRows.get("Immig").remove("Total");
+		
+		filteredRows.get("Immig").add("Born in Canada");
+		filteredRows.get("Immig").add("Very recent immigrants, 5 years or less");
+		filteredRows.get("Immig").add("Recent immigrants 5+ to 10 years");
+		filteredRows.get("Immig").add("Established immigrants, 10+ years");
+		filteredRows.get("Immig").add("Non-landed immigrants");
+		
+	}
+	
+	//This method is an extension of the actionPerformed() method. It performs actions for
+	//all the chart filter buttons, which are found in both the area chart and histogram frames.
+	private void checkChartFilterButtons(ActionEvent event) {
 		
 		
 		
@@ -52,6 +145,18 @@ public class ImmigrationLabourChartController extends ChartController {
 	public void updateChart() {
 		
 		
+		
+	}
+	
+	//This method navigates from one chart frame (screen) to another
+	private void switchToFrame(ImmigrationLabourChartFrame newFrame) {
+		
+		//Delete the current frame
+		currentChartFrame.dispose();
+		
+		//Set the current frame to the new frame, then show the new frame
+		currentChartFrame = newFrame;
+		newFrame.setVisible(true);
 		
 	}
 	
