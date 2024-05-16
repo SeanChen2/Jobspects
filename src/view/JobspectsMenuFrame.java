@@ -90,7 +90,7 @@ public class JobspectsMenuFrame extends JobspectsFrame {
         
         Icon lm3 = new ImageIcon("./images/LearnMore.png");
         JButton learnMore3 = new JButton(lm3);
-        learnMore3.setBounds(380, 770, 142, 34);
+        learnMore3.setBounds(378, 767, 142, 34);
         learnMore3.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 		background.add(learnMore3);
 
@@ -107,7 +107,7 @@ public class JobspectsMenuFrame extends JobspectsFrame {
 		
         Icon lm4 = new ImageIcon("./images/LearnMore.png");
         JButton learnMore4 = new JButton(lm4);
-        learnMore4.setBounds(380, 994, 142, 34);
+        learnMore4.setBounds(378, 995, 142, 34);
         learnMore4.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 		background.add(learnMore4);
 
@@ -123,7 +123,7 @@ public class JobspectsMenuFrame extends JobspectsFrame {
 
         Icon lm5 = new ImageIcon("./images/LearnMore.png");
         JButton learnMore5 = new JButton(lm5);
-        learnMore5.setBounds(380, 1218, 142, 34);
+        learnMore5.setBounds(379, 1216, 142, 34);
         learnMore5.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 		background.add(learnMore5);
 
