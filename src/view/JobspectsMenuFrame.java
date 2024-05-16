@@ -19,16 +19,20 @@ public class JobspectsMenuFrame extends JobspectsFrame {
 	
 	public JobspectsMenuFrame() {
 		
+		// Create a frame
 		JFrame menuFrame = new JFrame();
 		
+		// Create the background
         JLabel background = new JLabel(new ImageIcon("images/MainFrame.png"));
         scrollPane = new JScrollPane(background);
         scrollPane.setBounds(0, 0, 1405, 875);
         
+        // Create a panel on top
         JPanel panel = new JPanel();
         panel.setBounds(0, 0, 1405, 1365);
         panel.setLayout(null);
         
+        // Add a scroll panel on top of the panel
         panel.add(scrollPane);
         menuFrame.add(panel);
         
@@ -38,24 +42,32 @@ public class JobspectsMenuFrame extends JobspectsFrame {
         backButton.setBounds(41, 64, 52, 52);
         backButton.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 		background.add(backButton);
-		
+
+		// If button is clicked
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				// close this screen
+				// Create a new frame
 				new JobspectsTitleFrame();
+				// Close current frame
 				dispose();
 			}
 		});
 		
-		// Create the buttons
+		// Create the buttons for users to go into our individual frames
         Icon lm1 = new ImageIcon("./images/LearnMore.png");
         JButton learnMore1 = new JButton(lm1);
         learnMore1.setBounds(380, 324, 142, 34);
         learnMore1.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 		background.add(learnMore1);
-		
+
+		// If button is clicked
 		learnMore1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
+				// Create a new frame
+				new OccupationLabourBarChartFrame();
+				// Close current frame
+				dispose();
+
 			}
 		});
 		
@@ -64,9 +76,14 @@ public class JobspectsMenuFrame extends JobspectsFrame {
         learnMore2.setBounds(380, 547, 142, 34);
         learnMore2.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 		background.add(learnMore2);
-		
+
+		// If button is clicked
 		learnMore2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
+				// Create a new frame
+				new ImmigrationLabourAreaChartFrame();
+				// Close current frame
+				dispose();
 			}
 		});
         
@@ -75,9 +92,15 @@ public class JobspectsMenuFrame extends JobspectsFrame {
         learnMore3.setBounds(380, 770, 142, 34);
         learnMore3.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 		background.add(learnMore3);
-		
+
+		// If button is clicked
 		learnMore3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
+				// Create a new frame
+				new UnemploymentDurationLineChartFrame();
+				// Close current frame
+				dispose();
+				
 			}
 		});
 		
@@ -86,9 +109,14 @@ public class JobspectsMenuFrame extends JobspectsFrame {
         learnMore4.setBounds(380, 994, 142, 34);
         learnMore4.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 		background.add(learnMore4);
-		
+
+		// If button is clicked
 		learnMore4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
+				// Create a new frame
+				new WagesByEducationScatterplotFrame();
+				// Close current frame
+				dispose();
 			}
 		});
 
@@ -97,9 +125,14 @@ public class JobspectsMenuFrame extends JobspectsFrame {
         learnMore5.setBounds(380, 1218, 142, 34);
         learnMore5.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 		background.add(learnMore5);
-		
+
+		// If button is clicked
 		learnMore5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
+				// Create a new frame
+				new TourismEmploymentPieChartFrame();
+				// Close current frame
+				dispose();
 			}
 		});
 		
@@ -109,8 +142,13 @@ public class JobspectsMenuFrame extends JobspectsFrame {
         helpButton.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 		background.add(helpButton);
 		
+		// If button is clicked
 		helpButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
+				// Create the help frame
+				new HelpFrame();
+				// Close current frame
+				dispose();
 			}
 		});
 		

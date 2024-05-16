@@ -4,10 +4,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class OccupationLabourChartFrame extends JFrame implements ActionListener {
+public class OccupationLabourBarChartFrame extends JFrame implements ActionListener {
     private JButton back;
 
-    public OccupationLabourChartFrame() {
+    public OccupationLabourBarChartFrame() {
         setSize(1920, 1080);
         setTitle("Title Frame");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,6 +48,6 @@ public class OccupationLabourChartFrame extends JFrame implements ActionListener
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(OccupationLabourChartFrame::new);
+        SwingUtilities.invokeLater(OccupationLabourBarChartFrame::new);
     }
 }
