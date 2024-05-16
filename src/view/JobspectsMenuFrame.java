@@ -139,7 +139,7 @@ public class JobspectsMenuFrame extends JobspectsFrame {
 		
         Icon hb = new ImageIcon("./images/HelpButton.png");
         JButton helpButton = new JButton(hb);
-        helpButton.setBounds(1346, 1316, 34, 34);
+        helpButton.setBounds(1281, 71, 34, 34);
         helpButton.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 		background.add(helpButton);
 		
