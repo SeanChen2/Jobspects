@@ -2,6 +2,7 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 import javax.swing.JButton;
@@ -33,7 +34,9 @@ public class ImmigrationLabourChartController extends ChartController {
 		currentChartFrame.setVisible(true);
 		
 		//By default, show the employment figures for the entire labour force
-		getDatasetManager().getFilteredRows().add("Labour force");
+		getDatasetManager().getFilteredRows().put("Char", "Labour force");
+		getDatasetManager().getFilteredRows().put("Immig", new ArrayList<>());
+		getDatasetManager().getFilteredRows().get("Immig").add("Total");
 		
 	}
 	
@@ -105,9 +108,15 @@ public class ImmigrationLabourChartController extends ChartController {
 	//This method adds all the immigrant status rows into the dataset
 	private void filterImmigrantStatusRows() {
 		
-		ArrayList<String> filteredRows = getDatasetManager().getFilteredRows();
+		HashMap<String, ArrayList<String>> filteredRows = getDatasetManager().getFilteredRows();
 		
-		filteredRows.add("");
+		filteredRows.get("Immig").remove("Total");
+		
+		filteredRows.get("Immig").add("Born in Canada");
+		filteredRows.get("Immig").add("Very recent immigrants, 5 years or less");
+		filteredRows.get("Immig").add("Recent immigrants 5+ to 10 years");
+		filteredRows.get("Immig").add("Established immigrants, 10+ years");
+		filteredRows.get("Immig").add("Non-landed immigrants");
 		
 	}
 	
