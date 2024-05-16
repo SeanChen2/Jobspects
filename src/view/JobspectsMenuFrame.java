@@ -147,7 +147,7 @@ public class JobspectsMenuFrame extends JobspectsFrame {
 			public void actionPerformed(ActionEvent event) {
 				// Create the help frame
 				new HelpFrame();
-				// Close current frame
+				// Close current frame 
 				dispose();
 			}
 		});
