@@ -14,11 +14,5 @@
 /UnemploymentDurationLineChartFrame.class
 /WagesByEducationScatterplotFrame.class
 /JobspectsChartFrame.class
-/JobspectsTitleFrame$1.class
-/JobspectsMenuFrame$1.class
-/JobspectsMenuFrame$2.class
-/JobspectsMenuFrame$3.class
-/JobspectsMenuFrame$4.class
-/JobspectsMenuFrame$5.class
-/JobspectsMenuFrame$6.class
-/JobspectsMenuFrame$7.class
+/OccupationLabourChartFrame$GradientPanel.class
+/OccupationLabourChartFrame$CircularGradientPanel.class
