@@ -6,8 +6,7 @@ package view;
 public class ImmigrationLabourAreaChartFrame extends ImmigrationLabourChartFrame {
 	
 	//References to GUI panels for the "sections" of chart filters
-	private ImmigrationLabourCompareCategoryPanel compareCategoryPanel;
-	private ImmigrationLabourChartFilterPanel chartFilterPanel;
+	private ImmigrationLabourCompareCategoryPanel compareCategorySection;
 
 	//Constructor
 	public ImmigrationLabourAreaChartFrame() {
@@ -16,10 +15,16 @@ public class ImmigrationLabourAreaChartFrame extends ImmigrationLabourChartFrame
 		
 	}
 	
+	//Getter for the section of radio buttons that chooses what category
+	//each "area" on the chart represents
+	public ImmigrationLabourCompareCategoryPanel getCompareCategorySection() {
+		return compareCategorySection;
+	}
+
 	//This method adds a section of category filters that allows the user to
 	//choose which data category each "area" on the chart displays:
 	//education level or immigrant status
-	private void setUpCompareCategoryPanel() {
+	private void setUpCompareCategorySection() {
 		
 		
 		

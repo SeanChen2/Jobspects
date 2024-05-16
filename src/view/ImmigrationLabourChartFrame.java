@@ -12,6 +12,9 @@ public abstract class ImmigrationLabourChartFrame extends JobspectsChartFrame {
 	private JButton[] chartNavButtons;
 	private JPanel filterPanel;
 	
+	//Reference to the chart filter section (selects sex, employment type, etc.)
+	private ImmigrationLabourChartFilterPanel chartFilterSection;
+	
 	//Constructor
 	public ImmigrationLabourChartFrame() {
 		
@@ -19,9 +22,13 @@ public abstract class ImmigrationLabourChartFrame extends JobspectsChartFrame {
 		
 	}
 	
-	//Getter for the two buttons that navigate between chart screens
+	//Necessary getters for GUI elements
 	public JButton[] getChartNavButtons() {
 		return chartNavButtons;
+	}
+	
+	public ImmigrationLabourChartFilterPanel getChartFilterSection() {
+		return chartFilterSection;
 	}
 	
 	//This method adds the buttons that navigate between the two charts
