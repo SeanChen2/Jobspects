@@ -33,10 +33,12 @@ public class ImmigrationLabourChartController extends ChartController {
 		currentChartFrame = new ImmigrationLabourAreaChartFrame();
 		currentChartFrame.setVisible(true);
 		
-		//By default, show the employment figures for the entire labour force
+		//By default, show the employment figures for the entire labour force, comparing
+		//by education level
 		getDatasetManager().getFilteredRows().put("Char", "Labour force");
 		getDatasetManager().getFilteredRows().put("Immig", new ArrayList<>());
 		getDatasetManager().getFilteredRows().get("Immig").add("Total");
+		filterEducationLevelColumns();
 		
 	}
 	
@@ -94,6 +96,12 @@ public class ImmigrationLabourChartController extends ChartController {
 	private void filterEducationLevelColumns() {
 		
 		ArrayList<String> filteredColumns = getDatasetManager().getFilteredColumns();
+		HashMap<String, ArrayList<String>> filteredRows = getDatasetManager().getFilteredRows();
+		
+		filteredRows.clear();
+		filteredRows.get("Immig").add("Total");
+		
+		filteredColumns.clear();
 		
 		filteredColumns.add("No degree, certificate or diploma");
 		filteredColumns.add("High school graduate");
@@ -109,8 +117,12 @@ public class ImmigrationLabourChartController extends ChartController {
 	private void filterImmigrantStatusRows() {
 		
 		HashMap<String, ArrayList<String>> filteredRows = getDatasetManager().getFilteredRows();
+		ArrayList<String> filteredColumns = getDatasetManager().getFilteredColumns();
 		
-		filteredRows.get("Immig").remove("Total");
+		filteredColumns.clear();
+		filteredColumns.add("Total, all education levels");
+		
+		filteredRows.get("Immig").clear();
 		
 		filteredRows.get("Immig").add("Born in Canada");
 		filteredRows.get("Immig").add("Very recent immigrants, 5 years or less");

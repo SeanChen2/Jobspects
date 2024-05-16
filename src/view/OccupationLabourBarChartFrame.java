@@ -72,7 +72,7 @@ public class OccupationLabourBarChartFrame extends JFrame implements ActionListe
         // Set content pane layout to null for absolute positioning
         getContentPane().setLayout(null);
 
-        setVisible(true);
+        setVisible(false);
         
         // Create and add JTextArea
         JTextArea textArea = new JTextArea();
