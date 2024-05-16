@@ -1,5 +1,8 @@
 package view;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -18,7 +21,6 @@ public class JobspectsTitleFrame extends JobspectsFrame {
 
 	// Fields
 	private JButton startButton;
-	private JButton helpButton;
 	
 	// Constructor Methods
 	public JobspectsTitleFrame() {
@@ -33,23 +35,15 @@ public class JobspectsTitleFrame extends JobspectsFrame {
 	public void setStartButton(JButton startButton) {
 		this.startButton = startButton;
 	}
-
-	public JButton getHelpButton() {
-		return helpButton;
-	}
-
-	public void setHelpButton(JButton helpButton) {
-		this.helpButton = helpButton;
-	}
 	
 	// This method sets up the the frame
 	public void displayScreen() {
 			
 			// Load the background image
-			ImageIcon backgroundImage = new ImageIcon("images/HomeFrame.png");
-
-			// Create the buttons
-	        Icon gs = new ImageIcon("images/GetStartedButton.png");
+			ImageIcon backgroundImage = new ImageIcon("./images/TitleFrame.png");
+			
+			// Create the button
+	        Icon gs = new ImageIcon("./images/GetStarted.png");
 	        JButton getStartedButton = new JButton(gs);
 	        getStartedButton.setBounds(44, 639, 301, 70);
 	        getStartedButton.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
@@ -58,8 +52,18 @@ public class JobspectsTitleFrame extends JobspectsFrame {
 			// Create a JLabel to hold the background image
 			JLabel backgroundLabel = new JLabel(backgroundImage);
 	        backgroundLabel.setBounds(0, 0, backgroundImage.getIconWidth(), backgroundImage.getIconHeight());
-			
+	       
+	        // Add background to frame
 	        add(backgroundLabel);
+	        
+	        // If button is clicked
+			getStartedButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent event) {
+					// Close this screen and create a new frame
+					new JobspectsMenuFrame();
+					dispose();
+				}
+			});
 	        
 			// Set the size of the frame
 			setSize(1405, 875);
@@ -76,7 +80,7 @@ public class JobspectsTitleFrame extends JobspectsFrame {
 
 	@Override
 	public String toString() {
-		return "JobspectsTitleFrame [startButton=" + startButton + ", helpButton=" + helpButton + "]";
+		return "JobspectsTitleFrame [startButton=" + startButton + "]";
 	}
 	
 	

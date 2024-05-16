@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
 
-public class OccupationLabourChartFrame extends JFrame implements ActionListener {
+public class OccupationLabourBarChartFrame extends JFrame implements ActionListener {
     private JButton back;
     
     class CircularGradientPanel extends JPanel {
@@ -40,7 +40,7 @@ public class OccupationLabourChartFrame extends JFrame implements ActionListener
         }
     }
 
-    public OccupationLabourChartFrame() {
+    public OccupationLabourBarChartFrame() {
         setSize(1920, 1080);
         setTitle("Title Frame");
         CircularGradientPanel gradientPanel = new CircularGradientPanel();
@@ -103,6 +103,6 @@ public class OccupationLabourChartFrame extends JFrame implements ActionListener
    
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(OccupationLabourChartFrame::new);
+        SwingUtilities.invokeLater(OccupationLabourBarChartFrame::new);
     }
 }
