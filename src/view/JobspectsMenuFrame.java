@@ -41,6 +41,7 @@ public class JobspectsMenuFrame extends JobspectsFrame {
         JButton backButton = new JButton(bb);
         backButton.setBounds(41, 64, 52, 52);
         backButton.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+        backButton.setOpaque(false);
 		background.add(backButton);
 
 		// If button is clicked
