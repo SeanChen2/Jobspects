@@ -29,9 +29,6 @@ public abstract class JobspectsChartFrame extends JobspectsFrame {
 		setUpFrame();
 		setUpChartPanel();
 		
-		//TODO: DELETE
-		setVisible(true);
-		
 	}
 	
 	//Necessary getters for GUI elements on the frame
@@ -57,7 +54,7 @@ public abstract class JobspectsChartFrame extends JobspectsFrame {
 		backButton.setBackground(Color.WHITE);
 		backButton.setForeground(DARK_PURPLE);
 		backButton.setFocusPainted(false);
-		backButton.setFont(new Font("Sans Serif", Font.BOLD, 20));
+		backButton.setFont(new Font("Sans Serif", Font.BOLD, 30));
 		add(backButton);
 		
 		//Set up the title label
@@ -75,7 +72,7 @@ public abstract class JobspectsChartFrame extends JobspectsFrame {
 	private void setUpChartPanel() {
 		
 		chartPanelTemplate = new JPanel();
-		chartPanelTemplate.setBounds(30, 300, FRAME_WIDTH / 2 + 100, FRAME_HEIGHT - 400);
+		chartPanelTemplate.setBounds(30, 230, FRAME_WIDTH / 2 + 100, FRAME_HEIGHT - 300);
 		chartPanelTemplate.setBackground(Color.WHITE);
 		add(chartPanelTemplate);
 		

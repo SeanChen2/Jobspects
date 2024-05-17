@@ -11,7 +11,7 @@ public class ImmigrationLabourHistogramFrame extends ImmigrationLabourChartFrame
 	//Constructor
 	public ImmigrationLabourHistogramFrame() {
 		
-		
+		setVisible(true);
 		
 	}
 	
