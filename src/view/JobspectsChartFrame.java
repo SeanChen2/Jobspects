@@ -2,6 +2,8 @@ package view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
@@ -20,7 +22,7 @@ public abstract class JobspectsChartFrame extends JobspectsFrame {
 	
 	//Fields
 	private JButton backButton = new JButton("<");
-	private JLabel screenTitleLabel = new JLabel("   Are Canadian immigrants disproportionally affected by the unemployment crisis?");
+	protected JLabel screenTitleLabel = new JLabel(" ");
 	private JPanel chartPanelTemplate;
 	
 	//Constructor method:
@@ -45,17 +47,33 @@ public abstract class JobspectsChartFrame extends JobspectsFrame {
 		return averageCalculationPanel;
 	}
 	
+	public JLabel getScreenTitleLabel() {
+		return screenTitleLabel;
+	}
+
+	public void setScreenTitleLabel(JLabel screenTitleLabel) {
+		this.screenTitleLabel = screenTitleLabel;
+	}
+
 	//This method sets up the basic appearance of the chart frame, including:
 	//a back button and a screen title
 	private void setUpFrame() {
 		
 		//Set up the back button
-		backButton.setBounds(30, 30, 70, 70);
-		backButton.setBackground(Color.WHITE);
-		backButton.setForeground(DARK_PURPLE);
-		backButton.setFocusPainted(false);
-		backButton.setFont(new Font("Sans Serif", Font.BOLD, 30));
+        Icon bbb = new ImageIcon("./images/BigBackButton.png");
+        JButton backButton = new JButton(bbb);
+        backButton.setBounds(30, 30, 70, 70);
+        backButton.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 		add(backButton);
+		
+		backButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				// Create a new frame
+				new JobspectsMenuFrame();
+				// Close current frame
+				dispose();
+			}
+		});
 		
 		//Set up the title label
 		screenTitleLabel.setBounds(120, 30, FRAME_WIDTH - 180, 70);

@@ -2,6 +2,7 @@ package application;
 
 import view.ImmigrationLabourAreaChartFrame;
 import view.JobspectsTitleFrame;
+import view.WagesByEducationScatterplotFrame;
 
 /*
  * Names: Sean (%), Toby (%), Kelvin (%), Randiv (%), Abishan (%)
@@ -27,7 +28,7 @@ import view.JobspectsTitleFrame;
 public class JobspectsApplication {
 
 	public static void main(String[] args) {
-		new JobspectsTitleFrame();
+		new WagesByEducationScatterplotFrame();
 
 	}
 

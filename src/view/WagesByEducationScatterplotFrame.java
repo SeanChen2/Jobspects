@@ -1,10 +1,11 @@
 package view;
 
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-public class WagesByEducationScatterplotFrame extends JobspectsChartFrame  {
+public class WagesByEducationScatterplotFrame extends JobspectsChartFrame {
 
 	// Fields
 	private JPanel filterPanel;
@@ -14,7 +15,7 @@ public class WagesByEducationScatterplotFrame extends JobspectsChartFrame  {
     private JRadioButton[] educationLevelButtons;
     
     public WagesByEducationScatterplotFrame() {
-    	
+    	showFrame();
     }
     
     public void setUpYearSection() {
@@ -40,6 +41,14 @@ public class WagesByEducationScatterplotFrame extends JobspectsChartFrame  {
     public void getEducationLevelButtons() {
     	
     }
+    
+    public void showFrame() {
+    	setSize(1920, 1080);
+    	setVisible(true);
+    	
+    }
+    
+    
     
     
     
