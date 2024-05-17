@@ -1,6 +1,5 @@
 package application;
 
-import controller.ImmigrationLabourChartController;
 import view.ImmigrationLabourAreaChartFrame;
 import view.JobspectsTitleFrame;
 
@@ -28,7 +27,7 @@ import view.JobspectsTitleFrame;
 public class JobspectsApplication {
 
 	public static void main(String[] args) {
-		new ImmigrationLabourChartController();
+		new JobspectsTitleFrame();
 
 	}
 
