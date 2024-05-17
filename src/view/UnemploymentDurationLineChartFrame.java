@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 
 import view.OccupationLabourBarChartFrame.CircularGradientPanel;
@@ -24,7 +25,25 @@ public class UnemploymentDurationLineChartFrame extends JFrame implements Action
 		//gradientPanel.setLayout(null);
 		//setContentPane(gradientPanel);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		
+		setUpChartNavButtons();
+		
+		 setUpFilterPanel();
+		 
+		 setUpCompareCategorySection();
+		 
+		 setUpFilterSection();
+		 
+		 SetUpAverageSection();
+		 
+		 getChartNavButtons();
+		 
+		 getCompareCategoryButtons();
+		 
+		 getSexButtons();
+		 
+		// getTimeRangeTextFields()
+		
 		// Create button
 		backButton = new JButton("<");
 		backButton.addActionListener(this);
@@ -68,6 +87,80 @@ public class UnemploymentDurationLineChartFrame extends JFrame implements Action
 
 
 	}
+	
+
+
+	private void setUpChartNavButtons() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	private void setUpFilterPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	private void setUpCompareCategorySection() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	private void setUpFilterSection() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	private void SetUpAverageSection() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	public  JButton[] getChartNavButtons() {
+		// TODO Auto-generated method stub
+		return null;
+
+		
+	}
+
+
+
+	private JRadioButton[] getCompareCategoryButtons() {
+		// TODO Auto-generated method stub
+		return null;
+
+	}
+
+
+
+	private JRadioButton[] getSexButtons() {
+		// TODO Auto-generated method stub
+		return null;
+
+	}
+
+
+
+//	private JTextFields[] getTimeRangeTextFields() {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+
+
+
+	public void setBackButton(JButton backButton) {
+		this.backButton = backButton;
+	}
+
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
