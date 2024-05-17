@@ -24,6 +24,9 @@ public abstract class ChartController implements ActionListener {
 	//Reference to the chart screen that this controller is controlling
 	private JobspectsChartFrame chartFrame;
 	
+	//Reference to the chart displayed in the chart panel
+	private JFreeChart chart;
+	
 	//Constructor
 	public ChartController() {
 		
@@ -35,9 +38,17 @@ public abstract class ChartController implements ActionListener {
 		
 	}
 	
-	//Getter for the dataset manager
+	//Necessary getters and setters for objects
 	public DatasetManager getDatasetManager() {
 		return datasetManager;
+	}
+	
+	public JFreeChart getChart() {
+		return chart;
+	}
+	
+	public void setChart(JFreeChart chart) {
+		this.chart = chart;
 	}
 	
 	//This method shows the chart frame that this controller is controlling
