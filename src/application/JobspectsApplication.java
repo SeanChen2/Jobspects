@@ -27,7 +27,7 @@ import view.JobspectsTitleFrame;
 public class JobspectsApplication {
 
 	public static void main(String[] args) {
-		new ImmigrationLabourAreaChartFrame();
+		new JobspectsTitleFrame();
 
 	}
 
