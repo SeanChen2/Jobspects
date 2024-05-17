@@ -24,9 +24,6 @@ public abstract class ChartController implements ActionListener {
 	//Reference to the chart screen that this controller is controlling
 	private JobspectsChartFrame chartFrame;
 	
-	//Fields
-	private JFreeChart chart;
-	
 	//Constructor
 	public ChartController() {
 		

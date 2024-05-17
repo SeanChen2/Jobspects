@@ -17,8 +17,6 @@ import view.JobspectsFrame;
 //This controller handles the navigation between the area chart and histogram frames,
 //as well as the button presses for both frames.
 public class ImmigrationLabourChartController extends ChartController {
-	
-	//References to 
 
 	//Reference to the current immigration labour chart screen (area chart or histogram)
 	private ImmigrationLabourChartFrame currentChartFrame;
