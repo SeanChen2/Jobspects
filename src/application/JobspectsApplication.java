@@ -1,5 +1,6 @@
 package application;
 
+import view.ImmigrationLabourAreaChartFrame;
 import view.JobspectsTitleFrame;
 
 /*

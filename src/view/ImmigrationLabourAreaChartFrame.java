@@ -11,7 +11,11 @@ public class ImmigrationLabourAreaChartFrame extends ImmigrationLabourChartFrame
 	//Constructor
 	public ImmigrationLabourAreaChartFrame() {
 		
+		setUpCompareCategorySection();
+		setUpChartFilterSection();
+		setUpAverageSection();
 		
+		setVisible(true);
 		
 	}
 	

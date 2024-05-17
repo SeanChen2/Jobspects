@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-public class JobspectsMenuFrame extends JobspectsFrame {
+public class JobspectsMenuFrame {
 	
 	// Attributes
     private JScrollPane scrollPane;
@@ -50,7 +50,7 @@ public class JobspectsMenuFrame extends JobspectsFrame {
 				// Create a new frame
 				new JobspectsTitleFrame();
 				// Close current frame
-				dispose();
+				menuFrame.dispose();
 			}
 		});
 		
@@ -67,7 +67,7 @@ public class JobspectsMenuFrame extends JobspectsFrame {
 				// Create a new frame
 				new OccupationLabourBarChartFrame();
 				// Close current frame
-				dispose();
+				menuFrame.dispose();
 
 			}
 		});
@@ -84,7 +84,7 @@ public class JobspectsMenuFrame extends JobspectsFrame {
 				// Create a new frame
 				new ImmigrationLabourAreaChartFrame();
 				// Close current frame
-				dispose();
+				menuFrame.dispose();
 			}
 		});
         
@@ -100,7 +100,7 @@ public class JobspectsMenuFrame extends JobspectsFrame {
 				// Create a new frame
 				new UnemploymentDurationLineChartFrame();
 				// Close current frame
-				dispose();
+				menuFrame.dispose();
 				
 			}
 		});
@@ -117,7 +117,7 @@ public class JobspectsMenuFrame extends JobspectsFrame {
 				// Create a new frame
 				new WagesByEducationScatterplotFrame();
 				// Close current frame
-				dispose();
+				menuFrame.dispose();
 			}
 		});
 
@@ -133,13 +133,13 @@ public class JobspectsMenuFrame extends JobspectsFrame {
 				// Create a new frame
 				new TourismEmploymentPieChartFrame();
 				// Close current frame
-				dispose();
+				menuFrame.dispose();
 			}
 		});
 		
         Icon hb = new ImageIcon("./images/HelpButton.png");
         JButton helpButton = new JButton(hb);
-        helpButton.setBounds(1346, 1316, 34, 34);
+        helpButton.setBounds(1281, 71, 34, 34);
         helpButton.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 		background.add(helpButton);
 		
@@ -149,7 +149,7 @@ public class JobspectsMenuFrame extends JobspectsFrame {
 				// Create the help frame
 				new HelpFrame();
 				// Close current frame 
-				dispose();
+				menuFrame.dispose();
 			}
 		});
 		

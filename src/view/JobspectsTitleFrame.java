@@ -17,7 +17,7 @@ import javax.swing.JLabel;
  * Date: May 13th, 2024
  */
 
-public class JobspectsTitleFrame extends JobspectsFrame {
+public class JobspectsTitleFrame {
 
 	// Fields
 	private JButton startButton;
@@ -39,6 +39,9 @@ public class JobspectsTitleFrame extends JobspectsFrame {
 	// This method sets up the the frame
 	public void displayScreen() {
 			
+			// Create the frame
+			JFrame titleScreen = new JFrame();
+			
 			// Load the background image
 			ImageIcon backgroundImage = new ImageIcon("./images/TitleFrame.png");
 			
@@ -47,35 +50,35 @@ public class JobspectsTitleFrame extends JobspectsFrame {
 	        JButton getStartedButton = new JButton(gs);
 	        getStartedButton.setBounds(44, 639, 301, 70);
 	        getStartedButton.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
-			add(getStartedButton);
+			titleScreen.add(getStartedButton);
 			
 			// Create a JLabel to hold the background image
 			JLabel backgroundLabel = new JLabel(backgroundImage);
 	        backgroundLabel.setBounds(0, 0, backgroundImage.getIconWidth(), backgroundImage.getIconHeight());
 	       
 	        // Add background to frame
-	        add(backgroundLabel);
+	        titleScreen.add(backgroundLabel);
 	        
 	        // If button is clicked
 			getStartedButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent event) {
 					// Close this screen and create a new frame
 					new JobspectsMenuFrame();
-					dispose();
+					titleScreen.dispose();
 				}
 			});
 	        
 			// Set the size of the frame
-			setSize(1405, 875);
+			titleScreen.setSize(1405, 875);
 			
 			// Terminate the program when the user chooses to exit/quit
-			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			titleScreen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			
 			// Don't allow the user to resize the screen
-			setResizable(false);
+			titleScreen.setResizable(false);
 			
 			// Make the JFrame visible
-			setVisible(true);
+			titleScreen.setVisible(true);
 	}
 
 	@Override
