@@ -13,6 +13,13 @@ import view.ImmigrationLabourChartFrame;
 import view.ImmigrationLabourHistogramFrame;
 import view.JobspectsFrame;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.chart.ChartPanel;
+
 //This is the controller class for the immigration labour chart screens.
 //This controller handles the navigation between the area chart and histogram frames,
 //as well as the button presses for both frames.
@@ -29,7 +36,7 @@ public class ImmigrationLabourChartController extends ChartController {
 		
 		//Open the area chart frame by default
 		currentChartFrame = new ImmigrationLabourAreaChartFrame();
-		currentChartFrame.setVisible(true);
+		
 		
 		//By default, show the employment figures for the entire labour force, comparing
 		//by education level
@@ -37,6 +44,10 @@ public class ImmigrationLabourChartController extends ChartController {
 		getDatasetManager().getFilteredRows().put("Immig", new ArrayList<>());
 		getDatasetManager().getFilteredRows().get("Immig").add("Total");
 		filterEducationLevelColumns();
+		
+		updateChart();
+		
+		currentChartFrame.setVisible(true);
 		
 	}
 	
@@ -154,7 +165,14 @@ public class ImmigrationLabourChartController extends ChartController {
 	@Override
 	public void updateChart() {
 		
+		//Create the dataset
+		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+		dataset.addValue(500, "2020", "asdsdf");
+		setChart(ChartFactory.createAreaChart("Area Chart Test", "Year", "Number of cats", dataset, PlotOrientation.VERTICAL, true, true, false));
+		ChartPanel chartPanel = new ChartPanel(getChart());
+		currentChartFrame.getChartPanelTemplate().add(chartPanel);
 		
+		System.out.println("Chart added");
 		
 	}
 	
