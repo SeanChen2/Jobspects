@@ -45,7 +45,7 @@ public class WagesByEducationScatterplotFrame extends JobspectsChartFrame {
     public void showFrame() {
     	setSize(1920, 1080);
     	setVisible(true);
-    	
+    	getScreenTitleLabel().setText("    Does a Higher Education Correlate to a Higher Income? ");
     }
     
     

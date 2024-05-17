@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Color;
+import javax.swing.border.AbstractBorder;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +23,7 @@ public abstract class JobspectsChartFrame extends JobspectsFrame {
 	
 	//Fields
 	private JButton backButton = new JButton("<");
-	protected JLabel screenTitleLabel = new JLabel(" ");
+	private JLabel screenTitleLabel = new JLabel(" ");
 	private JPanel chartPanelTemplate;
 	
 	//Constructor method:
@@ -49,10 +50,6 @@ public abstract class JobspectsChartFrame extends JobspectsFrame {
 	
 	public JLabel getScreenTitleLabel() {
 		return screenTitleLabel;
-	}
-
-	public void setScreenTitleLabel(JLabel screenTitleLabel) {
-		this.screenTitleLabel = screenTitleLabel;
 	}
 
 	//This method sets up the basic appearance of the chart frame, including:
