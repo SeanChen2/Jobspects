@@ -1,13 +1,12 @@
 package view;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
 
-public class OccupationLabourBarChartFrame extends JFrame implements ActionListener {
+public class OccupationLabourBarChartFrame extends JFrame {
     private JButton back;
-    
+
     class CircularGradientPanel extends JPanel {
         @Override
         protected void paintComponent(Graphics g) {
@@ -22,10 +21,9 @@ public class OccupationLabourBarChartFrame extends JFrame implements ActionListe
             float radius = Math.min(width, height) / 2;
 
             // Define the colors
-            Color color1 = new Color(60,1,35); // red (Top color)
-            Color color2 = new Color(60,1,35); // White (Middle color)
-            Color color3 = new Color(20,0,56); // gold (Bottom color)
-
+            Color color1 = new Color(60, 1, 35); // red (Top color)
+            Color color2 = new Color(60, 1, 35); // White (Middle color)
+            Color color3 = new Color(20, 0, 56); // gold (Bottom color)
 
             // Define the fractions for the gradient
             float[] fractions = {0.0f, 0.5f, 1.0f};
@@ -50,7 +48,6 @@ public class OccupationLabourBarChartFrame extends JFrame implements ActionListe
 
         // Create button
         back = new JButton("<");
-        back.addActionListener(this);
 
         // Set absolute position for button
         back.setBounds(10, 10, 50, 30); // (x, y, width, height)
@@ -58,7 +55,7 @@ public class OccupationLabourBarChartFrame extends JFrame implements ActionListe
         // Add button to content pane
         getContentPane().add(back);
 
-     // Create and add label
+        // Create and add label
         JLabel titleLabel = new JLabel("What are Canada's top jobs? Are there any trends/biases?");
         titleLabel.setFont(new Font("Serif", Font.BOLD, 55));
         titleLabel.setForeground(Color.WHITE); // Set text color to white
@@ -72,8 +69,8 @@ public class OccupationLabourBarChartFrame extends JFrame implements ActionListe
         // Set content pane layout to null for absolute positioning
         getContentPane().setLayout(null);
 
-        setVisible(false);
-        
+        setVisible(true);
+
         // Create and add JTextArea
         JTextArea textArea = new JTextArea();
         textArea.setFont(new Font("Serif", Font.PLAIN, 16));
@@ -83,26 +80,22 @@ public class OccupationLabourBarChartFrame extends JFrame implements ActionListe
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
         textArea.setText("This is a JTextArea.\n"
-        		+ "Nothing is written atm for testing purposes only");
+                + "Nothing is written atm for testing purposes only");
         getContentPane().add(textArea);
 
         // Set content pane layout to null for absolute positioning
         getContentPane().setLayout(null);
     }
-    
 
-
-    public void actionPerformed(ActionEvent event) {
-        if (event.getSource() == back) {
-            // Handle button click event
-            System.out.println("Back button clicked");
-            new JobspectsTitleFrame();
-            dispose();
-        }
+    public JButton getBackButton() {
+        return back;
     }
-   
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(OccupationLabourBarChartFrame::new);
+        SwingUtilities.invokeLater(() -> {
+            OccupationLabourBarChartFrame frame = new OccupationLabourBarChartFrame();
+            new controller.OccupationLabourBarChartController(frame);
+            frame.setVisible(true);
+        });
     }
 }
