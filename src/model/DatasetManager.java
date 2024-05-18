@@ -14,6 +14,9 @@ public class DatasetManager {
 	
 	//toby
 	private ArrayList<Double>[] gender = new ArrayList[3];
+	
+	// Kelvin
+	private ArrayList<Double>[] gender = new ArrayList[3];
 
 	
 	public DatasetManager(){
@@ -38,6 +41,11 @@ public class DatasetManager {
 
 	private void initUnemployment() {
 		//37921
+		
+	}
+	
+	private void initWagesEmployment() {
+		
 		
 	}
 

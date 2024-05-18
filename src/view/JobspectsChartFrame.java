@@ -56,7 +56,7 @@ public abstract class JobspectsChartFrame extends JobspectsFrame {
 	//a back button and a screen title
 	private void setUpFrame() {
 		
-		//Set up the back button
+		// Set up the back button
         Icon bbb = new ImageIcon("./images/BigBackButton.png");
         JButton backButton = new JButton(bbb);
         backButton.setBounds(30, 30, 70, 70);
@@ -72,7 +72,7 @@ public abstract class JobspectsChartFrame extends JobspectsFrame {
 			}
 		});
 		
-		//Set up the title label
+		// Set up the title label
 		screenTitleLabel.setBounds(120, 30, FRAME_WIDTH - 180, 70);
 		screenTitleLabel.setBackground(Color.WHITE);
 		screenTitleLabel.setForeground(DARK_PURPLE);
@@ -87,7 +87,7 @@ public abstract class JobspectsChartFrame extends JobspectsFrame {
 	private void setUpChartPanel() {
 		
 		chartPanelTemplate = new JPanel();
-		chartPanelTemplate.setBounds(30, 230, FRAME_WIDTH / 2 + 100, FRAME_HEIGHT - 300);
+		chartPanelTemplate.setBounds(30, 180, FRAME_WIDTH / 2 + 100, FRAME_HEIGHT - 150);
 		chartPanelTemplate.setBackground(Color.WHITE);
 		add(chartPanelTemplate);
 		
