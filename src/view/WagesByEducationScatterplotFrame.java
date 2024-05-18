@@ -8,7 +8,7 @@ import javax.swing.JRadioButton;
 
 /*
  * Name: Kelvin Nguyen
- * JobspectsTitleFrame 
+ * WagesByEducationScatterplotFrame
  * Group 1
  * Date: May 17th, 2024
  */

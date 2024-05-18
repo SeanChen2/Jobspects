@@ -16,7 +16,8 @@ public class DatasetManager {
 	private ArrayList<Double>[] gender = new ArrayList[3];
 	
 	// Kelvin
-	private ArrayList<Double>[] gender = new ArrayList[3];
+	// Create an array to store the data info
+	private ArrayList<PersonEducationIncome> person = new ArrayList<>();
 
 	
 	public DatasetManager(){
@@ -24,6 +25,7 @@ public class DatasetManager {
 		initTourism();
 		initUnemployment();
 		initOccupationLabour();
+		initWagesEmployment();
 	}
 
 	private void importData() {
@@ -44,8 +46,42 @@ public class DatasetManager {
 		
 	}
 	
+	// Read the EducationVersusIncome.csv
+	// Source: https://www.youtube.com/watch?v=-Aud0cDh-J8
 	private void initWagesEmployment() {
+		// Create a string variable to hold the value
+		String line = "";
+		// Accumulator
+		int index = 0;
 		
+		// Try and catch: if the file cannot be read display and error otherwise read the file
+		try {
+			// Use a BufferedReader to read the file
+			BufferedReader br = new BufferedReader(new FileReader("data/EducationVersusIncome.csv"));
+				
+			// While there is still more data to read
+			while ((line = br.readLine()) != null) {
+				// CSV columns are separated by commas
+				String[] data = line.split(","); 
+
+		        // Extracting data and creating a new PersonEducationIncome object
+		        int year = Integer.parseInt(data[0]);
+		        int yearsOfEducation = Integer.parseInt(data[1]);
+		        double averageIncome = Double.parseDouble(data[2]);
+		            
+		        // Add to the ArrayList
+		        person.add(new PersonEducationIncome(year, yearsOfEducation, averageIncome));
+	            
+		        // Increment index
+		        index++;
+		}
+			
+		// If the file canont be found or read, print these errors
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 	}
 
