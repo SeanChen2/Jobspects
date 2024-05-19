@@ -1,7 +1,10 @@
 package view;
 
 import java.awt.Color;
+import javax.swing.border.AbstractBorder;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
@@ -49,19 +52,31 @@ public abstract class JobspectsChartFrame extends JobspectsFrame {
 		return averageCalculationPanel;
 	}
 	
+	public JLabel getScreenTitleLabel() {
+		return screenTitleLabel;
+	}
+
 	//This method sets up the basic appearance of the chart frame, including:
 	//a back button and a screen title
 	private void setUpFrame() {
 		
-		//Set up the back button
-		backButton.setBounds(30, 30, 70, 70);
-		backButton.setBackground(Color.WHITE);
-		backButton.setForeground(DARK_PURPLE);
-		backButton.setFocusPainted(false);
-		backButton.setFont(new Font("Sans Serif", Font.BOLD, 30));
+		// Set up the back button
+        Icon bbb = new ImageIcon("./images/BigBackButton.png");
+        JButton backButton = new JButton(bbb);
+        backButton.setBounds(30, 30, 70, 70);
+        backButton.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 		add(backButton);
 		
-		//Set up the title label
+		backButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				// Create a new frame
+				new JobspectsMenuFrame();
+				// Close current frame
+				dispose();
+			}
+		});
+		
+		// Set up the title label
 		screenTitleLabel.setBounds(120, 30, FRAME_WIDTH - 180, 70);
 		screenTitleLabel.setBackground(Color.WHITE);
 		screenTitleLabel.setForeground(DARK_PURPLE);
@@ -76,7 +91,7 @@ public abstract class JobspectsChartFrame extends JobspectsFrame {
 	private void setUpChartPanel() {
 		
 		chartPanelTemplate = new JPanel();
-		chartPanelTemplate.setBounds(30, 230, FRAME_WIDTH / 2 + 100, FRAME_HEIGHT - 300);
+		chartPanelTemplate.setBounds(30, 180, FRAME_WIDTH / 2 + 100, FRAME_HEIGHT - 150);
 		chartPanelTemplate.setBackground(Color.WHITE);
 		add(chartPanelTemplate);
 		

@@ -1,10 +1,19 @@
 package view;
 
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-public class WagesByEducationScatterplotFrame extends JobspectsChartFrame  {
+
+/*
+ * Name: Kelvin Nguyen
+ * WagesByEducationScatterplotFrame
+ * Group 1
+ * Date: May 17th, 2024
+ */
+
+public class WagesByEducationScatterplotFrame extends JobspectsChartFrame {
 
 	// Fields
 	private JPanel filterPanel;
@@ -13,11 +22,50 @@ public class WagesByEducationScatterplotFrame extends JobspectsChartFrame  {
     private JRadioButton[] incomeLevelButtons;
     private JRadioButton[] educationLevelButtons;
     
+    // Constructor Method
     public WagesByEducationScatterplotFrame() {
-    	
+    	// Build the frame
+    	showFrame();
     }
     
-    public void setUpYearSection() {
+    // Getters and Setters
+    public JPanel getFilterPanel() {
+		return filterPanel;
+	}
+
+	public void setFilterPanel(JPanel filterPanel) {
+		this.filterPanel = filterPanel;
+	}
+
+	public JLabel getChartFilterLabel() {
+		return chartFilterLabel;
+	}
+
+	public void setChartFilterLabel(JLabel chartFilterLabel) {
+		this.chartFilterLabel = chartFilterLabel;
+	}
+
+	public void setYearButtons(JRadioButton[] yearButtons) {
+		this.yearButtons = yearButtons;
+	}
+
+	public void setIncomeLevelButtons(JRadioButton[] incomeLevelButtons) {
+		this.incomeLevelButtons = incomeLevelButtons;
+	}
+
+	public void setEducationLevelButtons(JRadioButton[] educationLevelButtons) {
+		this.educationLevelButtons = educationLevelButtons;
+	}
+
+	// Utility Methods
+	// Build the frame
+    public void showFrame() {
+    	setSize(1920, 1080);
+    	setVisible(true);
+    	getScreenTitleLabel().setText("    Does a Higher Education Correlate to a Higher Income? ");
+    }
+    
+	public void setUpYearSection() {
     	
     }
     
@@ -30,7 +78,7 @@ public class WagesByEducationScatterplotFrame extends JobspectsChartFrame  {
     }
     
     public void getYearButtons() {
-    	
+
     }
     
     public void getIncomeLevelButtons() {
@@ -41,8 +89,13 @@ public class WagesByEducationScatterplotFrame extends JobspectsChartFrame  {
     	
     }
     
+    public void updateChart() {
+    	
+    }
     
-    
+    public void getValuesForAverage() {
+    	
+    }
     
 }
 
