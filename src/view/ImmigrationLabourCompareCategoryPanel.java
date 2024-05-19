@@ -1,13 +1,14 @@
 package view;
 
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 //This class is a panel that holds a section of category filters in the
 //filter panel of the immigration area chart frame. These filters allow
 //the user to choose which data category is represented by each of the
 //areas in the area chart (education level, immigrant status)
-public class ImmigrationLabourCompareCategoryPanel {
+public class ImmigrationLabourCompareCategoryPanel extends JPanel {
 
 	//Fields
 	private JLabel compareCategoryLabel;

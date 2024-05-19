@@ -20,7 +20,7 @@ public abstract class JobspectsChartFrame extends JobspectsFrame {
 	
 	//Fields
 	private JButton backButton = new JButton("<");
-	private JLabel screenTitleLabel = new JLabel("   Are Canadian immigrants disproportionally affected by the unemployment crisis?");
+	private JLabel screenTitleLabel = new JLabel(" ");
 	private JPanel chartPanelTemplate;
 	
 	//Constructor method:
@@ -35,6 +35,10 @@ public abstract class JobspectsChartFrame extends JobspectsFrame {
 	
 	public JButton getBackButton() {
 		return backButton;
+	}
+	
+	public JLabel getScreenTitleLabel() {
+		return screenTitleLabel;
 	}
 
 	public JPanel getChartPanelTemplate() {

@@ -7,7 +7,7 @@ import javax.swing.*;
 //the user to choose which demographics are represented by the chart.
 //Filters may include any of the following: sex, employment type, 
 //education level, immigrant status
-public class ImmigrationLabourChartFilterPanel {
+public class ImmigrationLabourChartFilterPanel extends JPanel {
 	
 	//Fields
 	private JLabel chartFilterLabel;
