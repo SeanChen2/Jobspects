@@ -39,6 +39,10 @@ public abstract class JobspectsChartFrame extends JobspectsFrame {
 	public JButton getBackButton() {
 		return backButton;
 	}
+	
+	public JLabel getScreenTitleLabel() {
+		return screenTitleLabel;
+	}
 
 	public JPanel getChartPanelTemplate() {
 		return chartPanelTemplate;

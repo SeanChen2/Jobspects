@@ -1,12 +1,6 @@
 package application;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-
-import model.PersonEducationIncome;
+import controller.ImmigrationLabourChartController;
 import view.ImmigrationLabourAreaChartFrame;
 import view.JobspectsTitleFrame;
 import view.WagesByEducationScatterplotFrame;
@@ -35,8 +29,8 @@ import view.WagesByEducationScatterplotFrame;
 public class JobspectsApplication {
 
 	public static void main(String[] args) {
-		new WagesByEducationScatterplotFrame();
-		
+		new ImmigrationLabourAreaChartFrame();
+
 	}
 }
 
