@@ -2,6 +2,7 @@ package view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GridLayout;
 
 import javax.swing.*;
 
@@ -22,6 +23,10 @@ public abstract class ImmigrationLabourChartFrame extends JobspectsChartFrame {
 		
 		//Set the frame title label
 		getScreenTitleLabel().setText("    Are Canadian immigrants disproportionally affected by the unemployment crisis?");
+		
+		//Shift the chart panel down to make room for the navigation buttons
+		JPanel chartPanel = getChartPanelTemplate();
+		getChartPanelTemplate().setBounds(chartPanel.getX(), chartPanel.getY() + 50, chartPanel.getWidth(), chartPanel.getHeight() - 50);
 		
 		setUpChartNavButtons();
 		addFilterPanel();
@@ -73,10 +78,15 @@ public abstract class ImmigrationLabourChartFrame extends JobspectsChartFrame {
 	//The contents of this panel will be added in the concrete classes.
 	private void addFilterPanel() {
 		
-		filterPanel.setLayout(new BoxLayout(filterPanel, SwingConstants.VERTICAL));
+		//Display the filter "sections" vertically using a box layout
+		filterPanel.setLayout(new BoxLayout(filterPanel, BoxLayout.Y_AXIS));
+		filterPanel.setBounds(FRAME_WIDTH / 2 + 150, 230, FRAME_WIDTH / 2 - 200, FRAME_HEIGHT - 300);
 		
-		//Make the filter panel scrollable
-		JScrollPane filterScrollPane = new JScrollPane(filterPanel);
+		//Make the filter panel vertically scrollable
+		JScrollPane filterScrollPane = new JScrollPane(filterPanel, 
+				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+	            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		
 		filterScrollPane.setBounds(FRAME_WIDTH / 2 + 150, 230, FRAME_WIDTH / 2 - 200, FRAME_HEIGHT - 300);
 		filterScrollPane.setBackground(Color.WHITE);
 		add(filterScrollPane);

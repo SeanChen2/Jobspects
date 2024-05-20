@@ -51,10 +51,6 @@ public abstract class JobspectsChartFrame extends JobspectsFrame {
 	public AverageCalculationPanel getAverageCalculationPanel() {
 		return averageCalculationPanel;
 	}
-	
-	public JLabel getScreenTitleLabel() {
-		return screenTitleLabel;
-	}
 
 	//This method sets up the basic appearance of the chart frame, including:
 	//a back button and a screen title
@@ -67,6 +63,7 @@ public abstract class JobspectsChartFrame extends JobspectsFrame {
         backButton.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 		add(backButton);
 		
+		//TODO: Discuss with Kelvin
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				// Create a new frame

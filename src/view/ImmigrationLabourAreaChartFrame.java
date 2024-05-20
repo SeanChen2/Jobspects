@@ -8,7 +8,7 @@ import java.awt.Color;
 public class ImmigrationLabourAreaChartFrame extends ImmigrationLabourChartFrame {
 	
 	//References to GUI panels for the "sections" of chart filters
-	private ImmigrationLabourCompareCategoryPanel compareCategorySection = new ImmigrationLabourCompareCategoryPanel();
+	private ImmigrationLabourCompareCategoryPanel compareCategorySection = new ImmigrationLabourCompareCategoryPanel(getFilterPanel());
 
 	//Constructor
 	public ImmigrationLabourAreaChartFrame() {
@@ -32,7 +32,6 @@ public class ImmigrationLabourAreaChartFrame extends ImmigrationLabourChartFrame
 	//education level or immigrant status
 	private void setUpCompareCategorySection() {
 		
-		compareCategorySection.setBackground(Color.RED);
 		getFilterPanel().add(compareCategorySection);
 		
 	}
@@ -42,8 +41,7 @@ public class ImmigrationLabourAreaChartFrame extends ImmigrationLabourChartFrame
 	@Override
 	protected void setUpChartFilterSection() {
 		
-		setChartFilterSection(new ImmigrationLabourChartFilterPanel(true, true, true, true));
-		getChartFilterSection().setBackground(Color.BLUE);
+		setChartFilterSection(new ImmigrationLabourChartFilterPanel(getFilterPanel(), true, true, false, false));
 		getFilterPanel().add(getChartFilterSection());
 		
 	}
