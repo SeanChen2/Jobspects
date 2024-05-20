@@ -33,8 +33,8 @@ public abstract class ChartController implements ActionListener {
 		//Listen for when the back button and "calculate average" button
 		//in the chart frame are pressed. Note: other buttons are handled
 		//in concrete classes.
-		chartFrame.getBackButton().addActionListener(this);
-		chartFrame.getAverageCalculationPanel().getCalculateAverageButton().addActionListener(this);
+		//chartFrame.getBackButton().addActionListener(this);
+		//chartFrame.getAverageCalculationPanel().getCalculateAverageButton().addActionListener(this);
 		
 	}
 	

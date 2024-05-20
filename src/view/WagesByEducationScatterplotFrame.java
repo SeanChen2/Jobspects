@@ -5,6 +5,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
+import controller.WagesByEducationChartController;
+import model.DatasetManager;
+
 
 /*
  * Name: Kelvin Nguyen
@@ -63,6 +66,9 @@ public class WagesByEducationScatterplotFrame extends JobspectsChartFrame {
     	setSize(1920, 1080);
     	setVisible(true);
     	getScreenTitleLabel().setText("    Does a Higher Education Correlate to a Higher Income? ");
+        DatasetManager datasetManager = new DatasetManager();
+        WagesByEducationChartController chartController = new WagesByEducationChartController(getChartPanelTemplate(), datasetManager);
+        
     }
     
 	public void setUpYearSection() {
