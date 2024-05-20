@@ -79,13 +79,13 @@ public class WagesByEducationChartController extends ChartController {
         // Make sure the chart appears
         chartPanelTemplate.revalidate();
         chartPanelTemplate.repaint();
-        
-        // Create the filter panel
-        filterPanelTemplate.setVisible(true);
 
     }
     
     public void createFilterPanel() {
+        // Create the filter panel
+        filterPanelTemplate.setVisible(true);
+        
         // Set the layout manager
         filterPanelTemplate.setLayout(new FlowLayout());
 
