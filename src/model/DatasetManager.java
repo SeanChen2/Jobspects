@@ -1,3 +1,4 @@
+package model;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -71,7 +72,6 @@ public class DatasetManager {
 		            
 		        // Add to the ArrayList
 		        person.add(new PersonEducationIncome(year, yearsOfEducation, averageIncome));
-	            
 		        // Increment index
 		        index++;
 		}
@@ -114,7 +114,38 @@ public class DatasetManager {
         }
 		
 	}
-	 
-	
+
+	// Getters and Setters
+	public ArrayList<Integer>[] getTouristBusinesses() {
+		return touristBusinesses;
+	}
+
+	public void setTouristBusinesses(ArrayList<Integer>[] touristBusinesses) {
+		this.touristBusinesses = touristBusinesses;
+	}
+
+	public int[] getYears() {
+		return years;
+	}
+
+	public void setYears(int[] years) {
+		this.years = years;
+	}
+
+	public ArrayList<Double>[] getGender() {
+		return gender;
+	}
+
+	public void setGender(ArrayList<Double>[] gender) {
+		this.gender = gender;
+	}
+
+	public ArrayList<PersonEducationIncome> getPerson() {
+		return person;
+	}
+
+	public void setPerson(ArrayList<PersonEducationIncome> person) {
+		this.person = person;
+	}
 	
 }
