@@ -1,6 +1,7 @@
 package model;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 /*
@@ -72,11 +73,11 @@ public class DatasetManager {
 		
 	}
 	
-	public String getFilteredRows(){
+	public HashMap<String, ArrayList<String>> getFilteredRows(){
 		return null;
 	}
 	
-	public String getFilteredColumns(){
+	public ArrayList<String> getFilteredColumns(){
 		return null;
 	}
 	

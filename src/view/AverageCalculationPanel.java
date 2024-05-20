@@ -9,7 +9,7 @@ public class AverageCalculationPanel extends JPanel {
 	private String[] averageTypes;
 	private JComboBox<String> averageTypeComboBox;
 	private JComboBox<String> categoryComboBox;
-	private JButton calculateAverageButton;
+	private JButton calculateAverageButton = new JButton("Calculate");
 	private JLabel resultLabel;
 	
 	//Constructor

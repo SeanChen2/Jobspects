@@ -80,14 +80,14 @@ public abstract class ImmigrationLabourChartFrame extends JobspectsChartFrame {
 		
 		//Display the filter "sections" vertically using a box layout
 		filterPanel.setLayout(new BoxLayout(filterPanel, BoxLayout.Y_AXIS));
-		filterPanel.setBounds(FRAME_WIDTH / 2 + 150, 230, FRAME_WIDTH / 2 - 200, FRAME_HEIGHT - 300);
+		filterPanel.setBounds(FRAME_WIDTH / 2 + 150, 180, FRAME_WIDTH / 2 - 200, FRAME_HEIGHT - 290);
 		
 		//Make the filter panel vertically scrollable
 		JScrollPane filterScrollPane = new JScrollPane(filterPanel, 
 				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 	            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
-		filterScrollPane.setBounds(FRAME_WIDTH / 2 + 150, 230, FRAME_WIDTH / 2 - 200, FRAME_HEIGHT - 300);
+		filterScrollPane.setBounds(FRAME_WIDTH / 2 + 150, 180, FRAME_WIDTH / 2 - 200, FRAME_HEIGHT - 290);
 		filterScrollPane.setBackground(Color.WHITE);
 		add(filterScrollPane);
 		

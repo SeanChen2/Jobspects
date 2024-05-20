@@ -29,7 +29,7 @@ import view.WagesByEducationScatterplotFrame;
 public class JobspectsApplication {
 
 	public static void main(String[] args) {
-		new ImmigrationLabourAreaChartFrame();
+		new ImmigrationLabourChartController();
 
 	}
 }

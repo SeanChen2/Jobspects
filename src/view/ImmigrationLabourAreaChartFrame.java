@@ -13,11 +13,13 @@ public class ImmigrationLabourAreaChartFrame extends ImmigrationLabourChartFrame
 	//Constructor
 	public ImmigrationLabourAreaChartFrame() {
 		
+		//Use an average calculation panel with a combo box to select which data 
+		//category to calculate the average for
+		setAverageCalculationPanel(new AverageCalculationPanel(true));
+		
 		setUpCompareCategorySection();
 		setUpChartFilterSection();
 		setUpAverageSection();
-		
-		setVisible(true);
 		
 	}
 	
