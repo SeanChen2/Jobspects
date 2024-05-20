@@ -27,9 +27,13 @@ public abstract class ChartController implements ActionListener {
 	private JFreeChart chart;
 	
 	//Constructor
-	public ChartController(JobspectsMenuFrame menuFrame) {
+	public ChartController() {
 		
-		this.menuFrame = menuFrame;
+		//Listen for when the back button and "calculate average" button
+		//in the chart frame are pressed. Note: other buttons are handled
+		//in concrete classes.
+		//chartFrame.getBackButton().addActionListener(this);
+		//chartFrame.getAverageCalculationPanel().getCalculateAverageButton().addActionListener(this);
 		
 	}
 	
@@ -41,18 +45,6 @@ public abstract class ChartController implements ActionListener {
 	
 	public void setChart(JFreeChart chart) {
 		this.chart = chart;
-	}
-	
-	public JobspectsChartFrame getChartFrame() {
-		return chartFrame;
-	}
-	
-	//Special setter: Also add action listeners to the chart frame's back button and average calculation button
-	public void setChartFrame(JobspectsChartFrame chartFrame) {
-		this.chartFrame = chartFrame;
-		
-		this.chartFrame.getBackButton().addActionListener(this);
-		this.chartFrame.getAverageCalculationPanel().getCalculateAverageButton().addActionListener(this);
 	}
 	
 	//This method shows the chart frame that this controller is controlling

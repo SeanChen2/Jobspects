@@ -25,6 +25,7 @@ public abstract class JobspectsChartFrame extends JobspectsFrame {
 	private JButton backButton;
 	private JLabel screenTitleLabel = new JLabel(" ");
 	private JPanel chartPanelTemplate;
+	private JPanel filterPanelTemplate;
 	
 	//Constructor method:
 	public JobspectsChartFrame() {
@@ -54,6 +55,27 @@ public abstract class JobspectsChartFrame extends JobspectsFrame {
 	
 	public void setAverageCalculationPanel(AverageCalculationPanel averageCalculationPanel) {
 		this.averageCalculationPanel = averageCalculationPanel;
+	}
+	
+
+	public void setBackButton(JButton backButton) {
+		this.backButton = backButton;
+	}
+
+	public void setScreenTitleLabel(JLabel screenTitleLabel) {
+		this.screenTitleLabel = screenTitleLabel;
+	}
+
+	public void setChartPanelTemplate(JPanel chartPanelTemplate) {
+		this.chartPanelTemplate = chartPanelTemplate;
+	}
+
+	public JPanel getFilterPanelTemplate() {
+		return filterPanelTemplate;
+	}
+
+	public void setFilterPanelTemplate(JPanel filterPanelTemplate) {
+		this.filterPanelTemplate = filterPanelTemplate;
 	}
 
 	//This method sets up the basic appearance of the chart frame, including:
@@ -93,9 +115,17 @@ public abstract class JobspectsChartFrame extends JobspectsFrame {
 		
 		//Set up the chart panel with a null layout, so that the chart can be added with coordinates
 		chartPanelTemplate = new JPanel(null);
-		chartPanelTemplate.setBounds(30, 180, FRAME_WIDTH / 2 + 100, FRAME_HEIGHT - 290);
+		chartPanelTemplate.setBounds(30, 180, FRAME_WIDTH / 2 + 100, FRAME_HEIGHT - 300);
 		chartPanelTemplate.setBackground(Color.WHITE);
 		add(chartPanelTemplate);
+		
+		filterPanelTemplate = new JPanel();
+		filterPanelTemplate.setBounds(1100, 180, FRAME_WIDTH / 8 + 100, FRAME_HEIGHT - 300);
+		filterPanelTemplate.setBackground(Color.WHITE);
+		add(filterPanelTemplate);
+		
+		
+		
 		
 	}
 	
