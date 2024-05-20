@@ -34,7 +34,7 @@ public abstract class JobspectsChartFrame extends JobspectsFrame {
 		
 	}
 	
-	//Necessary getters for GUI elements on the frame
+	//Necessary getters and setters for GUI elements on the frame
 	
 	public JButton getBackButton() {
 		return backButton;
@@ -50,6 +50,10 @@ public abstract class JobspectsChartFrame extends JobspectsFrame {
 	
 	public AverageCalculationPanel getAverageCalculationPanel() {
 		return averageCalculationPanel;
+	}
+	
+	public void setAverageCalculationPanel(AverageCalculationPanel averageCalculationPanel) {
+		this.averageCalculationPanel = averageCalculationPanel;
 	}
 
 	//This method sets up the basic appearance of the chart frame, including:

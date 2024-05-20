@@ -156,7 +156,7 @@ public class ImmigrationLabourChartController extends ChartController {
 	@Override
 	protected ArrayList<Double> getValuesForAverage() {
 		
-		
+		return null;
 		
 	}
 	
