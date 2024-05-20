@@ -31,11 +31,12 @@ public class ImmigrationLabourChartController extends ChartController {
 	private Scanner dataFile;
 	
 	//Constructor
-	public ImmigrationLabourChartController() {
+	public ImmigrationLabourChartController(JobspectsMenuFrame menuFrame) {
+		
+		super(menuFrame);
 		
 		//Open the area chart frame by default
 		setChartFrame(new ImmigrationLabourAreaChartFrame());
-		getChartFrame().getBackButton().addActionListener(this);
 		
 		//By default, show the employment figures for the entire labour force, comparing
 		//by education level
@@ -47,7 +48,7 @@ public class ImmigrationLabourChartController extends ChartController {
 		
 		updateChart();
 		
-		getChartFrame().setVisible(true);
+		showChartFrame();
 		
 	}
 	
@@ -55,8 +56,6 @@ public class ImmigrationLabourChartController extends ChartController {
 	//chart frames is pressed
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		
-		System.out.println("In ImmigrationLabourChartController actionPerformed()");
 		
 		//Check the back button and the "calculate average" button in the superclass
 		super.actionPerformed(event);

@@ -27,9 +27,9 @@ public abstract class ChartController implements ActionListener {
 	private JFreeChart chart;
 	
 	//Constructor
-	public ChartController() {
+	public ChartController(JobspectsMenuFrame menuFrame) {
 		
-
+		this.menuFrame = menuFrame;
 		
 	}
 	
@@ -53,7 +53,6 @@ public abstract class ChartController implements ActionListener {
 		
 		this.chartFrame.getBackButton().addActionListener(this);
 		this.chartFrame.getAverageCalculationPanel().getCalculateAverageButton().addActionListener(this);
-		System.out.println("Added action listeners");
 	}
 	
 	//This method shows the chart frame that this controller is controlling
@@ -67,8 +66,6 @@ public abstract class ChartController implements ActionListener {
 	//calculate an average value when the "Calculate" button is pressed.
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		
-		System.out.println("In ChartController");
 		
 		//If the chart frame's back button was pressed, navigate to the main menu
 		if (event.getSource() == chartFrame.getBackButton()) {

@@ -22,7 +22,7 @@ public abstract class JobspectsChartFrame extends JobspectsFrame {
 	private AverageCalculationPanel averageCalculationPanel;
 	
 	//Fields
-	private JButton backButton = new JButton("<");
+	private JButton backButton;
 	private JLabel screenTitleLabel = new JLabel(" ");
 	private JPanel chartPanelTemplate;
 	
@@ -62,7 +62,7 @@ public abstract class JobspectsChartFrame extends JobspectsFrame {
 		
 		// Set up the back button
         Icon bbb = new ImageIcon("./images/BigBackButton.png");
-        JButton backButton = new JButton(bbb);
+        backButton = new JButton(bbb);
         backButton.setBounds(30, 30, 70, 70);
         backButton.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 		add(backButton);
