@@ -18,7 +18,6 @@ public abstract class ChartController implements ActionListener {
 	
 	//Object references
 	private JobspectsMenuFrame menuFrame;
-	private DatasetManager datasetManager;
 	private AverageCalculator averageCalculator;
 	
 	//Reference to the chart screen that this controller is controlling
@@ -39,9 +38,6 @@ public abstract class ChartController implements ActionListener {
 	}
 	
 	//Necessary getters and setters for objects
-	public DatasetManager getDatasetManager() {
-		return datasetManager;
-	}
 	
 	public JFreeChart getChart() {
 		return chart;
@@ -92,14 +88,14 @@ public abstract class ChartController implements ActionListener {
 		
 		//Retrieve the requested average type (mean or median), and
 		//the list of values to calculate the average for
-		String averageType = chartFrame.getAverageCalculationPanel().getAverageTypeComboBox().getSelectedItem();
+		String averageType = (String) chartFrame.getAverageCalculationPanel().getAverageTypeComboBox().getSelectedItem();
 		ArrayList<Double> data = getValuesForAverage();
 		
 		//Initialize the average calculator object with the list of values
 		averageCalculator = new AverageCalculator(data);
 		
 		//Based on the requested average type (mean or median), calculate the average
-		double average;
+		double average = 0.0;
 		
 		if (averageType.equals("Mean"))
 			average = averageCalculator.calculateMean();
