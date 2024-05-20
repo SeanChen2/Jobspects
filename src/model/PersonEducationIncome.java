@@ -36,6 +36,7 @@ public class PersonEducationIncome {
 		return averageIncome;
 	}
 
+	// To string
 	@Override
 	public String toString() {
 		return "PersonEducationIncome [year=" + year + ", yearsOfEducation=" + yearsOfEducation + ", averageIncome="
