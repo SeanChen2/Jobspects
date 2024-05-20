@@ -1,5 +1,7 @@
 package view;
 
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -19,7 +21,6 @@ import model.DatasetManager;
 public class WagesByEducationScatterplotFrame extends JobspectsChartFrame {
 
 	// Fields
-	private JPanel filterPanel;
 	private JLabel chartFilterLabel;
     private JRadioButton[] yearButtons;
     private JRadioButton[] incomeLevelButtons;
@@ -32,14 +33,6 @@ public class WagesByEducationScatterplotFrame extends JobspectsChartFrame {
     }
     
     // Getters and Setters
-    public JPanel getFilterPanel() {
-		return filterPanel;
-	}
-
-	public void setFilterPanel(JPanel filterPanel) {
-		this.filterPanel = filterPanel;
-	}
-
 	public JLabel getChartFilterLabel() {
 		return chartFilterLabel;
 	}
@@ -67,7 +60,7 @@ public class WagesByEducationScatterplotFrame extends JobspectsChartFrame {
     	setVisible(true);
     	getScreenTitleLabel().setText("    Does a Higher Education Correlate to a Higher Income? ");
         DatasetManager datasetManager = new DatasetManager();
-        WagesByEducationChartController chartController = new WagesByEducationChartController(getChartPanelTemplate(), datasetManager);
+        WagesByEducationChartController chartController = new WagesByEducationChartController(getChartPanelTemplate(), datasetManager, getFilterPanelTemplate());
         
     }
     
