@@ -1,6 +1,8 @@
 package controller;
 
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -13,6 +15,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 
 import model.DatasetManager;
 import model.PersonEducationIncome;
@@ -91,22 +94,33 @@ public class WagesByEducationChartController extends ChartController {
 
         JLabel title = new JLabel();
         title.setText("Filter By:");
+        title.setFont(new Font("Sans Serif", Font.BOLD, 25));
         filterPanelTemplate.add(title);
-        
-        // Create radio buttons
-        JRadioButton radioButton1 = new JRadioButton("Option 1");
-        JRadioButton radioButton2 = new JRadioButton("Option 2");
-        JRadioButton radioButton3 = new JRadioButton("Option 3");
 
-        // Create a button group to group the radio buttons
-        ButtonGroup year = new ButtonGroup();
-        year.add(radioButton1);
-        year.add(radioButton2);
-        year.add(radioButton3);
+        // Create a new JPanel to hold the "Year" label and radio buttons
+        JPanel yearPanel = new JPanel(new GridLayout(0, 3, 5, 5)); // Adjust the columns as needed
         
-        filterPanelTemplate.add(radioButton1);
-        filterPanelTemplate.add(radioButton2);
-        filterPanelTemplate.add(radioButton3);
+        JLabel years = new JLabel();
+        years.setText("Year");
+        years.setFont(new Font("Sans Serif", Font.PLAIN, 20));
+        yearPanel.add(years);
+
+        // Create radio buttons
+        JRadioButton[] radioButtons = new JRadioButton[23];
+        ButtonGroup yearGroup = new ButtonGroup();
+
+        for (int i = 0; i < radioButtons.length; i++) {
+            radioButtons[i] = new JRadioButton(String.valueOf(1997 + i));
+            yearGroup.add(radioButtons[i]);
+            yearPanel.add(radioButtons[i]);
+        }
+        
+        // Add the yearPanel to a JScrollPane
+        JScrollPane scrollPane = new JScrollPane(yearPanel);
+        scrollPane.setPreferredSize(new java.awt.Dimension(250, 150)); // Adjust the size as needed
+
+        // Add the scrollPane to the filterPanelTemplate
+        filterPanelTemplate.add(scrollPane);
         
         // Repaint the parent container to reflect changes
         filterPanelTemplate.revalidate();
