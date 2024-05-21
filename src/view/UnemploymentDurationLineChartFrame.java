@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 
@@ -17,16 +16,8 @@ import view.OccupationLabourBarChartFrame.CircularGradientPanel;
 public class UnemploymentDurationLineChartFrame extends JFrame implements ActionListener{
 	
 	private JButton backButton;
-	private JButton[] chartNavButtons = new JButton[2];
-	private JPanel filterPanel = new JPanel();
-	//private UnemploymentDurationFilterPanel chartFilterSection;
-	
-
 
 	public UnemploymentDurationLineChartFrame() {
-		
-		//getScreenTitleLabel().setText("	  What factors affect the Duration of Employment in Canada?");
-
 		setSize(1920, 1080);
 		// You'll never see it coming Sean
 		setTitle("Jobspects😎");
@@ -101,22 +92,6 @@ public class UnemploymentDurationLineChartFrame extends JFrame implements Action
 
 	private void setUpChartNavButtons() {
 		// TODO Auto-generated method stub
-		//Set up and add the back button
-		chartNavButtons[0] = new JButton("Line Graph");
-		chartNavButtons[0].setBounds(30, 150, 250, 60);
-		chartNavButtons[0].setBackground(new Color(232, 192, 225));
-		chartNavButtons[0].setForeground(JobspectsFrame.DARK_PURPLE);
-		chartNavButtons[0].setFont(new Font("Sans Serif", Font.BOLD, 24));
-		chartNavButtons[0].setFocusPainted(false);
-		add(chartNavButtons[0]);
-		
-		chartNavButtons[1] = new JButton("Time Series Chart");
-		chartNavButtons[1].setBounds(290, 150, 250, 80);
-		chartNavButtons[1].setBackground(new Color(232, 192, 225));
-		chartNavButtons[1].setForeground(JobspectsFrame.DARK_PURPLE);
-		chartNavButtons[1].setFont(new Font("Sans Serif", Font.BOLD, 24));
-		chartNavButtons[1].setFocusPainted(false);
-		add(chartNavButtons[1]);
 		
 	}
 

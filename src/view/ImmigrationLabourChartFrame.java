@@ -31,9 +31,6 @@ public abstract class ImmigrationLabourChartFrame extends JobspectsChartFrame {
 		setUpChartNavButtons();
 		addFilterPanel();
 		
-		//TODO: remove?
-		getFilterPanelTemplate().setVisible(false);
-		
 	}
 	
 	//Necessary getters and setters for GUI elements
