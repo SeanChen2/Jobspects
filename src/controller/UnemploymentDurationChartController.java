@@ -12,7 +12,8 @@ public class UnemploymentDurationChartController extends ChartController impleme
 	
 	
 	public UnemploymentDurationChartController() {
-		
+		super(menuFrame);
+
 		
 		
 
