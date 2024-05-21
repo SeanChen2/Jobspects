@@ -18,7 +18,6 @@ public abstract class ChartController implements ActionListener {
 	
 	//Object references
 	private JobspectsMenuFrame menuFrame;
-	private DatasetManager datasetManager;
 	private AverageCalculator averageCalculator;
 	
 	//Reference to the chart screen that this controller is controlling
@@ -28,20 +27,12 @@ public abstract class ChartController implements ActionListener {
 	private JFreeChart chart;
 	
 	//Constructor
-	public ChartController() {
-		
-		//Listen for when the back button and "calculate average" button
-		//in the chart frame are pressed. Note: other buttons are handled
-		//in concrete classes.
-		chartFrame.getBackButton().addActionListener(this);
-		chartFrame.getAverageCalculationPanel().getCalculateAverageButton().addActionListener(this);
+	public ChartController(JobspectsMenuFrame menuFrame) {
+		this.menuFrame = menuFrame;
 		
 	}
 	
 	//Necessary getters and setters for objects
-	public DatasetManager getDatasetManager() {
-		return datasetManager;
-	}
 	
 	public JFreeChart getChart() {
 		return chart;
@@ -49,6 +40,19 @@ public abstract class ChartController implements ActionListener {
 	
 	public void setChart(JFreeChart chart) {
 		this.chart = chart;
+	}
+	
+	public JobspectsChartFrame getChartFrame() {
+		return chartFrame;
+	}
+	
+	
+	//Special setter: also adds action listeners to the back button and average calculation button
+	public void setChartFrame(JobspectsChartFrame chartFrame) {
+		this.chartFrame = chartFrame;
+		
+		chartFrame.getBackButton().addActionListener(this);
+		chartFrame.getAverageCalculationPanel().getCalculateAverageButton().addActionListener(this);
 	}
 	
 	//This method shows the chart frame that this controller is controlling
@@ -92,14 +96,14 @@ public abstract class ChartController implements ActionListener {
 		
 		//Retrieve the requested average type (mean or median), and
 		//the list of values to calculate the average for
-		String averageType = chartFrame.getAverageCalculationPanel().getAverageTypeComboBox().getSelectedItem();
+		String averageType = (String) chartFrame.getAverageCalculationPanel().getAverageTypeComboBox().getSelectedItem();
 		ArrayList<Double> data = getValuesForAverage();
 		
 		//Initialize the average calculator object with the list of values
 		averageCalculator = new AverageCalculator(data);
 		
 		//Based on the requested average type (mean or median), calculate the average
-		double average;
+		double average = 0.0;
 		
 		if (averageType.equals("Mean"))
 			average = averageCalculator.calculateMean();
@@ -110,5 +114,7 @@ public abstract class ChartController implements ActionListener {
 		chartFrame.getAverageCalculationPanel().getResultLabel().setText(String.format("%.2f", average));
 		
 	}
+	
+	
 	
 }

@@ -30,7 +30,8 @@ public class UnemploymentDurationChartController extends ChartController impleme
 
 	@Override
 	//wants it not to be void in chartController
-	public void getValuesForAverage() {
+	public ArrayList<Double> getValuesForAverage() {
+		return null;
 		// TODO Auto-generated method stub
 	}
 

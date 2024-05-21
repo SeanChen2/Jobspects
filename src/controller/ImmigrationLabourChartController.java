@@ -1,6 +1,7 @@
 package controller;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -8,10 +9,8 @@ import java.util.Scanner;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
 
-import view.ImmigrationLabourAreaChartFrame;
-import view.ImmigrationLabourChartFrame;
-import view.ImmigrationLabourHistogramFrame;
-import view.JobspectsFrame;
+import view.*;
+import model.ImmigrationDatasetManager;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
@@ -24,30 +23,34 @@ import org.jfree.chart.ChartPanel;
 //This controller handles the navigation between the area chart and histogram frames,
 //as well as the button presses for both frames.
 public class ImmigrationLabourChartController extends ChartController {
-
-	//Reference to the current immigration labour chart screen (area chart or histogram)
-	private ImmigrationLabourChartFrame currentChartFrame;
+	
+	//Reference to the immigration labour dataset manager
+	private ImmigrationDatasetManager datasetManager = new ImmigrationDatasetManager();
 	
 	//Field for the CSV data file being read: "Labour Force Estimates by Immigration"
 	private Scanner dataFile;
 	
 	//Constructor
-	public ImmigrationLabourChartController() {
+	public ImmigrationLabourChartController(JobspectsMenuFrame menuFrame) {
+		
+		super(menuFrame);
 		
 		//Open the area chart frame by default
-		currentChartFrame = new ImmigrationLabourAreaChartFrame();
+		setChartFrame(new ImmigrationLabourAreaChartFrame());
 		
+		//By default, show the employment figures for the entire labour force in Canada
+		datasetManager.setCategoryColumn("Month");
+		datasetManager.addRowRestraint("Province", "Canada");
+		datasetManager.addRowRestraint("Immigrant status", "Total");
+		datasetManager.addRowRestraint("Employment type", "Labour force");
+		datasetManager.addRowRestraint("Sex", "Both Sexes");
+		datasetManager.addRowRestraint("Age", "15 Years +");
 		
-		//By default, show the employment figures for the entire labour force, comparing
-		//by education level
-		getDatasetManager().getFilteredRows().put("Char", "Labour force");
-		getDatasetManager().getFilteredRows().put("Immig", new ArrayList<>());
-		getDatasetManager().getFilteredRows().get("Immig").add("Total");
+		//By default, each area on the chart represents a different education level
 		filterEducationLevelColumns();
 		
 		updateChart();
-		
-		currentChartFrame.setVisible(true);
+		showChartFrame();
 		
 	}
 	
@@ -59,23 +62,25 @@ public class ImmigrationLabourChartController extends ChartController {
 		//Check the back button and the "calculate average" button in the superclass
 		super.actionPerformed(event);
 		
-		//Handle navigation between the area chart frame and the histogram frame
+		//Handle navigation between the area chart frame and the histogram frame.
+		//First, downcast the chart frame to an immigration chart frame to access the nav buttons.
+		ImmigrationLabourChartFrame immigrationChartFrame = (ImmigrationLabourChartFrame) getChartFrame();
 		
 		//If we are on the histogram frame and want to navigate to the area chart, do so here
-		if (currentChartFrame instanceof ImmigrationLabourHistogramFrame &&
-				event.getSource() == currentChartFrame.getChartNavButtons()[0])
+		if (immigrationChartFrame instanceof ImmigrationLabourHistogramFrame &&
+				event.getSource() == immigrationChartFrame.getChartNavButtons()[0])
 			switchToFrame(new ImmigrationLabourAreaChartFrame());
 		
 		//If we are on the area chart frame and want to navigate to the histogram, do so here
-		else if (currentChartFrame instanceof ImmigrationLabourAreaChartFrame &&
-				event.getSource() == currentChartFrame.getChartNavButtons()[1])
+		else if (immigrationChartFrame instanceof ImmigrationLabourAreaChartFrame &&
+				event.getSource() == immigrationChartFrame.getChartNavButtons()[1])
 			switchToFrame(new ImmigrationLabourHistogramFrame());
 		
 		//AREA CHART EXCLUSIVE: handle the "compare by" buttons
-		if (currentChartFrame instanceof ImmigrationLabourAreaChartFrame) {
+		if (immigrationChartFrame instanceof ImmigrationLabourAreaChartFrame) {
 			
 			//Downcast the chart frame to an area chart frame, then check all the "compare by" buttons
-			ImmigrationLabourAreaChartFrame areaChartFrame = (ImmigrationLabourAreaChartFrame) currentChartFrame;
+			ImmigrationLabourAreaChartFrame areaChartFrame = (ImmigrationLabourAreaChartFrame) immigrationChartFrame;
 			checkCompareCategoryButtons(areaChartFrame.getCompareCategorySection().getCompareCategoryButtons(), event);
 			
 		}
@@ -91,7 +96,7 @@ public class ImmigrationLabourChartController extends ChartController {
 		
 		//If the "education level" radio button was pressed, and education level isn't already being compared,
 		//filter the dataset so that it includes all the education level columns
-		if (event.getSource() == compareCategoryButtons[0] && !getDatasetManager().getFilteredColumns().contains("High school graduate"))
+		if (event.getSource() == compareCategoryButtons[0] && !datasetManager.getFilteredColumns().contains("High school graduate"))
 			filterEducationLevelColumns();
 		
 		//If the "immigrant status" radio button was pressed, and immigrant status isn't already being compared,
@@ -104,29 +109,28 @@ public class ImmigrationLabourChartController extends ChartController {
 	//This method adds all the education level columns into the dataset
 	private void filterEducationLevelColumns() {
 		
-		ArrayList<String> filteredColumns = getDatasetManager().getFilteredColumns();
-		HashMap<String, ArrayList<String>> filteredRows = getDatasetManager().getFilteredRows();
+		//Display data for all immigrant statuses
+		datasetManager.getFilteredRows().put("Immigrant status", "Total");
 		
-		filteredRows.clear();
-		filteredRows.get("Immig").add("Total");
+		//Retrieve the list of value columns from the dataset manager, and clear it
+		ArrayList<String> valueColumns = datasetManager.getValueColumns();
+		valueColumns.clear();
 		
-		filteredColumns.clear();
-		
-		filteredColumns.add("No degree, certificate or diploma");
-		filteredColumns.add("High school graduate");
-		filteredColumns.add("High school graduate, some post-secondary");
-		filteredColumns.add("Post-secondary certificate or diploma");
-		filteredColumns.add("University degree");
-		filteredColumns.add("Bachelor's degree");
-		filteredColumns.add("Above bachelor's degree");
+		valueColumns.add("No certifications");
+		valueColumns.add("High school graduate");
+		valueColumns.add("High school graduate, some post-secondary");
+		valueColumns.add("Post-secondary certificate or diploma");
+		valueColumns.add("University degree");
+		valueColumns.add("Bachelor's degree");
+		valueColumns.add("Above bachelor's degree");
 		
 	}
 	
 	//This method adds all the immigrant status rows into the dataset
 	private void filterImmigrantStatusRows() {
 		
-		HashMap<String, ArrayList<String>> filteredRows = getDatasetManager().getFilteredRows();
-		ArrayList<String> filteredColumns = getDatasetManager().getFilteredColumns();
+		HashMap<String, ArrayList<String>> filteredRows = datasetManager.getFilteredRows();
+		ArrayList<String> filteredColumns = datasetManager.getFilteredColumns();
 		
 		filteredColumns.clear();
 		filteredColumns.add("Total, all education levels");
@@ -156,23 +160,31 @@ public class ImmigrationLabourChartController extends ChartController {
 	@Override
 	protected ArrayList<Double> getValuesForAverage() {
 		
-		
+		return null;
 		
 	}
 	
 	//This concrete method updates the chart data (could be area chart or histogram)
 	//when one of the filters change. Also updates the appearance of the chart.
+	//Source for area customization: http://www.java2s.com/Code/Java/Chart/JFreeChartAreaChartDemo.htm
 	@Override
 	public void updateChart() {
 		
-		//Create the dataset
-		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		dataset.addValue(500, "2020", "asdsdf");
-		setChart(ChartFactory.createAreaChart("Area Chart Test", "Year", "Number of cats", dataset, PlotOrientation.VERTICAL, true, true, false));
-		ChartPanel chartPanel = new ChartPanel(getChart());
-		currentChartFrame.getChartPanelTemplate().add(chartPanel);
-		
-		System.out.println("Chart added");
+		if (getChartFrame() instanceof ImmigrationLabourAreaChartFrame) {
+			
+			//Get the dataset with all filters applied, from the dataset manager
+			DefaultCategoryDataset filteredDataset = datasetManager.getFilteredDataset();
+			
+			//TODO: dynamic year choosing
+			
+			//Create the area chart from the filtered dataset
+			setChart(ChartFactory.createAreaChart("Immigration Labour Force in Canada - " + "2020", "Month", "Number of employed Canadians", 
+					filteredDataset, PlotOrientation.VERTICAL, true, true, false));
+			
+			//Make the chart's areas translucent so that the overlap is visible
+			getChart().getCategoryPlot().setForegroundAlpha(0.5f);
+			
+		}
 		
 	}
 	
@@ -180,10 +192,10 @@ public class ImmigrationLabourChartController extends ChartController {
 	private void switchToFrame(ImmigrationLabourChartFrame newFrame) {
 		
 		//Delete the current frame
-		currentChartFrame.dispose();
+		getChartFrame().dispose();
 		
 		//Set the current frame to the new frame, then show the new frame
-		currentChartFrame = newFrame;
+		setChartFrame(newFrame);
 		newFrame.setVisible(true);
 		
 	}

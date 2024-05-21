@@ -12,15 +12,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-public class JobspectsMenuFrame {
+import controller.ImmigrationLabourChartController;
+import controller.WagesByEducationChartController;
+
+//TODO: use a panel for each dataset, OR just an array of "learn more buttons" so that
+//the functionality can be done in the controller class
+public class JobspectsMenuFrame extends JFrame {
 	
 	// Attributes
+	private JobspectsMenuFrame menuFrame = this;
     private JScrollPane scrollPane;
 	
 	public JobspectsMenuFrame() {
-		
-		// Create a frame
-		JFrame menuFrame = new JFrame();
 		
 		// Create the background
         JLabel background = new JLabel(new ImageIcon("images/MainFrame.png"));
@@ -34,7 +37,7 @@ public class JobspectsMenuFrame {
         
         // Add a scroll panel on top of the panel
         panel.add(scrollPane);
-        menuFrame.add(panel);
+        add(panel);
         
 		// Create the button
         Icon bb = new ImageIcon("./images/BackButton.png");
@@ -50,7 +53,7 @@ public class JobspectsMenuFrame {
 				// Create a new frame
 				new JobspectsTitleFrame();
 				// Close current frame
-				menuFrame.dispose();
+				dispose();
 			}
 		});
 		
@@ -67,7 +70,7 @@ public class JobspectsMenuFrame {
 				// Create a new frame
 				new OccupationLabourBarChartFrame();
 				// Close current frame
-				menuFrame.dispose();
+				dispose();
 
 			}
 		});
@@ -82,9 +85,9 @@ public class JobspectsMenuFrame {
 		learnMore2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				// Create a new frame
-				new ImmigrationLabourAreaChartFrame();
+				new ImmigrationLabourChartController(menuFrame);
 				// Close current frame
-				menuFrame.dispose();
+				dispose();
 			}
 		});
         
@@ -100,7 +103,7 @@ public class JobspectsMenuFrame {
 				// Create a new frame
 				new UnemploymentDurationLineChartFrame();
 				// Close current frame
-				menuFrame.dispose();
+				dispose();
 				
 			}
 		});
@@ -115,9 +118,9 @@ public class JobspectsMenuFrame {
 		learnMore4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				// Create a new frame
-				new WagesByEducationScatterplotFrame();
+				new WagesByEducationChartController(menuFrame);
 				// Close current frame
-				menuFrame.dispose();
+				dispose();
 			}
 		});
 
@@ -133,7 +136,7 @@ public class JobspectsMenuFrame {
 				// Create a new frame
 				new TourismEmploymentPieChartFrame();
 				// Close current frame
-				menuFrame.dispose();
+				dispose();
 			}
 		});
 		
@@ -149,17 +152,17 @@ public class JobspectsMenuFrame {
 				// Create the help frame
 				new HelpFrame();
 				// Close current frame 
-				menuFrame.dispose();
+				dispose();
 			}
 		});
 		
 		// Set the size of the frame
-		menuFrame.setSize(1405, 1365);
+		setSize(1405, 1365);
 		
 		// Don't allow the user to resize the screen
-		menuFrame.setResizable(false);
+		setResizable(false);
 		
 		// Make the JFrame visible
-		menuFrame.setVisible(true);
+		setVisible(true);
 	}
 }

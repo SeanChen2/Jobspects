@@ -1,21 +1,25 @@
 package view;
 
+import java.awt.Color;
+
 //This concrete class is a frame that displays the area chart for the immigration
 //labour force sub-topic. All the specific chart filters/features will be added to
 //the filter panel in this class.
 public class ImmigrationLabourAreaChartFrame extends ImmigrationLabourChartFrame {
 	
 	//References to GUI panels for the "sections" of chart filters
-	private ImmigrationLabourCompareCategoryPanel compareCategorySection;
+	private ImmigrationLabourCompareCategoryPanel compareCategorySection = new ImmigrationLabourCompareCategoryPanel(getFilterPanel());
 
 	//Constructor
 	public ImmigrationLabourAreaChartFrame() {
 		
+		//Use an average calculation panel with a combo box to select which data 
+		//category to calculate the average for
+		setAverageCalculationPanel(new AverageCalculationPanel(true));
+		
 		setUpCompareCategorySection();
 		setUpChartFilterSection();
 		setUpAverageSection();
-		
-		setVisible(true);
 		
 	}
 	
@@ -30,7 +34,7 @@ public class ImmigrationLabourAreaChartFrame extends ImmigrationLabourChartFrame
 	//education level or immigrant status
 	private void setUpCompareCategorySection() {
 		
-		
+		getFilterPanel().add(compareCategorySection);
 		
 	}
 	
@@ -39,7 +43,8 @@ public class ImmigrationLabourAreaChartFrame extends ImmigrationLabourChartFrame
 	@Override
 	protected void setUpChartFilterSection() {
 		
-		
+		setChartFilterSection(new ImmigrationLabourChartFilterPanel(getFilterPanel(), true, true, false, false));
+		getFilterPanel().add(getChartFilterSection());
 		
 	}
 	

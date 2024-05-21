@@ -2,10 +2,9 @@ package view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GridLayout;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
+import javax.swing.*;
 
 //This is a general frame that holds common GUI elements between
 //the two chart screens for the immigration labour force sub-topic:
@@ -22,20 +21,36 @@ public abstract class ImmigrationLabourChartFrame extends JobspectsChartFrame {
 	//Constructor
 	public ImmigrationLabourChartFrame() {
 		
+		//Set the frame title label
+		getScreenTitleLabel().setText("    Are Canadian immigrants disproportionally affected by the unemployment crisis?");
+		
+		//Shift the chart panel down to make room for the navigation buttons
+		JPanel chartPanel = getChartPanelTemplate();
+		getChartPanelTemplate().setBounds(chartPanel.getX(), chartPanel.getY() + 50, chartPanel.getWidth(), chartPanel.getHeight() - 50);
+		
 		setUpChartNavButtons();
 		addFilterPanel();
-		setUpChartFilterSection();
-		setUpAverageSection();
+		
+		//TODO: remove?
+		getFilterPanelTemplate().setVisible(false);
 		
 	}
 	
-	//Necessary getters for GUI elements
+	//Necessary getters and setters for GUI elements
+	public JPanel getFilterPanel() {
+		return filterPanel;
+	}
+	
 	public JButton[] getChartNavButtons() {
 		return chartNavButtons;
 	}
 	
 	public ImmigrationLabourChartFilterPanel getChartFilterSection() {
 		return chartFilterSection;
+	}
+	
+	public void setChartFilterSection(ImmigrationLabourChartFilterPanel chartFilterSection) {
+		this.chartFilterSection = chartFilterSection;
 	}
 	
 	//This method adds the buttons that navigate between the two charts
@@ -66,9 +81,18 @@ public abstract class ImmigrationLabourChartFrame extends JobspectsChartFrame {
 	//The contents of this panel will be added in the concrete classes.
 	private void addFilterPanel() {
 		
-		filterPanel.setBounds(FRAME_WIDTH / 2 + 150, 230, FRAME_WIDTH / 2 - 200, FRAME_HEIGHT - 300);
-		filterPanel.setBackground(Color.WHITE);
-		add(filterPanel);
+		//Display the filter "sections" vertically using a box layout
+		filterPanel.setLayout(new BoxLayout(filterPanel, BoxLayout.Y_AXIS));
+		filterPanel.setBounds(FRAME_WIDTH / 2 + 150, 180, FRAME_WIDTH / 2 - 200, FRAME_HEIGHT - 290);
+		
+		//Make the filter panel vertically scrollable
+		JScrollPane filterScrollPane = new JScrollPane(filterPanel, 
+				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+	            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		
+		filterScrollPane.setBounds(FRAME_WIDTH / 2 + 150, 180, FRAME_WIDTH / 2 - 200, FRAME_HEIGHT - 290);
+		filterScrollPane.setBackground(Color.WHITE);
+		add(filterScrollPane);
 		
 	}
 	
