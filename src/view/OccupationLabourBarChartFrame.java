@@ -86,6 +86,9 @@ public class OccupationLabourBarChartFrame extends JFrame {
         // Set content pane layout to null for absolute positioning
         getContentPane().setLayout(null);
     }
+    public class BarChart extends JPanel {
+    	
+    }
 
     public JButton getBackButton() {
         return back;
