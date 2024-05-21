@@ -128,6 +128,7 @@ public class ImmigrationDatasetManager {
 					employmentFigures[0], employmentFigures[1], employmentFigures[2], employmentFigures[3],
 					employmentFigures[4], employmentFigures[5], employmentFigures[6], employmentFigures[7],
 					employmentFigures[8], employmentFigures[9], employmentFigures[10], employmentFigures[11]));
+			
 		}
 		
 	}
