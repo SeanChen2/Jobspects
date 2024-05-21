@@ -89,16 +89,6 @@ public abstract class JobspectsChartFrame extends JobspectsFrame {
         backButton.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 		add(backButton);
 		
-		//TODO: Discuss with Kelvin
-//		backButton.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent event) {
-//				// Create a new frame
-//				new JobspectsMenuFrame();
-//				// Close current frame
-//				dispose();
-//			}
-//		});
-		
 		// Set up the title label
 		screenTitleLabel.setBounds(120, 30, FRAME_WIDTH - 180, 70);
 		screenTitleLabel.setBackground(Color.WHITE);
@@ -117,15 +107,7 @@ public abstract class JobspectsChartFrame extends JobspectsFrame {
 		chartPanelTemplate = new JPanel(null);
 		chartPanelTemplate.setBounds(30, 180, FRAME_WIDTH / 2 + 100, FRAME_HEIGHT - 300);
 		chartPanelTemplate.setBackground(Color.WHITE);
-		add(chartPanelTemplate);
-		
-		filterPanelTemplate = new JPanel();
-		filterPanelTemplate.setBounds(1100, 180, FRAME_WIDTH / 8 + 100, FRAME_HEIGHT - 300);
-		filterPanelTemplate.setBackground(Color.WHITE);
-		add(filterPanelTemplate);
-		
-		
-		
+		add(chartPanelTemplate);	
 		
 	}
 	

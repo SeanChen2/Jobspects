@@ -46,6 +46,7 @@ public abstract class ChartController implements ActionListener {
 		return chartFrame;
 	}
 	
+	
 	//Special setter: also adds action listeners to the back button and average calculation button
 	public void setChartFrame(JobspectsChartFrame chartFrame) {
 		this.chartFrame = chartFrame;
@@ -112,6 +113,14 @@ public abstract class ChartController implements ActionListener {
 		//Post the calculated average (rounded to 2 decimal places) onto the result label
 		chartFrame.getAverageCalculationPanel().getResultLabel().setText(String.format("%.2f", average));
 		
+	}
+
+	protected JobspectsMenuFrame getMenuFrame() {
+		return menuFrame;
+	}
+
+	public void setMenuFrame(JobspectsMenuFrame menuFrame) {
+		this.menuFrame = menuFrame;
 	}
 	
 }

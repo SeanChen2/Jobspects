@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -19,14 +20,24 @@ import javax.swing.JScrollPane;
 
 import model.DatasetManager;
 import model.PersonEducationIncome;
+import view.ImmigrationLabourAreaChartFrame;
+import view.JobspectsMenuFrame;
+import view.WagesByEducationScatterplotFrame;
 
 public class WagesByEducationChartController extends ChartController {
-    private JPanel chartPanelTemplate;
+    
+	private static final int FRAME_WIDTH = 1920;
+    private static final int FRAME_HEIGHT = 1080;
+    
+	private JPanel chartPanelTemplate;
     private DatasetManager datasetManager;
     private JPanel filterPanelTemplate;
+    
 
     // Constructor Method
-    public WagesByEducationChartController(JPanel chartPanelTemplate, DatasetManager datasetManager, JPanel filterPanelTemplate) {
+    public WagesByEducationChartController(JobspectsMenuFrame menuFrame) {
+		super(menuFrame);
+    	setChartFrame(new WagesByEducationScatterplotFrame());
         this.chartPanelTemplate = chartPanelTemplate;
         this.datasetManager = datasetManager;
         this.filterPanelTemplate = filterPanelTemplate;
@@ -86,8 +97,10 @@ public class WagesByEducationChartController extends ChartController {
     }
     
     public void createFilterPanel() {
-        // Create the filter panel
-        filterPanelTemplate.setVisible(true);
+		filterPanelTemplate = new JPanel();
+		filterPanelTemplate.setBounds(1100, 180, FRAME_WIDTH / 8 + 100, FRAME_HEIGHT - 300);
+		filterPanelTemplate.setBackground(Color.WHITE);
+		getMenuFrame().add(filterPanelTemplate);
         
         // Set the layout manager
         filterPanelTemplate.setLayout(new FlowLayout());

@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import controller.ImmigrationLabourChartController;
+import controller.WagesByEducationChartController;
 
 //TODO: use a panel for each dataset, OR just an array of "learn more buttons" so that
 //the functionality can be done in the controller class
@@ -117,7 +118,7 @@ public class JobspectsMenuFrame extends JFrame {
 		learnMore4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				// Create a new frame
-				new WagesByEducationScatterplotFrame();
+				new WagesByEducationChartController(menuFrame);
 				// Close current frame
 				dispose();
 			}
