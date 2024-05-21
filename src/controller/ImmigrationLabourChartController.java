@@ -38,16 +38,18 @@ public class ImmigrationLabourChartController extends ChartController {
 		//Open the area chart frame by default
 		setChartFrame(new ImmigrationLabourAreaChartFrame());
 		
-		//By default, show the employment figures for the entire labour force, comparing
-		//by education level
-//		datasetManager.getFilteredRows().put("Char", new ArrayList<>());
-//		datasetManager.getFilteredRows().get("Char").add("Labour force");
-//		datasetManager.getFilteredRows().put("Immig", new ArrayList<>());
-//		datasetManager.getFilteredRows().get("Immig").add("Total");
-//		filterEducationLevelColumns();
+		//By default, show the employment figures for the entire labour force in Canada
+		datasetManager.setCategoryColumn("Month");
+		datasetManager.addRowRestraint("Province", "Canada");
+		datasetManager.addRowRestraint("Immigrant status", "Total");
+		datasetManager.addRowRestraint("Employment type", "Labour force");
+		datasetManager.addRowRestraint("Sex", "Both Sexes");
+		datasetManager.addRowRestraint("Age", "15 Years +");
+		
+		//By default, each area on the chart represents a different education level
+		filterEducationLevelColumns();
 		
 		updateChart();
-		
 		showChartFrame();
 		
 	}
@@ -107,21 +109,20 @@ public class ImmigrationLabourChartController extends ChartController {
 	//This method adds all the education level columns into the dataset
 	private void filterEducationLevelColumns() {
 		
-		ArrayList<String> filteredColumns = datasetManager.getFilteredColumns();
-		HashMap<String, ArrayList<String>> filteredRows = datasetManager.getFilteredRows();
+		//Display data for all immigrant statuses
+		datasetManager.getFilteredRows().put("Immigrant status", "Total");
 		
-		filteredRows.clear();
-		filteredRows.get("Immig").add("Total");
+		//Retrieve the list of value columns from the dataset manager, and clear it
+		ArrayList<String> valueColumns = datasetManager.getValueColumns();
+		valueColumns.clear();
 		
-		filteredColumns.clear();
-		
-		filteredColumns.add("No degree, certificate or diploma");
-		filteredColumns.add("High school graduate");
-		filteredColumns.add("High school graduate, some post-secondary");
-		filteredColumns.add("Post-secondary certificate or diploma");
-		filteredColumns.add("University degree");
-		filteredColumns.add("Bachelor's degree");
-		filteredColumns.add("Above bachelor's degree");
+		valueColumns.add("No certifications");
+		valueColumns.add("High school graduate");
+		valueColumns.add("High school graduate, some post-secondary");
+		valueColumns.add("Post-secondary certificate or diploma");
+		valueColumns.add("University degree");
+		valueColumns.add("Bachelor's degree");
+		valueColumns.add("Above bachelor's degree");
 		
 	}
 	
@@ -169,22 +170,21 @@ public class ImmigrationLabourChartController extends ChartController {
 	@Override
 	public void updateChart() {
 		
-		//Create the dataset
-		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		dataset.addValue(200, "Orange Tabby", "2020");
-		dataset.addValue(500, "Orange Tabby", "2021");
-		dataset.addValue(700, "Orange Tabby", "2022");
-		dataset.addValue(800, "Orange Tabby", "2023");
-		dataset.addValue(500, "Persian", "2020");
-		dataset.addValue(300, "Persian", "2021");
-		dataset.addValue(400, "Persian", "2022");
-		
-		setChart(ChartFactory.createAreaChart("Area Chart Test", "Year", "Number of cats", dataset, PlotOrientation.VERTICAL, true, true, false));
-		getChart().getCategoryPlot().setForegroundAlpha(0.5f);
-		ChartPanel chartPanel = new ChartPanel(getChart());
-		
-		chartPanel.setBounds(0, 0, getChartFrame().getChartPanelTemplate().getWidth(), getChartFrame().getChartPanelTemplate().getHeight());
-		getChartFrame().getChartPanelTemplate().add(chartPanel);
+		if (getChartFrame() instanceof ImmigrationLabourAreaChartFrame) {
+			
+			//Get the dataset with all filters applied, from the dataset manager
+			DefaultCategoryDataset filteredDataset = datasetManager.getFilteredDataset();
+			
+			//TODO: dynamic year choosing
+			
+			//Create the area chart from the filtered dataset
+			setChart(ChartFactory.createAreaChart("Immigration Labour Force in Canada - " + "2020", "Month", "Number of employed Canadians", 
+					filteredDataset, PlotOrientation.VERTICAL, true, true, false));
+			
+			//Make the chart's areas translucent so that the overlap is visible
+			getChart().getCategoryPlot().setForegroundAlpha(0.5f);
+			
+		}
 		
 	}
 	
