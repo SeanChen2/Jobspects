@@ -20,6 +20,7 @@ import javax.swing.JScrollPane;
 
 import model.DatasetManager;
 import model.PersonEducationIncome;
+import view.ImmigrationLabourAreaChartFrame;
 import view.JobspectsMenuFrame;
 import view.WagesByEducationScatterplotFrame;
 
@@ -28,6 +29,7 @@ public class WagesByEducationChartController extends ChartController {
 	private static final int FRAME_WIDTH = 1920;
     private static final int FRAME_HEIGHT = 1080;
     
+	private JPanel chartPanelTemplate;
     private DatasetManager datasetManager = new DatasetManager();
     private JPanel filterPanelTemplate;
     
@@ -36,6 +38,9 @@ public class WagesByEducationChartController extends ChartController {
     public WagesByEducationChartController(JobspectsMenuFrame menuFrame) {
 		super(menuFrame);
     	setChartFrame(new WagesByEducationScatterplotFrame());
+        this.chartPanelTemplate = chartPanelTemplate;
+        this.datasetManager = datasetManager;
+        this.filterPanelTemplate = filterPanelTemplate;
         createChart();
         createFilterPanel();
     }
@@ -80,13 +85,14 @@ public class WagesByEducationChartController extends ChartController {
         );
         
         setChart(chart);
+
     }
     
     public void createFilterPanel() {
 		filterPanelTemplate = new JPanel();
 		filterPanelTemplate.setBounds(1100, 180, FRAME_WIDTH / 8 + 100, FRAME_HEIGHT - 300);
 		filterPanelTemplate.setBackground(Color.WHITE);
-		getMenuFrame().add(filterPanelTemplate);
+		getChartFrame().add(filterPanelTemplate);
         
         // Set the layout manager
         filterPanelTemplate.setLayout(new FlowLayout());
