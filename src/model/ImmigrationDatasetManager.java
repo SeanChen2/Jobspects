@@ -1,6 +1,7 @@
 package model;
 
 import java.util.*;
+import java.util.Map.Entry;
 import java.io.*;
 
 import org.jfree.data.category.CategoryDataset;
@@ -10,12 +11,11 @@ public class ImmigrationDatasetManager {
 
 	//Fields
 	private Scanner dataFile;
-	private CategoryDataset originalDataset;
 	
 	//Names of the data column(s) used to display the values (y-axis) and categories (x-axis).
 	//NOTE: if there are multiple value columns, each one gets its own "series" on the chart
 	//(this is useful for the area chart, where each series is represented by an area)
-	private ArrayList<String> valueColumns;
+	private ArrayList<String> valueColumns = new ArrayList<>();
 	private String categoryColumn;
 	
 	//Instead of having multiple value columns, each value in a specific column can get its own
@@ -30,11 +30,18 @@ public class ImmigrationDatasetManager {
 	//immigrants who are not landed yet
 	private HashMap<String, String> filteredRows = new HashMap<>();
 	
-	//The data from the CSV file stored in table format
-	private ArrayList<ImmigrationDataRow> data = new ArrayList<>();
+	//The data from the CSV file stored in table format - one "table" for each year
+	private HashMap<Integer, ArrayList<ImmigrationDataRow>> data = new HashMap<>();
+	
+	//Field for which year the data is being displayed for (default 2020)
+	private int requestedYear = 2020;
 	
 	//Constructor
 	public ImmigrationDatasetManager() {
+		
+		//Fill the data map with the years from 2006 to 2020 (as outlined in the CSV file)
+		for (int year = 2006; year <= 2020; year++)
+			data.put(year, new ArrayList<ImmigrationDataRow>());
 		
 		importData();
 		
@@ -74,15 +81,22 @@ public class ImmigrationDatasetManager {
 		this.filteredRows = filteredRows;
 	}
 
-	public ArrayList<ImmigrationDataRow> getData() {
+	public HashMap<Integer, ArrayList<ImmigrationDataRow>> getData() {
 		return data;
 	}
 
-	public void setData(ArrayList<ImmigrationDataRow> data) {
+	public void setData(HashMap<Integer, ArrayList<ImmigrationDataRow>> data) {
 		this.data = data;
 	}
 	
-	
+	public int getRequestedYear() {
+		return requestedYear;
+	}
+
+	public void setRequestedYear(int requestedYear) {
+		this.requestedYear = requestedYear;
+	}
+
 	//This method imports all the data from the CSV file to the category dataset
 	private void importData() {
 		
@@ -123,7 +137,7 @@ public class ImmigrationDatasetManager {
 			}
 			
 			//Input the month, year, and all of the other column values into a data row object
-			data.add(new ImmigrationDataRow(month, year, province, 
+			data.get(year).add(new ImmigrationDataRow(month, year, province, 
 					immigrantStatus, employmentType, sex, age,
 					employmentFigures[0], employmentFigures[1], employmentFigures[2], employmentFigures[3],
 					employmentFigures[4], employmentFigures[5], employmentFigures[6], employmentFigures[7],
@@ -133,12 +147,45 @@ public class ImmigrationDatasetManager {
 		
 	}
 	
+	//This method adds an entry to the filtered rows map, to "restrain" which rows are included in the dataset
+	public void addRowRestraint(String column, String requiredValue) {
+		
+		filteredRows.put(column, requiredValue);
+		
+	}
+	
 	//This method generates a dataset with all the filters/constraints appliwed
-	public CategoryDataset getFilteredDataset() {
+	public DefaultCategoryDataset getFilteredDataset() {
 		
-		CategoryDataset filteredDataset = new DefaultCategoryDataset();
+		DefaultCategoryDataset filteredDataset = new DefaultCategoryDataset();
 		
-		
+		RowIterator:
+		for (ImmigrationDataRow row : data.get(requestedYear)) {
+			
+			//First, disregard this row if it doesn't satisfy the row filters
+			for (Entry<String, String> filter : filteredRows.entrySet()) {
+				
+				if (!row.getValue(filter.getKey()).equals(filter.getValue())) {
+					continue RowIterator;
+				}
+			}
+			
+			System.out.println(row);
+			
+			if (seriesColumn == null) {
+				
+				//Add each column series to the appropriate year on the x-axis
+				for (String valueColumn : valueColumns)
+					filteredDataset.addValue(row.getEmploymentFigure(valueColumn), valueColumn, row.getValue(categoryColumn));
+				
+			} else {
+				
+				//If the series are defined by a certain column, there is guaranteed to be only one value column
+				filteredDataset.addValue(row.getEmploymentFigure(valueColumns.get(0)), seriesColumn, row.getValue(categoryColumn));
+				
+			}
+			
+		}
 		
 		return filteredDataset;
 		

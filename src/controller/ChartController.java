@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.ChartPanel;
 
 import model.AverageCalculator;
 import model.DatasetManager;
@@ -38,8 +39,13 @@ public abstract class ChartController implements ActionListener {
 		return chart;
 	}
 	
+	//Special setter: also posts the chart onto the chart panel template
 	public void setChart(JFreeChart chart) {
 		this.chart = chart;
+		
+		ChartPanel chartPanel = new ChartPanel(chart);
+		chartPanel.setBounds(0, 0, chartFrame.getChartPanelTemplate().getWidth(), chartFrame.getChartPanelTemplate().getHeight());
+		chartFrame.getChartPanelTemplate().add(chartPanel);
 	}
 	
 	public JobspectsChartFrame getChartFrame() {

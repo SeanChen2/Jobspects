@@ -1,5 +1,7 @@
 package model;
 
+import java.util.HashMap;
+
 //This template class represents a row of data found in the immigration labour force CSV file
 public class ImmigrationDataRow {
 
@@ -12,10 +14,10 @@ public class ImmigrationDataRow {
 	private String sex;
 	private String age;
 	private double allEducationLevelsValue;
-	private double noPSEvalue;
+	private double noPseValue;
 	private double noCertificationsValue;
 	private double highSchoolGradValue;
-	private double highSchoolGradSomePSEValue;
+	private double highSchoolGradSomePseValue;
 	private double pseValue;
 	private double certificateOrDiplomaValue;
 	private double withoutHighSchoolGradValue;
@@ -26,8 +28,8 @@ public class ImmigrationDataRow {
 	
 	//Constructor
 	public ImmigrationDataRow(String month, int year, String province, String immigrantStatus, String employmentType,
-			String sex, String age, double allEducationLevelsValue, double noPSEvalue, double noCertificationsValue,
-			double highSchoolGradValue, double highSchoolGradSomePSEValue, double pseValue,
+			String sex, String age, double allEducationLevelsValue, double noPseValue, double noCertificationsValue,
+			double highSchoolGradValue, double highSchoolGradSomePseValue, double pseValue,
 			double certificateOrDiplomaValue, double withoutHighSchoolGradValue, double withHighSchoolGradValue,
 			double universityDegreeValue, double bachelorDegreeValue, double aboveBachelorDegreeValue) {
 		
@@ -39,10 +41,10 @@ public class ImmigrationDataRow {
 		this.sex = sex;
 		this.age = age;
 		this.allEducationLevelsValue = allEducationLevelsValue;
-		this.noPSEvalue = noPSEvalue;
+		this.noPseValue = noPseValue;
 		this.noCertificationsValue = noCertificationsValue;
 		this.highSchoolGradValue = highSchoolGradValue;
-		this.highSchoolGradSomePSEValue = highSchoolGradSomePSEValue;
+		this.highSchoolGradSomePseValue = highSchoolGradSomePseValue;
 		this.pseValue = pseValue;
 		this.certificateOrDiplomaValue = certificateOrDiplomaValue;
 		this.withoutHighSchoolGradValue = withoutHighSchoolGradValue;
@@ -118,12 +120,12 @@ public class ImmigrationDataRow {
 		this.allEducationLevelsValue = allEducationLevelsValue;
 	}
 
-	public double getNoPSEvalue() {
-		return noPSEvalue;
+	public double getNoPseValue() {
+		return noPseValue;
 	}
 
-	public void setNoPSEvalue(double noPSEvalue) {
-		this.noPSEvalue = noPSEvalue;
+	public void setNoPseValue(double noPseValue) {
+		this.noPseValue = noPseValue;
 	}
 
 	public double getNoCertificationsValue() {
@@ -142,12 +144,12 @@ public class ImmigrationDataRow {
 		this.highSchoolGradValue = highSchoolGradValue;
 	}
 
-	public double getHighSchoolGradSomePSEValue() {
-		return highSchoolGradSomePSEValue;
+	public double getHighSchoolGradSomePseValue() {
+		return highSchoolGradSomePseValue;
 	}
 
-	public void setHighSchoolGradSomePSEValue(double highSchoolGradSomePSEValue) {
-		this.highSchoolGradSomePSEValue = highSchoolGradSomePSEValue;
+	public void setHighSchoolGradSomePseValue(double highSchoolGradSomePseValue) {
+		this.highSchoolGradSomePseValue = highSchoolGradSomePseValue;
 	}
 
 	public double getPseValue() {
@@ -211,13 +213,94 @@ public class ImmigrationDataRow {
 	public String toString() {
 		return "ImmigrationDataRow [month=" + month + ", year=" + year + ", province=" + province + ", immigrantStatus="
 				+ immigrantStatus + ", employmentType=" + employmentType + ", sex=" + sex + ", age=" + age
-				+ ", allEducationLevelsValue=" + allEducationLevelsValue + ", noPSEvalue=" + noPSEvalue
+				+ ", allEducationLevelsValue=" + allEducationLevelsValue + ", noPSEvalue=" + noPseValue
 				+ ", noCertificationsValue=" + noCertificationsValue + ", highSchoolGradValue=" + highSchoolGradValue
-				+ ", highSchoolGradSomePSEValue=" + highSchoolGradSomePSEValue + ", pseValue=" + pseValue
+				+ ", highSchoolGradSomePSEValue=" + highSchoolGradSomePseValue + ", pseValue=" + pseValue
 				+ ", certificateOrDiplomaValue=" + certificateOrDiplomaValue + ", withoutHighSchoolGradValue="
 				+ withoutHighSchoolGradValue + ", withHighSchoolGradValue=" + withHighSchoolGradValue
 				+ ", universityDegreeValue=" + universityDegreeValue + ", bachelorDegreeValue=" + bachelorDegreeValue
 				+ ", aboveBachelorDegreeValue=" + aboveBachelorDegreeValue + "]";
+	}
+	
+	//This method gets a certain column value that is NOT a decimal value
+	public String getValue(String columnName) {
+		
+		switch (columnName) {
+		
+			case "Month":
+				return getMonth();
+				
+			case "Year":
+				return Integer.toString(getYear());
+				
+			case "Province":
+				return getProvince();
+				
+			case "Immigrant status":
+				return getImmigrantStatus();
+				
+			case "Employment type":
+				return getEmploymentType();
+				
+			case "Sex":
+				return getSex();
+				
+			case "Age":
+				return getAge();
+				
+			default:
+				return "INVALID";
+		
+		}
+		
+	}
+	
+	//This method gets a decimal value for the employment figure based on education level
+	public double getEmploymentFigure(String educationLevel) {
+		
+		switch (educationLevel) {
+		
+			case "All education levels":
+				return getAllEducationLevelsValue();
+				
+			case "No post-secondary education":
+				return getNoPseValue();
+				
+			case "No certifications":
+				return getNoCertificationsValue();
+				
+			case "High school graduate":
+				return getHighSchoolGradValue();
+				
+			case "High school graduate, some post-secondary":
+				return getHighSchoolGradSomePseValue();
+				
+			case "Post-secondary education":
+				return getPseValue();
+				
+			case "Post-secondary certificate or diploma":
+				return getCertificateOrDiplomaValue();
+				
+			case "Without high school graduation":
+				return getWithoutHighSchoolGradValue();
+				
+			case "With high school graduation":
+				return getWithHighSchoolGradValue();
+				
+			case "University degree":
+				return getUniversityDegreeValue();
+				
+			case "Bachelor's degree":
+				return getBachelorDegreeValue();
+				
+			case "Above bachelor's degree":
+				return getAboveBachelorDegreeValue();
+				
+			default:
+				return -1.0;
+				
+		}
+		
 	}
 	
 }
