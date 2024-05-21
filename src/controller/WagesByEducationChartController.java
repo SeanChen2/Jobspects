@@ -12,7 +12,11 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -106,7 +110,7 @@ public class WagesByEducationChartController extends ChartController {
         JPanel yearPanel = new JPanel(new GridLayout(0, 3, 5, 5)); // Adjust the columns as needed
         
         JLabel years = new JLabel();
-        years.setText("Year");
+        years.setText("Year:");
         years.setFont(new Font("Sans Serif", Font.PLAIN, 20));
         yearPanel.add(years);
 
@@ -127,7 +131,7 @@ public class WagesByEducationChartController extends ChartController {
         
         // Add the yearPanel to a JScrollPane
         JScrollPane scrollPane = new JScrollPane(yearPanel);
-        scrollPane.setPreferredSize(new java.awt.Dimension(250, 150)); // Adjust the size as needed
+        scrollPane.setPreferredSize(new java.awt.Dimension(250, 150)); 
 
         // Add the scrollPane to the filterPanelTemplate
         filterPanelTemplate.add(scrollPane);
@@ -258,9 +262,17 @@ public class WagesByEducationChartController extends ChartController {
         // Add the yearPanel to a JScrollPane
         JScrollPane salaryScrollPane = new JScrollPane(salaryPanel);
         salaryScrollPane.setPreferredSize(new java.awt.Dimension(250, 150));
-
+        
         // Add the scrollPane to the filterPanelTemplate
         filterPanelTemplate.add(salaryScrollPane);
+        
+		// Create the button to input data
+        Icon fd = new ImageIcon("./images/FilterDataButton.png");
+        JButton filterDataButton = new JButton(fd);
+        filterDataButton.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+        filterDataButton.setOpaque(false);
+		filterPanelTemplate.add(filterDataButton);
+		
         
         // Repaint the parent container to reflect changes
         filterPanelTemplate.revalidate();
