@@ -86,7 +86,7 @@ public class WagesByEducationChartController extends ChartController {
 		filterPanelTemplate = new JPanel();
 		filterPanelTemplate.setBounds(1100, 180, FRAME_WIDTH / 8 + 100, FRAME_HEIGHT - 300);
 		filterPanelTemplate.setBackground(Color.WHITE);
-		getChartFrame().add(filterPanelTemplate);
+		getMenuFrame().add(filterPanelTemplate);
         
         // Set the layout manager
         filterPanelTemplate.setLayout(new FlowLayout());
