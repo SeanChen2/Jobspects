@@ -28,6 +28,11 @@ public class WagesByEducationScatterplotFrame extends JobspectsChartFrame {
     
     // Constructor Method
     public WagesByEducationScatterplotFrame() {
+    	
+		//Use an average calculation panel with a combo box to select which data 
+		//category to calculate the average for
+		setAverageCalculationPanel(new AverageCalculationPanel(true));
+		
     	// Build the frame
     	showFrame();
     }

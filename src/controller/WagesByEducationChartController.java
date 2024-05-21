@@ -30,7 +30,7 @@ public class WagesByEducationChartController extends ChartController {
     private static final int FRAME_HEIGHT = 1080;
     
 	private JPanel chartPanelTemplate;
-    private DatasetManager datasetManager;
+    private DatasetManager datasetManager = new DatasetManager();
     private JPanel filterPanelTemplate;
     
 
@@ -83,16 +83,18 @@ public class WagesByEducationChartController extends ChartController {
             PlotOrientation.VERTICAL,
             true, true, false
         );
-
-        // Create the panel and set dimensions
-        ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setPreferredSize(new java.awt.Dimension(800, 600));
-        chartPanelTemplate.setLayout(new java.awt.BorderLayout());
-        chartPanelTemplate.add(chartPanel, java.awt.BorderLayout.CENTER);
         
-        // Make sure the chart appears
-        chartPanelTemplate.revalidate();
-        chartPanelTemplate.repaint();
+        setChart(chart);
+
+//        // Create the panel and set dimensions
+//        ChartPanel chartPanel = new ChartPanel(chart);
+//        chartPanel.setPreferredSize(new java.awt.Dimension(800, 600));
+//        chartPanelTemplate.setLayout(new java.awt.BorderLayout());
+//        chartPanelTemplate.add(chartPanel, java.awt.BorderLayout.CENTER);
+//        
+//        // Make sure the chart appears
+//        chartPanelTemplate.revalidate();
+//        chartPanelTemplate.repaint();
 
     }
     
