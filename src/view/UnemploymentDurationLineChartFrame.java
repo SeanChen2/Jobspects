@@ -15,21 +15,16 @@ import view.OccupationLabourBarChartFrame.CircularGradientPanel;
 
 public class UnemploymentDurationLineChartFrame extends JobspectsChartFrame implements ActionListener{
 	
-	private JButton backButton;
-
 	public UnemploymentDurationLineChartFrame() {
-		
-		//Use an average calculation panel with a combo box to select which data 
-		//category to calculate the average for
-		setAverageCalculationPanel(new AverageCalculationPanel(true));
-		
 		setSize(1920, 1080);
 		// You'll never see it coming Sean
 		setTitle("Jobspects😎");
 		//CircularGradientPanel gradientPanel = new CircularGradientPanel();
 		//gradientPanel.setLayout(null);
 		//setContentPane(gradientPanel);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		setAverageCalculationPanel(new AverageCalculationPanel(true));
 		
 		setUpChartNavButtons();
 		
@@ -41,28 +36,23 @@ public class UnemploymentDurationLineChartFrame extends JobspectsChartFrame impl
 		 
 		 SetUpAverageSection();
 		 
+//		 getChartNavButtons();
+//		 
+//		 getCompareCategoryButtons();
+//		 
+//		 getSexButtons();
+//		 
 		// getTimeRangeTextFields()
 		
-		// Create button
-		backButton = new JButton("<");
-		backButton.addActionListener(this);
-
-		// Set absolute position for button
-		backButton.setBounds(10, 10, 50, 30); // (x, y, width, height)
-
-		// Add button to content pane
-		getContentPane().add(backButton);
 
 		// Create and add label
-		JLabel titleLabel = new JLabel("What factors affect the Duration of Employment in Canada?");
-		titleLabel.setFont(new Font("Serif", Font.BOLD, 55));
-		titleLabel.setForeground(Color.WHITE); // Set text color to white
+		getScreenTitleLabel().setText("    What factors affect the Duration of Employment in Canada?");
 
 		// Set position for label
-		titleLabel.setBounds(10, 30, 5000, 100); // (x, y, width, height)
+//		titleLabel.setBounds(10, 30, 5000, 100); // (x, y, width, height)
 
 		// Add label to content pane
-		getContentPane().add(titleLabel);
+//		getContentPane().add(titleLabel);
 
 		// Set content pane layout to null for absolute positioning
 		getContentPane().setLayout(null);
@@ -82,7 +72,7 @@ public class UnemploymentDurationLineChartFrame extends JobspectsChartFrame impl
 		// Set content pane layout to null for absolute positioning
 		getContentPane().setLayout(null);
 		
-		setVisible(false);
+		//setVisible(false);
 
 
 	}
@@ -156,19 +146,10 @@ public class UnemploymentDurationLineChartFrame extends JobspectsChartFrame impl
 
 
 
-	public void setBackButton(JButton backButton) {
-		this.backButton = backButton;
-	}
-
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == backButton) {
-            // Handle button click event
-            System.out.println("Back button clicked");
-            new JobspectsTitleFrame();
-            dispose();
-        }
+
 	}
 
 }
