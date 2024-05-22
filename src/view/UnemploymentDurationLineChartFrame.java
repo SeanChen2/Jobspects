@@ -24,6 +24,10 @@ public class UnemploymentDurationLineChartFrame extends JobspectsChartFrame impl
 		setSize(1920, 1080);
 		// You'll never see it coming Sean
 		setTitle("Jobspects😎");
+		//CircularGradientPanel gradientPanel = new CircularGradientPanel();
+		//gradientPanel.setLayout(null);
+		//setContentPane(gradientPanel);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		setAverageCalculationPanel(new AverageCalculationPanel(true));
 		
