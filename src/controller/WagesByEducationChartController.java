@@ -237,6 +237,7 @@ public class WagesByEducationChartController extends ChartController implements 
     public void actionPerformed(ActionEvent e) {
     	super.actionPerformed(e);
     	
+    	// Make sure the program doesnt confuse itself with the back button
     	if (e.getSource() == getFilterDataButton()) {
 	    	
 	    	// Check to see if all the options were filled
