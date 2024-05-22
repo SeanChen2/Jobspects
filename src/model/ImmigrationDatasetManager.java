@@ -24,11 +24,12 @@ public class ImmigrationDatasetManager {
 	private String seriesColumn;
 	
 	//A map of specific instructions for which data rows to include.
-	//The key of this map specifies the column, and the value specifies
-	//what each row must have in that column in order for it to be in the filtered dataset.
-	//Ex. key="Immig", value="Non-landed immigrants" - the dataset will only include entries for
-	//immigrants who are not landed yet
-	private HashMap<String, String> filteredRows = new HashMap<>();
+	//The key of this map specifies the column, and the value is a list that defines what
+	//the row could have in that column in order for it to be in the filtered dataset.
+	//Ex. key="Immigrant Status", value=[Born in Canada, Non-landed immigrants] - the 
+	//dataset will only include rows with "Born in Canada" and "Non-landed immigrants" as their
+	//immigrant status
+	private HashMap<String, ArrayList<String>> filteredRows = new HashMap<>();
 	
 	//The data from the CSV file stored in table format - one "table" for each year
 	private HashMap<Integer, ArrayList<ImmigrationDataRow>> data = new HashMap<>();
@@ -73,11 +74,11 @@ public class ImmigrationDatasetManager {
 		this.seriesColumn = seriesColumn;
 	}
 
-	public HashMap<String, String> getFilteredRows() {
+	public HashMap<String, ArrayList<String>> getFilteredRows() {
 		return filteredRows;
 	}
 
-	public void setFilteredRows(HashMap<String, String> filteredRows) {
+	public void setFilteredRows(HashMap<String, ArrayList<String>> filteredRows) {
 		this.filteredRows = filteredRows;
 	}
 
@@ -123,7 +124,7 @@ public class ImmigrationDatasetManager {
 			
 			//Input the String values
 			String province = dataFile.next();
-			String immigrantStatus = dataFile.next();
+			String immigrantStatus = dataFile.next().trim();	//Remove unnecessary leading spaces
 			String employmentType = dataFile.next();
 			String sex = dataFile.next();
 			String age = dataFile.next();
@@ -150,9 +151,19 @@ public class ImmigrationDatasetManager {
 	//This method adds an entry to the filtered rows map, to "restrain" which rows are included in the dataset
 	public void addRowRestraint(String column, String requiredValue) {
 		
-		filteredRows.put(column, requiredValue);
+		//If a mapping doesn't exist for this column name yet, create the mapping
+		if (!filteredRows.containsKey(column))
+			filteredRows.put(column, new ArrayList<>());
 		
+		//Add the new required value under this column mapping
+		filteredRows.get(column).add(requiredValue);
 	}
+	
+	//This method removes an entry from the filtered rows map, given the column key to remove
+	public void removeRowRestraint(String column) {
+		filteredRows.remove(column);
+	}
+	
 	
 	//This method generates a dataset with all the filters/constraints appliwed
 	public DefaultCategoryDataset getFilteredDataset() {
@@ -163,14 +174,9 @@ public class ImmigrationDatasetManager {
 		for (ImmigrationDataRow row : data.get(requestedYear)) {
 			
 			//First, disregard this row if it doesn't satisfy the row filters
-			for (Entry<String, String> filter : filteredRows.entrySet()) {
-				
-				if (!row.getValue(filter.getKey()).equals(filter.getValue())) {
+			for (Entry<String, ArrayList<String>> filter : filteredRows.entrySet())
+				if (!filter.getValue().contains(row.getValue(filter.getKey())))
 					continue RowIterator;
-				}
-			}
-			
-			System.out.println(row);
 			
 			if (seriesColumn == null) {
 				
@@ -179,9 +185,9 @@ public class ImmigrationDatasetManager {
 					filteredDataset.addValue(row.getEmploymentFigure(valueColumn), valueColumn, row.getValue(categoryColumn));
 				
 			} else {
-				
+
 				//If the series are defined by a certain column, there is guaranteed to be only one value column
-				filteredDataset.addValue(row.getEmploymentFigure(valueColumns.get(0)), seriesColumn, row.getValue(categoryColumn));
+				filteredDataset.addValue(row.getEmploymentFigure(valueColumns.get(0)), row.getValue(seriesColumn), row.getValue(categoryColumn));
 				
 			}
 			

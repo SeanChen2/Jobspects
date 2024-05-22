@@ -45,6 +45,9 @@ public abstract class ChartController implements ActionListener {
 		
 		ChartPanel chartPanel = new ChartPanel(chart);
 		chartPanel.setBounds(0, 0, chartFrame.getChartPanelTemplate().getWidth(), chartFrame.getChartPanelTemplate().getHeight());
+		
+		//Remove the current chart, then add the new one
+		chartFrame.getChartPanelTemplate().removeAll();
 		chartFrame.getChartPanelTemplate().add(chartPanel);
 	}
 	

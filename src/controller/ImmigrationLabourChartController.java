@@ -27,9 +27,6 @@ public class ImmigrationLabourChartController extends ChartController {
 	//Reference to the immigration labour dataset manager
 	private ImmigrationDatasetManager datasetManager = new ImmigrationDatasetManager();
 	
-	//Field for the CSV data file being read: "Labour Force Estimates by Immigration"
-	private Scanner dataFile;
-	
 	//Constructor
 	public ImmigrationLabourChartController(JobspectsMenuFrame menuFrame) {
 		
@@ -49,9 +46,42 @@ public class ImmigrationLabourChartController extends ChartController {
 		//By default, each area on the chart represents a different education level
 		filterEducationLevelColumns();
 		
-		updateChart();
-		showChartFrame();
+		//Listen for when any of the buttons on the chart frame are pressed
+		addActionListeners();
 		
+		//Post the initial chart onto the chart panel
+		updateChart();
+		
+	}
+	
+	//This method adds action listeners to all the interactive elements on the chart frame
+	private void addActionListeners() {
+		
+		//Downcast the chart frame to an immigration chart frame to access the nav buttons
+		ImmigrationLabourChartFrame immigrationChartFrame = (ImmigrationLabourChartFrame) getChartFrame();
+		
+		//Add action listeners to the nav buttons (navigating between area chart and histogram)
+		for (JButton chartNavButton : immigrationChartFrame.getChartNavButtons())
+			chartNavButton.addActionListener(this);
+		
+		//AREA CHART EXCLUSIVE: add action listeners to the "compare category" buttons
+		if (immigrationChartFrame instanceof ImmigrationLabourAreaChartFrame) {
+			
+			//Downcast the chart frame to an area chart frame
+			ImmigrationLabourAreaChartFrame areaChartFrame = (ImmigrationLabourAreaChartFrame) immigrationChartFrame;
+			
+			//Add action listeners to the "compare category" buttons
+			for (JRadioButton compareCategoryButton : areaChartFrame.getCompareCategorySection().getCompareCategoryButtons())
+				compareCategoryButton.addActionListener(this);
+				
+		}
+		
+		//Add action listeners to the chart filter buttons, if they exist in this frame
+		for (JRadioButton[] buttonArray : immigrationChartFrame.getChartFilterSection().getFilterButtons())
+			for (JRadioButton filterButton : buttonArray)
+				if (filterButton != null)
+					filterButton.addActionListener(this);
+	
 	}
 	
 	//This method handles what happens when a button in one of the immigration labour
@@ -77,7 +107,7 @@ public class ImmigrationLabourChartController extends ChartController {
 			switchToFrame(new ImmigrationLabourHistogramFrame());
 		
 		//AREA CHART EXCLUSIVE: handle the "compare by" buttons
-		if (immigrationChartFrame instanceof ImmigrationLabourAreaChartFrame) {
+		else if (immigrationChartFrame instanceof ImmigrationLabourAreaChartFrame) {
 			
 			//Downcast the chart frame to an area chart frame, then check all the "compare by" buttons
 			ImmigrationLabourAreaChartFrame areaChartFrame = (ImmigrationLabourAreaChartFrame) immigrationChartFrame;
@@ -95,14 +125,19 @@ public class ImmigrationLabourChartController extends ChartController {
 	private void checkCompareCategoryButtons(JRadioButton[] compareCategoryButtons, ActionEvent event) {
 		
 		//If the "education level" radio button was pressed, and education level isn't already being compared,
-		//filter the dataset so that it includes all the education level columns
-		if (event.getSource() == compareCategoryButtons[0] && !datasetManager.getFilteredColumns().contains("High school graduate"))
+		//filter the dataset so that it includes all the education level columns. Then, show the new chart.
+		if (event.getSource() == compareCategoryButtons[0] && !datasetManager.getValueColumns().contains("High school graduate")) {
 			filterEducationLevelColumns();
+			updateChart();
+		}
 		
 		//If the "immigrant status" radio button was pressed, and immigrant status isn't already being compared,
-		//filter the dataset so that it includes all the available immigrant status rows
-		else if (event.getSource() == compareCategoryButtons[1])
+		//filter the dataset so that it includes all the available immigrant status rows. Then, show the new chart.
+		else if (event.getSource() == compareCategoryButtons[1] && (datasetManager.getSeriesColumn() == null || 
+				!datasetManager.getSeriesColumn().equals("Immigrant status"))) {
 			filterImmigrantStatusRows();
+			updateChart();
+		}
 		
 	}
 	
@@ -110,7 +145,9 @@ public class ImmigrationLabourChartController extends ChartController {
 	private void filterEducationLevelColumns() {
 		
 		//Display data for all immigrant statuses
-		datasetManager.getFilteredRows().put("Immigrant status", "Total");
+		datasetManager.setSeriesColumn(null);
+		datasetManager.removeRowRestraint("Immigrant status");
+		datasetManager.addRowRestraint("Immigrant status", "Total");
 		
 		//Retrieve the list of value columns from the dataset manager, and clear it
 		ArrayList<String> valueColumns = datasetManager.getValueColumns();
@@ -120,28 +157,28 @@ public class ImmigrationLabourChartController extends ChartController {
 		valueColumns.add("High school graduate");
 		valueColumns.add("High school graduate, some post-secondary");
 		valueColumns.add("Post-secondary certificate or diploma");
-		valueColumns.add("University degree");
 		valueColumns.add("Bachelor's degree");
 		valueColumns.add("Above bachelor's degree");
 		
 	}
 	
-	//This method adds all the immigrant status rows into the dataset
+	//This method adds all the immigrant statuses as "series" in the dataset
 	private void filterImmigrantStatusRows() {
 		
-		HashMap<String, ArrayList<String>> filteredRows = datasetManager.getFilteredRows();
-		ArrayList<String> filteredColumns = datasetManager.getFilteredColumns();
+		//Display data for all education levels (total)
+		datasetManager.getValueColumns().clear();
+		datasetManager.getValueColumns().add("All education levels");
 		
-		filteredColumns.clear();
-		filteredColumns.add("Total, all education levels");
+		//Make the immigrant statuses define separate series on the area chart
+		datasetManager.removeRowRestraint("Immigrant status");
+		datasetManager.setSeriesColumn("Immigrant status");
 		
-		filteredRows.get("Immig").clear();
-		
-		filteredRows.get("Immig").add("Born in Canada");
-		filteredRows.get("Immig").add("Very recent immigrants, 5 years or less");
-		filteredRows.get("Immig").add("Recent immigrants 5+ to 10 years");
-		filteredRows.get("Immig").add("Established immigrants, 10+ years");
-		filteredRows.get("Immig").add("Non-landed immigrants");
+		//Restrict which immigrant statuses are included as series
+		datasetManager.addRowRestraint("Immigrant status", "Born in Canada");
+		datasetManager.addRowRestraint("Immigrant status", "Very recent immigrants; 5 years or less");
+		datasetManager.addRowRestraint("Immigrant status", "Recent immigrants; 5+ to 10 years");
+		datasetManager.addRowRestraint("Immigrant status", "Established immigrants; 10+ years");
+		datasetManager.addRowRestraint("Immigrant status", "Non-landed immigrants");
 		
 	}
 	
@@ -149,7 +186,47 @@ public class ImmigrationLabourChartController extends ChartController {
 	//all the chart filter buttons, which are found in both the area chart and histogram frames.
 	private void checkChartFilterButtons(ActionEvent event) {
 		
+		//First, downcast the chart frame to an immigration chart frame to access the filter buttons
+		ImmigrationLabourChartFrame immigrationChartFrame = (ImmigrationLabourChartFrame) getChartFrame();
 		
+		//If a sex selection button was pressed, filter the dataset so that it only displays data for that sex
+		for (JRadioButton sexButton : immigrationChartFrame.getChartFilterSection().getSexButtons()) {
+			if (event.getSource() == sexButton) {
+				datasetManager.removeRowRestraint("Sex");
+				datasetManager.addRowRestraint("Sex", sexButton.getText().trim());
+				updateChart();
+			}
+		}
+		
+		//If an employment type button was pressed, filter the dataset so that it only displays data 
+		//for that employment type
+		for (JRadioButton employmentTypeButton : immigrationChartFrame.getChartFilterSection().getEmploymentTypeButtons()) {
+			if (event.getSource() == employmentTypeButton) {
+				datasetManager.removeRowRestraint("Employment type");
+				datasetManager.addRowRestraint("Employment type", employmentTypeButton.getText().trim());
+				updateChart();
+			}
+		}
+		
+		//If an education level button was pressed, filter the dataset so that it only displays data for
+		//that education level
+		for (JRadioButton educationLevelButton : immigrationChartFrame.getChartFilterSection().getEducationLevelButtons()) {
+			if (event.getSource() == educationLevelButton) {
+				datasetManager.removeRowRestraint("Education level");
+				datasetManager.addRowRestraint("Education level", educationLevelButton.getText().trim());
+				updateChart();
+			}
+		}
+		
+		//If an immigrant status button was pressed, filter the dataset so that it only displays data for
+		//that immigrant status
+		for (JRadioButton immigrantStatusButton : immigrationChartFrame.getChartFilterSection().getImmigrantStatusButtons()) {
+			if (event.getSource() == immigrantStatusButton) {
+				datasetManager.removeRowRestraint("Immigrant status");
+				datasetManager.addRowRestraint("Immigrant status", immigrantStatusButton.getText().trim());
+				updateChart();
+			}
+		}
 		
 	}
 	
@@ -177,12 +254,15 @@ public class ImmigrationLabourChartController extends ChartController {
 			
 			//TODO: dynamic year choosing
 			
-			//Create the area chart from the filtered dataset
-			setChart(ChartFactory.createAreaChart("Immigration Labour Force in Canada - " + "2020", "Month", "Number of employed Canadians", 
+			//Create the stacked area chart from the filtered dataset
+			setChart(ChartFactory.createStackedAreaChart("Immigration Labour Force in Canada - " + "2020", "Month", "Number of employed Canadians", 
 					filteredDataset, PlotOrientation.VERTICAL, true, true, false));
 			
-			//Make the chart's areas translucent so that the overlap is visible
-			getChart().getCategoryPlot().setForegroundAlpha(0.5f);
+			//Make the stacked area chart continuous (Source: https://stackoverflow.com/a/7716930)
+			getChart().getCategoryPlot().getDomainAxis().setCategoryMargin(0);
+			
+			getChartFrame().revalidate();
+			getChartFrame().repaint();
 			
 		}
 		

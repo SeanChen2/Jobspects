@@ -33,7 +33,7 @@ public class JobspectsMainController implements ActionListener {
 		
 		//Fill the chart controller array with 5 chart controllers
 		chartControllers[0] = new OccupationLabourChartController();
-		chartControllers[1] = new ImmigrationLabourChartController();
+		chartControllers[1] = new ImmigrationLabourChartController(menuFrame);
 		chartControllers[2] = new UnemploymentDurationChartController();
 		chartControllers[3] = new WagesByEducationChartController();
 		chartControllers[4] = new TourismEmploymentChartController();
@@ -57,7 +57,7 @@ public class JobspectsMainController implements ActionListener {
 		//controller activate the correct chart frame
 		for (int index = 0; index < NUM_CHARTS; index++) {
 			
-			if (event.getSource() == menuFrame.getSelectionPanels()[index].getSelectionButton()) {
+			if (event.getSource() == menuFrame.getSelectionButtons()[index]) {
 				currentFrame.setVisible(false);
 				chartControllers[index].showChartFrame();
 			}
