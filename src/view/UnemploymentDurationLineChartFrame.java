@@ -13,11 +13,16 @@ import javax.swing.JTextArea;
 
 import view.OccupationLabourBarChartFrame.CircularGradientPanel;
 
-public class UnemploymentDurationLineChartFrame extends JFrame implements ActionListener{
+public class UnemploymentDurationLineChartFrame extends JobspectsChartFrame implements ActionListener{
 	
 	private JButton backButton;
 
 	public UnemploymentDurationLineChartFrame() {
+		
+		//Use an average calculation panel with a combo box to select which data 
+		//category to calculate the average for
+		setAverageCalculationPanel(new AverageCalculationPanel(true));
+		
 		setSize(1920, 1080);
 		// You'll never see it coming Sean
 		setTitle("Jobspects😎");
@@ -35,12 +40,6 @@ public class UnemploymentDurationLineChartFrame extends JFrame implements Action
 		 setUpFilterSection();
 		 
 		 SetUpAverageSection();
-		 
-		 getChartNavButtons();
-		 
-		 getCompareCategoryButtons();
-		 
-		 getSexButtons();
 		 
 		// getTimeRangeTextFields()
 		

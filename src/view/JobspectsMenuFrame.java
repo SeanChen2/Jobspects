@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import controller.ImmigrationLabourChartController;
+import controller.UnemploymentDurationChartController;
 import controller.WagesByEducationChartController;
 
 //TODO: use a panel for each dataset, OR just an array of "learn more buttons" so that
@@ -101,7 +102,7 @@ public class JobspectsMenuFrame extends JobspectsFrame {
 		learnMore3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				// Create a new frame
-				new UnemploymentDurationLineChartFrame();
+				new UnemploymentDurationChartController(menuFrame);
 				// Close current frame
 				dispose();
 				
