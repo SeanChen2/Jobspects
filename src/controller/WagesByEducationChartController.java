@@ -48,6 +48,11 @@ public class WagesByEducationChartController extends ChartController implements 
     private ButtonGroup educationGroup;
     private ButtonGroup salaryGroup;
     private JButton filterDataButton;
+    private ArrayList<PersonEducationIncome> yearsOfEdu;
+    private ArrayList<PersonEducationIncome> yearsOfEduUpdated;
+    private String selectedYear;
+    private String selectedEducation;
+    private String selectedSalary;
 
     // Constructor Method
     public WagesByEducationChartController(JobspectsMenuFrame menuFrame) {
@@ -66,7 +71,15 @@ public class WagesByEducationChartController extends ChartController implements 
 		this.filterDataButton = filterDataButton;
 	}
 
-    @Override
+    public ArrayList<PersonEducationIncome> getYearsOfEdu() {
+		return yearsOfEdu;
+	}
+
+	public void setYearsOfEdu(ArrayList<PersonEducationIncome> yearsOfEdu) {
+		this.yearsOfEdu = yearsOfEdu;
+	}
+
+	@Override
     protected ArrayList<Double> getValuesForAverage() {
         // TODO Auto-generated method stub
         return null;
@@ -78,7 +91,7 @@ public class WagesByEducationChartController extends ChartController implements 
         XYSeries series = new XYSeries("Data");
         
         // Create an arraylist in this file to easily reference the object
-        ArrayList<PersonEducationIncome> yearsOfEdu = datasetManager.getPerson();
+        yearsOfEdu = datasetManager.getPerson();
         
         // Loop through the array and begin inputting the data into the graph
         for (int i = 0; i < yearsOfEdu.size(); i++) {
@@ -243,17 +256,32 @@ public class WagesByEducationChartController extends ChartController implements 
     	    	return; 
     	    }
 		    // Retrieve selected button texts
-		    String selectedYear = getUserChoice(yearGroup);
-		    String selectedEducation = getUserChoice(educationGroup);
-		    String selectedSalary = getUserChoice(salaryGroup);
+		    selectedYear = getUserChoice(yearGroup);
+		    selectedEducation = getUserChoice(educationGroup);
+		    selectedSalary = getUserChoice(salaryGroup);
 		
 		    // test
 		    System.out.println("Selected Year: " + selectedYear);
 		    System.out.println("Selected Education Level: " + selectedEducation);
 		    System.out.println("Selected Salary: " + selectedSalary);
 		    
-		    // Update the chart
-		   
+		    yearsOfEduUpdated = yearsOfEdu;
+	        
+	        for (int i = 0; i < yearsOfEduUpdated.size(); i++) {
+	        	if (selectedYear == "All") {
+	        		break;
+	        	}
+	        	if (yearsOfEdu.get(i).getYear() != Integer.parseInt(selectedYear)) {
+	        			yearsOfEduUpdated.remove(i);
+	        		}
+	        	
+		    for (int j = 0; j < yearsOfEduUpdated.size(); j++) {
+		    	
+		    }
+	        	
+	        	
+	        	
+	        }
     	}
       
     }
@@ -283,13 +311,12 @@ public class WagesByEducationChartController extends ChartController implements 
                 return button.getText();
             }
         }
-        // If none are selected then return false
+        // If none are selected then return "nothing"
         return "nothing";
     }
 
 	@Override
 	public void updateChart() {
-		// TODO Auto-generated method stub
 		
 	}
 }
