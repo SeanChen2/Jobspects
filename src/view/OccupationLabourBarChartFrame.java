@@ -60,6 +60,7 @@ public class OccupationLabourBarChartFrame extends JobspectsChartFrame {
 
         setSize(1920, 1080);
         setTitle("Title Frame");
+        setAverageCalculationPanel(new AverageCalculationPanel(true));
         
         readFile();
 

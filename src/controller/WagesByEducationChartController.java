@@ -271,12 +271,26 @@ public class WagesByEducationChartController extends ChartController implements 
 	        	if (selectedYear == "All") {
 	        		break;
 	        	}
-	        	if (yearsOfEdu.get(i).getYear() != Integer.parseInt(selectedYear)) {
+	        	if (yearsOfEduUpdated.get(i).getYear() != Integer.parseInt(selectedYear)) {
 	        			yearsOfEduUpdated.remove(i);
 	        		}
 	        	
 		    for (int j = 0; j < yearsOfEduUpdated.size(); j++) {
-		    	
+	        	if (selectedEducation == "All") {
+	        		break;
+	        	}
+	        	if (yearsOfEduUpdated.get(i).getYearsOfEducation() != Integer.parseInt(selectedEducation)) {
+        			yearsOfEduUpdated.remove(i);
+        		}
+		    }
+		    
+		    for (int j = 0; j < yearsOfEduUpdated.size(); j++) {
+	        	if (selectedSalary == "All") {
+	        		break;
+	        	}
+	        	if (yearsOfEduUpdated.get(i).getAverageIncome() != Integer.parseInt(selectedEducation)) {
+        			yearsOfEduUpdated.remove(i);
+        		}
 		    }
 	        	
 	        	
