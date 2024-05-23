@@ -27,6 +27,14 @@ import model.PersonEducationIncome;
 import view.JobspectsMenuFrame;
 import view.WagesByEducationScatterplotFrame;
 
+/*
+ * Name: Kelvin Nguyen
+ * WagesByEducationChartController
+ * Group 1
+ * Date: May 17th, 2024
+ */
+
+
 public class WagesByEducationChartController extends ChartController implements ActionListener {
     
     // Set frame size as constants
@@ -57,12 +65,6 @@ public class WagesByEducationChartController extends ChartController implements 
 	public void setFilterDataButton(JButton filterDataButton) {
 		this.filterDataButton = filterDataButton;
 	}
-
-
-	@Override
-    public void updateChart() {
-        // TODO Auto-generated method stub
-    }
 
     @Override
     protected ArrayList<Double> getValuesForAverage() {
@@ -249,6 +251,9 @@ public class WagesByEducationChartController extends ChartController implements 
 		    System.out.println("Selected Year: " + selectedYear);
 		    System.out.println("Selected Education Level: " + selectedEducation);
 		    System.out.println("Selected Salary: " + selectedSalary);
+		    
+		    // Update the chart
+		   
     	}
       
     }
@@ -281,4 +286,10 @@ public class WagesByEducationChartController extends ChartController implements 
         // If none are selected then return false
         return "nothing";
     }
+
+	@Override
+	public void updateChart() {
+		// TODO Auto-generated method stub
+		
+	}
 }
