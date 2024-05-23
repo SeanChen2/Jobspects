@@ -1,6 +1,7 @@
 package application;
 
 import controller.ImmigrationLabourChartController;
+import controller.JobspectsMainController;
 import controller.WagesByEducationChartController;
 import view.ImmigrationLabourAreaChartFrame;
 import view.JobspectsMenuFrame;
@@ -31,7 +32,7 @@ import view.WagesByEducationScatterplotFrame;
 public class JobspectsApplication {
 
 	public static void main(String[] args) {
-		new JobspectsMenuFrame();
+		new JobspectsMainController();
 
 	}
 }

@@ -3,7 +3,6 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import view.DatasetSelectionPanel;
 import view.JobspectsFrame;
 import view.JobspectsMenuFrame;
 import view.JobspectsTitleFrame;
@@ -34,8 +33,8 @@ public class JobspectsMainController implements ActionListener {
 		//Fill the chart controller array with 5 chart controllers
 		chartControllers[0] = new OccupationLabourChartController();
 		chartControllers[1] = new ImmigrationLabourChartController(menuFrame);
-		chartControllers[2] = new UnemploymentDurationChartController();
-		chartControllers[3] = new WagesByEducationChartController();
+		chartControllers[2] = new UnemploymentDurationChartController(menuFrame);
+		chartControllers[3] = new WagesByEducationChartController(menuFrame);
 		chartControllers[4] = new TourismEmploymentChartController();
 		
 		//Show the title frame when the app is opened
