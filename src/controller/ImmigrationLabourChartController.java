@@ -8,6 +8,8 @@ import java.util.Scanner;
 
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import view.*;
 import model.ImmigrationDatasetManager;
@@ -22,7 +24,7 @@ import org.jfree.chart.ChartPanel;
 //This is the controller class for the immigration labour chart screens.
 //This controller handles the navigation between the area chart and histogram frames,
 //as well as the button presses for both frames.
-public class ImmigrationLabourChartController extends ChartController {
+public class ImmigrationLabourChartController extends ChartController implements ChangeListener {
 	
 	//Reference to the immigration labour dataset manager
 	private ImmigrationDatasetManager datasetManager = new ImmigrationDatasetManager();
@@ -36,12 +38,15 @@ public class ImmigrationLabourChartController extends ChartController {
 		setChartFrame(new ImmigrationLabourAreaChartFrame());
 		
 		//By default, show the employment figures for the entire labour force in Canada
-		datasetManager.setCategoryColumn("Month");
+		datasetManager.setCategoryColumn("Year");
 		datasetManager.addRowRestraint("Province", "Canada");
 		datasetManager.addRowRestraint("Immigrant status", "Total");
 		datasetManager.addRowRestraint("Employment type", "Labour force");
 		datasetManager.addRowRestraint("Sex", "Both Sexes");
 		datasetManager.addRowRestraint("Age", "15 Years +");
+		
+		//By default, the chart will display date for all 15 years
+		datasetManager.setRequestedYear(-1);
 		
 		//By default, each area on the chart represents a different education level
 		filterEducationLevelColumns();
@@ -64,7 +69,8 @@ public class ImmigrationLabourChartController extends ChartController {
 		for (JButton chartNavButton : immigrationChartFrame.getChartNavButtons())
 			chartNavButton.addActionListener(this);
 		
-		//AREA CHART EXCLUSIVE: add action listeners to the "compare category" buttons
+		//AREA CHART EXCLUSIVE: add action listeners to the "compare category" buttons and the date type picker radio buttons.
+		//Also, add a change listener to the year slider.
 		if (immigrationChartFrame instanceof ImmigrationLabourAreaChartFrame) {
 			
 			//Downcast the chart frame to an area chart frame
@@ -73,6 +79,13 @@ public class ImmigrationLabourChartController extends ChartController {
 			//Add action listeners to the "compare category" buttons
 			for (JRadioButton compareCategoryButton : areaChartFrame.getCompareCategorySection().getCompareCategoryButtons())
 				compareCategoryButton.addActionListener(this);
+			
+			//Add action listeners to the date type picker radio buttons
+			for (JRadioButton dateTypePickerButton : areaChartFrame.getDatePickerSection().getDateTypePickerButtons())
+				dateTypePickerButton.addActionListener(this);
+			
+			//Add a change listener to the year slider
+			areaChartFrame.getDatePickerSection().getYearSlider().addChangeListener(this);
 				
 		}
 		
@@ -106,12 +119,13 @@ public class ImmigrationLabourChartController extends ChartController {
 				event.getSource() == immigrationChartFrame.getChartNavButtons()[1])
 			switchToFrame(new ImmigrationLabourHistogramFrame());
 		
-		//AREA CHART EXCLUSIVE: handle the "compare by" buttons
+		//AREA CHART EXCLUSIVE: handle the "compare by" buttons AND the date picker buttons/slider
 		else if (immigrationChartFrame instanceof ImmigrationLabourAreaChartFrame) {
 			
 			//Downcast the chart frame to an area chart frame, then check all the "compare by" buttons
 			ImmigrationLabourAreaChartFrame areaChartFrame = (ImmigrationLabourAreaChartFrame) immigrationChartFrame;
 			checkCompareCategoryButtons(areaChartFrame.getCompareCategorySection().getCompareCategoryButtons(), event);
+			checkDatePickerElements(areaChartFrame, event);
 			
 		}
 		
@@ -230,6 +244,53 @@ public class ImmigrationLabourChartController extends ChartController {
 		
 	}
 	
+	//This method is an extension of the actionPerformed() method. It performs actions for
+	//the date type picker radio buttons, and makes sure that the year slider only appears
+	//if the user chooses to display data for a single year.
+	private void checkDatePickerElements(ImmigrationLabourAreaChartFrame areaChartFrame, ActionEvent event) {
+		
+		//If the "15 years" button was clicked, make the year slider invisible, then 
+		//make the chart display data for 15 years
+		if (event.getSource() == areaChartFrame.getDatePickerSection().getDateTypePickerButtons()[0]) {
+			
+			areaChartFrame.getDatePickerSection().getYearSlider().setVisible(false);
+			datasetManager.setRequestedYear(-1);
+			datasetManager.setCategoryColumn("Year");
+			updateChart();
+			
+		}
+		
+		//If the "Single year" button was clicked, make the year slider visible, then
+		//make the chart display data for the 12 months of the chosen year
+		else if (event.getSource() == areaChartFrame.getDatePickerSection().getDateTypePickerButtons()[1]) {
+			
+			areaChartFrame.getDatePickerSection().getYearSlider().setVisible(true);
+			datasetManager.setRequestedYear(areaChartFrame.getDatePickerSection().getYearSlider().getValue());
+			datasetManager.setCategoryColumn("Month");
+			updateChart();
+			
+		}
+		
+	}
+	
+	//This method is called every time the selected value of the year slider changes.
+	//When this occurs, the chart will be updated to display data for the newly selected year.
+	@Override
+	public void stateChanged(ChangeEvent event) {
+		
+		//Downcast the chart frame to an area chart frame to access the year slider
+		ImmigrationLabourAreaChartFrame areaChartFrame = (ImmigrationLabourAreaChartFrame) getChartFrame();
+		
+		//If the slider's value changed, update the chart so that it displays data for the chosen year
+		if (event.getSource() == areaChartFrame.getDatePickerSection().getYearSlider()) {
+			
+			datasetManager.setRequestedYear(areaChartFrame.getDatePickerSection().getYearSlider().getValue());
+			updateChart();
+			
+		}
+		
+	}
+	
 	//This concrete method returns a list of values to calculate the average of.
 	//For the area chart, the average is calculated over the years, and the category
 	//combo box must be considered. For the histogram, the average is calculated over 
@@ -252,11 +313,12 @@ public class ImmigrationLabourChartController extends ChartController {
 			//Get the dataset with all filters applied, from the dataset manager
 			DefaultCategoryDataset filteredDataset = datasetManager.getFilteredDataset();
 			
-			//TODO: dynamic year choosing
+			//Get the year being displayed on the chart (or the entire range 2006-2020), so it can be included in the title
+			String yearsDisplayed = (datasetManager.getRequestedYear() == -1) ? "2006-2020" : Integer.toString(datasetManager.getRequestedYear());
 			
 			//Create the stacked area chart from the filtered dataset
-			setChart(ChartFactory.createStackedAreaChart("Immigration Labour Force in Canada - " + "2020", "Month", "Number of employed Canadians", 
-					filteredDataset, PlotOrientation.VERTICAL, true, true, false));
+			setChart(ChartFactory.createStackedAreaChart("Immigration Labour Force in Canada - " + yearsDisplayed, 
+					"Month", "Number of employed Canadians", filteredDataset, PlotOrientation.VERTICAL, true, true, false));
 			
 			//Make the stacked area chart continuous (Source: https://stackoverflow.com/a/7716930)
 			getChart().getCategoryPlot().getDomainAxis().setCategoryMargin(0);

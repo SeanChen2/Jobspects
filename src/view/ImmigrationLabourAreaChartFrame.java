@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 
 //This concrete class is a frame that displays the area chart for the immigration
 //labour force sub-topic. All the specific chart filters/features will be added to
@@ -9,6 +10,7 @@ public class ImmigrationLabourAreaChartFrame extends ImmigrationLabourChartFrame
 	
 	//References to GUI panels for the "sections" of chart filters
 	private ImmigrationLabourCompareCategoryPanel compareCategorySection = new ImmigrationLabourCompareCategoryPanel(getFilterPanel());
+	private ImmigrationLabourDatePickerPanel datePickerSection = new ImmigrationLabourDatePickerPanel(getFilterPanel());
 
 	//Constructor
 	public ImmigrationLabourAreaChartFrame() {
@@ -19,14 +21,19 @@ public class ImmigrationLabourAreaChartFrame extends ImmigrationLabourChartFrame
 		
 		setUpCompareCategorySection();
 		setUpChartFilterSection();
+		setUpDatePickerSection();
 		setUpAverageSection();
 		
 	}
 	
-	//Getter for the section of radio buttons that chooses what category
-	//each "area" on the chart represents
+	//Getters for all the sections of filters
+	
 	public ImmigrationLabourCompareCategoryPanel getCompareCategorySection() {
 		return compareCategorySection;
+	}
+	
+	public ImmigrationLabourDatePickerPanel getDatePickerSection() {
+		return datePickerSection;
 	}
 
 	//This method adds a section of category filters that allows the user to
@@ -44,7 +51,20 @@ public class ImmigrationLabourAreaChartFrame extends ImmigrationLabourChartFrame
 	protected void setUpChartFilterSection() {
 		
 		setChartFilterSection(new ImmigrationLabourChartFilterPanel(getFilterPanel(), true, true, false, false));
+		
+		//Limit this panel's size to minimize unnecessary blank space between panels
+		getChartFilterSection().setPreferredSize(new Dimension(1600, 400));
+		getChartFilterSection().setMaximumSize(new Dimension(1600, 400));
+		
 		getFilterPanel().add(getChartFilterSection());
+		
+	}
+	
+	//This method adds a section of radio buttons and a slider to allow the user to
+	//select which dates (years or months) to display
+	private void setUpDatePickerSection() {
+		
+		getFilterPanel().add(datePickerSection);
 		
 	}
 	

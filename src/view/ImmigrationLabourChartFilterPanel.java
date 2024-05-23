@@ -46,10 +46,6 @@ public class ImmigrationLabourChartFilterPanel extends JPanel {
 		//Set the filter panel template object
 		this.filterPanelTemplate = filterPanelTemplate;
 		
-		//Limit this panel's size to minimize unnecessary blank space between panels
-		setPreferredSize(new Dimension(1600, 500));
-		setMaximumSize(new Dimension(1600, 500));
-		
 		//Use the null layout manager to allow components to be placed on this panel using coordinates
 		setLayout(null);
 		
