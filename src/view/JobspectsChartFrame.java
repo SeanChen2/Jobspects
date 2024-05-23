@@ -80,7 +80,7 @@ public abstract class JobspectsChartFrame extends JobspectsFrame {
 
 	//This method sets up the basic appearance of the chart frame, including:
 	//a back button and a screen title
-	private void setUpFrame() {
+	protected void setUpFrame() {
 		
 		// Set up the back button
         Icon bbb = new ImageIcon("./images/BigBackButton.png");
