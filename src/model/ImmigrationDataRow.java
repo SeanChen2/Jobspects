@@ -26,6 +26,11 @@ public class ImmigrationDataRow {
 	private double bachelorDegreeValue;
 	private double aboveBachelorDegreeValue;
 	
+	//An array of all the numeric values (employment figures) of the row
+	private double[] employmentFigures = { allEducationLevelsValue, noPseValue, noCertificationsValue, highSchoolGradValue,
+			highSchoolGradSomePseValue, pseValue, certificateOrDiplomaValue, withoutHighSchoolGradValue, withHighSchoolGradValue,
+			universityDegreeValue, bachelorDegreeValue, aboveBachelorDegreeValue };
+	
 	//Constructor
 	public ImmigrationDataRow(String month, int year, String province, String immigrantStatus, String employmentType,
 			String sex, String age, double allEducationLevelsValue, double noPseValue, double noCertificationsValue,
@@ -208,6 +213,14 @@ public class ImmigrationDataRow {
 		this.aboveBachelorDegreeValue = aboveBachelorDegreeValue;
 	}
 
+	public double[] getEmploymentFigures() {
+		return employmentFigures;
+	}
+
+	public void setEmploymentFigures(double[] employmentFigures) {
+		this.employmentFigures = employmentFigures;
+	}
+
 	//Generate a String representation of the object to display in the console
 	@Override
 	public String toString() {
@@ -300,6 +313,15 @@ public class ImmigrationDataRow {
 				return -1.0;
 				
 		}
+		
+	}
+	
+	//This method adds all the numeric values (employment figures) from a given row, to this row
+	public void addAllValues(ImmigrationDataRow addedRow) {
+		
+		//Add all the employment figures in the "added row" to this row
+		for (int employmentFigureIndex = 0; employmentFigureIndex < employmentFigures.length; employmentFigureIndex++)
+			this.employmentFigures[employmentFigureIndex] += addedRow.getEmploymentFigures()[employmentFigureIndex];
 		
 	}
 	

@@ -21,16 +21,21 @@ public class ImmigrationLabourChartFilterPanel extends JPanel {
 	private JPanel filterSectionContainer = new JPanel();
 	
 	//String arrays that hold all the options for each filter category
-	private String[] sexOptions = { "Male", "Female", "All" };
-	private String[] employmentTypeOptions = { "Full-time", "Part-time", "All" };
-	private String[] educationLevelOptions = { "" };	//TODO: Finish these
-	private String[] immigrantStatusOptions = { "" };
+	private String[] sexOptions = { "Male", "Female", "Both Sexes" };
+	private String[] employmentTypeOptions = { "Full-time employment", "Part-time employment", "Labour force" };
+	private String[] educationLevelOptions = { "No degree, certificate or diploma", "High school graduate", 
+			"Post-secondary certificate or diploma", "Bachelor's degree", "Above bachelor's degree", "Total; all education levels" };
+	private String[] immigrantStatusOptions = { "Born in Canada", "Very recent immigrants; 5 years or less", 
+			"Recent immigrants; 5+ to 10 years", "Established immigrants; 10+ years", "Non-landed immigrants" };
 	
 	//Arrays that hold the radio buttons for each filter category
 	private JRadioButton[] sexButtons = new JRadioButton[sexOptions.length];
 	private JRadioButton[] employmentTypeButtons = new JRadioButton[employmentTypeOptions.length];
 	private JRadioButton[] educationLevelButtons = new JRadioButton[educationLevelOptions.length];
 	private JRadioButton[] immigrantStatusButtons = new JRadioButton[immigrantStatusOptions.length];
+	
+	//2D array that holds all the sets of radio buttons in one structure
+	private JRadioButton[][] filterButtons = { sexButtons, employmentTypeButtons, educationLevelButtons, immigrantStatusButtons };
 	
 	private JPanel filterPanelTemplate;
 	
@@ -40,10 +45,6 @@ public class ImmigrationLabourChartFilterPanel extends JPanel {
 		
 		//Set the filter panel template object
 		this.filterPanelTemplate = filterPanelTemplate;
-		
-		//Limit this panel's size to minimize unnecessary blank space between panels
-		setPreferredSize(new Dimension(1600, 500));
-		setMaximumSize(new Dimension(1600, 500));
 		
 		//Use the null layout manager to allow components to be placed on this panel using coordinates
 		setLayout(null);
@@ -74,6 +75,10 @@ public class ImmigrationLabourChartFilterPanel extends JPanel {
 		return immigrantStatusButtons;
 	}
 	
+	public JRadioButton[][] getFilterButtons() {
+		return filterButtons;
+	}
+	
 	//This method sets up the header label for all the filter sections
 	private void setUpChartFilterLabel() {
 		
@@ -96,32 +101,32 @@ public class ImmigrationLabourChartFilterPanel extends JPanel {
 		
 		//If the current chart frame should allow the user to filter by sex, add this section
 		if (addSex)
-			setUpFilterSection("Sex", 63, sexOptions, sexButtons);
+			setUpFilterSection("Sex", 63, 3, sexOptions, sexButtons);
 		
 		//If the current chart frame should allow the user to filter by employment type, add this section
 		if (addEmploymentType)
-			setUpFilterSection("Employment type", 200, employmentTypeOptions, employmentTypeButtons);
+			setUpFilterSection("Employment type", 200, 2, employmentTypeOptions, employmentTypeButtons);
 		
 		//If the current chart frame should allow the user to filter by education level, add this section
 		if (addEducationLevel)
-			setUpFilterSection("Education level", 180, educationLevelOptions, educationLevelButtons);
+			setUpFilterSection("Education level", 180, 1, educationLevelOptions, educationLevelButtons);
 		
 		//If the current chart frame should allow the user to filter by immigrant status, add this section
 		if (addImmigrantStatus)
-			setUpFilterSection("Immigrant status", 190, immigrantStatusOptions, immigrantStatusButtons);
+			setUpFilterSection("Immigrant status", 190, 1, immigrantStatusOptions, immigrantStatusButtons);
 		
 	}
 	
 	//This method sets up a filter section with the specified section name, filter categories,
 	//and the array to hold the filter buttons
-	private void setUpFilterSection(String sectionName, int sectionNameLabelWidth,
+	private void setUpFilterSection(String sectionName, int sectionNameLabelWidth, int buttonsPerRow,
 			String[] filterCategories, JRadioButton[] filterButtonArray) {
 		
 		//Create a panel for this section, using a null layout to place components by coordinates
 		JPanel filterSectionPanel = new JPanel(null);
 		
-		//Calculate how many rows of buttons there will be (given that each row holds 3 buttons)
-		int	numButtonRows = (filterButtonArray.length + 2) / 3;
+		//Calculate how many rows of buttons there will be (given the number of buttons each row holds
+		int	numButtonRows = (filterButtonArray.length + (buttonsPerRow - 1)) / buttonsPerRow;
 		
 		//Limit the size of this panel to minimize blank space between filter sections
 		filterSectionPanel.setPreferredSize(new Dimension(1600, 60 + 50 * numButtonRows));
@@ -141,10 +146,10 @@ public class ImmigrationLabourChartFilterPanel extends JPanel {
 		for (int index = 0; index < filterButtonArray.length; index++)
 			filterButtonArray[index] = new JRadioButton("  " + filterCategories[index]);
 		
-		//Set up a grid layout panel with 1 row to display the radio buttons, then add it to
-		//the filter section panel
+		//Set up a grid layout panel with the calculated number of rows to display the radio buttons, then add it to
+		//the filter section panel.
 		JPanel filterButtonPanel = new JPanel(new GridLayout(numButtonRows, 3));
-		filterButtonPanel.setBounds(0, 50 * numButtonRows, filterPanelTemplate.getWidth() - 60, 50);
+		filterButtonPanel.setBounds(0, 50, filterPanelTemplate.getWidth() - 60, 50 * numButtonRows);
 		filterSectionPanel.add(filterButtonPanel);
 		
 		//Group the radio buttons together so that only one can be selected at a time

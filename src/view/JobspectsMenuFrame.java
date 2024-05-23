@@ -17,7 +17,7 @@ import controller.WagesByEducationChartController;
 
 //TODO: use a panel for each dataset, OR just an array of "learn more buttons" so that
 //the functionality can be done in the controller class
-public class JobspectsMenuFrame extends JFrame {
+public class JobspectsMenuFrame extends JobspectsFrame {
 	
 	// Attributes
 	private JobspectsMenuFrame menuFrame = this;
