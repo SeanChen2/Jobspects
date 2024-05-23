@@ -35,7 +35,7 @@ public class ImmigrationDatasetManager {
 	private HashMap<Integer, ArrayList<ImmigrationDataRow>> data = new HashMap<>();
 	
 	//This list contains the aggregates for each of the 15 years covered in the data
-	private ArrayList<ImmigrationDataRow> yearlyData = new ArrayList<>();
+	private HashMap<Integer, ArrayList<ImmigrationDataRow>> yearlyData = new HashMap<>();
 	
 	//Field for which year the data is being displayed for.
 	//NOTE: if this value is -1, the dataset will aggregate and include data for each of the 15 years
@@ -50,9 +50,11 @@ public class ImmigrationDatasetManager {
 	//Constructor
 	public ImmigrationDatasetManager() {
 		
-		//Fill the data map with the years from 2006 to 2020 (as outlined in the CSV file)
-		for (int year = 2006; year <= 2020; year++)
+		//Fill the data maps with the years from 2006 to 2020 (as outlined in the CSV file)
+		for (int year = 2006; year <= 2020; year++) {
 			data.put(year, new ArrayList<ImmigrationDataRow>());
+			yearlyData.put(year, new ArrayList<ImmigrationDataRow>());
+		}
 		
 		//Fill the month-to-number map with pairs of month names and numbers
 		monthToNum.put("Jan", 1);
@@ -190,7 +192,7 @@ public class ImmigrationDatasetManager {
 			//Fill the yearly data map with all the rows in the first month.
 			//The values of these rows will later act as the "total" for the year.
 			for (rowIndex = 0; rowIndex < DATA_ROWS_PER_MONTH; rowIndex++)
-				yearlyData.add(data.get(year).get(rowIndex));
+				yearlyData.get(year).add(copyOfRow(data.get(year).get(rowIndex)));
 			
 			//Sum up all the values in the remaining months for data aggregation
 			//Note that the remaining months may not be a perfect February-December case.
@@ -200,11 +202,23 @@ public class ImmigrationDatasetManager {
 				//For every row in this month, add all of its values to the "total" rows in the yearly data list,
 				//so that these "total" rows will eventually hold total values for the year.
 				for (int aggregateRowIndex = 0; aggregateRowIndex < DATA_ROWS_PER_MONTH; aggregateRowIndex++) {
-					yearlyData.get(aggregateRowIndex).addAllValues(data.get(year).get(rowIndex++));
+					yearlyData.get(year).get(aggregateRowIndex).addAllValues(data.get(year).get(rowIndex++));
 				}
 				
 			}
 		}
+		
+	}
+	
+	//This method creates a copy of the given immigration data row
+	private ImmigrationDataRow copyOfRow(ImmigrationDataRow originalRow) {
+		
+		return new ImmigrationDataRow(originalRow.getMonth(), originalRow.getYear(), originalRow.getProvince(), originalRow.getImmigrantStatus(),
+				originalRow.getEmploymentType(), originalRow.getSex(), originalRow.getAge(), originalRow.getAllEducationLevelsValue(),
+				originalRow.getNoPseValue(), originalRow.getNoCertificationsValue(), originalRow.getHighSchoolGradValue(), 
+				originalRow.getHighSchoolGradSomePseValue(), originalRow.getPseValue(), originalRow.getCertificateOrDiplomaValue(),
+				originalRow.getWithoutHighSchoolGradValue(), originalRow.getWithHighSchoolGradValue(), originalRow.getUniversityDegreeValue(),
+				originalRow.getBachelorDegreeValue(), originalRow.getAboveBachelorDegreeValue());
 		
 	}
 	
@@ -230,12 +244,23 @@ public class ImmigrationDatasetManager {
 		
 		DefaultCategoryDataset filteredDataset = new DefaultCategoryDataset();
 		
-		//If the user wants to see data for all 15 years, filter the aggregated yearly data.
+		//If the user wants to see data for all 15 years, filter all the yearly data.
 		//Otherwise, filter the actual data with separate months.
-		ArrayList<ImmigrationDataRow> originalDataset = (requestedYear == -1) ? yearlyData : data.get(requestedYear);
+		if (requestedYear == -1)
+			for (int year = 2006; year <= 2020; year++)
+				addDataPointsFromList(yearlyData.get(year), filteredDataset);
+		else
+			addDataPointsFromList(data.get(requestedYear), filteredDataset);
+		
+		return filteredDataset;
+		
+	}
+	
+	//This method adds all the data rows from the given list to the filtered category dataset
+	private void addDataPointsFromList(ArrayList<ImmigrationDataRow> dataRowList, DefaultCategoryDataset filteredDataset) {
 		
 		RowIterator:
-		for (ImmigrationDataRow row : originalDataset) {
+		for (ImmigrationDataRow row : dataRowList) {
 			
 			//First, disregard this row if it doesn't satisfy the row filters
 			for (Entry<String, ArrayList<String>> filter : filteredRows.entrySet())
@@ -257,8 +282,6 @@ public class ImmigrationDatasetManager {
 			}
 			
 		}
-		
-		return filteredDataset;
 		
 	}
 	

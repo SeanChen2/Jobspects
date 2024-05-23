@@ -99,8 +99,6 @@ public class OccupationLabourBarChartFrame extends JobspectsChartFrame {
         JPanel barChartPanel = createBarChartPanel();
         barChartPanel.setBounds(50, 150, 800, 600);
         getContentPane().add(barChartPanel);
-
-        setVisible(true);
     }
 
     //

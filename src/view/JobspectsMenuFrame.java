@@ -102,9 +102,6 @@ public class JobspectsMenuFrame extends JobspectsFrame {
 		
 		// Don't allow the user to resize the screen
 		setResizable(false);
-		
-		// Make the JFrame visible
-		setVisible(true);
 	}
 
 	// Getters and Setters

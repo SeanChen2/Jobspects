@@ -3,7 +3,6 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import view.DatasetSelectionPanel;
 import view.JobspectsFrame;
 import view.JobspectsMenuFrame;
 import view.JobspectsTitleFrame;
@@ -31,16 +30,31 @@ public class JobspectsMainController implements ActionListener {
 	//Constructor
 	public JobspectsMainController() {
 		
+		//Add action listeners to all the buttons in the frames
+		addActionListeners();
+		
 		//Fill the chart controller array with 5 chart controllers
-		chartControllers[0] = new OccupationLabourChartController();
+		chartControllers[0] = new OccupationLabourChartController(menuFrame);
 		chartControllers[1] = new ImmigrationLabourChartController(menuFrame);
-		chartControllers[2] = new UnemploymentDurationChartController();
-		chartControllers[3] = new WagesByEducationChartController();
-		chartControllers[4] = new TourismEmploymentChartController();
+		chartControllers[2] = new UnemploymentDurationChartController(menuFrame);
+		chartControllers[3] = new WagesByEducationChartController(menuFrame);
+		chartControllers[4] = new TourismEmploymentChartController(menuFrame);
 		
 		//Show the title frame when the app is opened
 		currentFrame = titleFrame;
 		titleFrame.setVisible(true);
+		
+	}
+	
+	//This method is called whenever one of the buttons in the title frame or menu frame is pressed
+	private void addActionListeners() {
+		
+		//Listen for when the "start" button in the title frame is pressed
+		titleFrame.getStartButton().addActionListener(this);
+		
+		//Listen for when one of the dataset selection buttons in the menu frame is pressed
+		for (int buttonIndex = 0; buttonIndex < NUM_CHARTS; buttonIndex++)
+			menuFrame.getSelectionButtons()[buttonIndex].addActionListener(this);
 		
 	}
 	
@@ -50,16 +64,21 @@ public class JobspectsMainController implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
 		
 		//Title frame: if the "Get Started" button was pressed, navigate to the menu frame
-		if (event.getSource() == titleFrame.getStartButton())
+		if (event.getSource() == titleFrame.getStartButton()) {
 			switchToFrame(menuFrame);
+		}
 		
-		//Menu frame: if any of the chart selection panels were pressed, let the corresponding
-		//controller activate the correct chart frame
-		for (int index = 0; index < NUM_CHARTS; index++) {
+		else {
 			
-			if (event.getSource() == menuFrame.getSelectionButtons()[index]) {
-				currentFrame.setVisible(false);
-				chartControllers[index].showChartFrame();
+			//Menu frame: if any of the chart selection panels were pressed, let the corresponding
+			//controller activate the correct chart frame
+			for (int index = 0; index < NUM_CHARTS; index++) {
+				
+				if (event.getSource() == menuFrame.getSelectionButtons()[index]) {
+					currentFrame.setVisible(false);
+					chartControllers[index].showChartFrame();
+				}
+				
 			}
 			
 		}
@@ -74,7 +93,7 @@ public class JobspectsMainController implements ActionListener {
 		
 		//Set the current frame to the new frame, then show the new frame
 		currentFrame = newFrame;
-		newFrame.setVisible(true);
+		currentFrame.setVisible(true);
 		
 	}
 	

@@ -34,7 +34,7 @@ public class WagesByEducationScatterplotFrame extends JobspectsChartFrame {
 		setAverageCalculationPanel(new AverageCalculationPanel(true));
 		
     	// Build the frame
-    	showFrame();
+    	buildFrame();
     }
     
     // Getters and Setters
@@ -60,9 +60,8 @@ public class WagesByEducationScatterplotFrame extends JobspectsChartFrame {
 
 	// Utility Methods
 	// Build the frame
-    public void showFrame() {
+    public void buildFrame() {
     	setSize(1920, 1080);
-    	setVisible(true);
     	getScreenTitleLabel().setText("    Does a Higher Education Correlate to a Higher Income? ");
         DatasetManager datasetManager = new DatasetManager();
         

@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import view.JobspectsMenuFrame;
 
-public class TourismEmploymentChartController extends ChartController {
+public class OccupationLabourChartController extends ChartController {
 
-	public TourismEmploymentChartController(JobspectsMenuFrame menuFrame) {
+	public OccupationLabourChartController(JobspectsMenuFrame menuFrame) {
 		super(menuFrame);
 		// TODO Auto-generated constructor stub
 	}

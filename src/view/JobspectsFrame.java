@@ -68,7 +68,6 @@ public  class JobspectsFrame extends JFrame {
 		    setContentPane(gradientPanel);
 		        
 		    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			setVisible(true);
 
 		}
 		

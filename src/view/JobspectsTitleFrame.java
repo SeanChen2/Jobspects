@@ -47,10 +47,10 @@ public class JobspectsTitleFrame extends JobspectsFrame {
 			
 			// Create the button
 	        Icon gs = new ImageIcon("./images/GetStarted.png");
-	        JButton getStartedButton = new JButton(gs);
-	        getStartedButton.setBounds(44, 639, 301, 70);
-	        getStartedButton.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
-			add(getStartedButton);
+	        startButton = new JButton(gs);
+	        startButton.setBounds(44, 639, 301, 70);
+	        startButton.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+			add(startButton);
 			
 			// Create a JLabel to hold the background image
 			JLabel backgroundLabel = new JLabel(backgroundImage);
@@ -58,15 +58,6 @@ public class JobspectsTitleFrame extends JobspectsFrame {
 	       
 	        // Add background to frame
 	        add(backgroundLabel);
-	        
-	        // If button is clicked
-			getStartedButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent event) {
-					// Close this screen and create a new frame
-					new JobspectsMenuFrame();
-					dispose();
-				}
-			});
 	        
 			// Set the size of the frame
 			setSize(1405, 875);
@@ -77,8 +68,7 @@ public class JobspectsTitleFrame extends JobspectsFrame {
 			// Don't allow the user to resize the screen
 			setResizable(false);
 			
-			// Make the JFrame visible
-			setVisible(true);
+			setVisible(false);
 	}
 
 	@Override
