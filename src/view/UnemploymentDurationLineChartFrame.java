@@ -5,21 +5,18 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import view.OccupationLabourBarChartFrame.CircularGradientPanel;
 
-public class UnemploymentDurationLineChartFrame extends JobspectsChartFrame implements ActionListener{
+public class UnemploymentDurationLineChartFrame extends JFrame implements ActionListener{
 	
-	private JPanel filterPanel = new JPanel();
-	
+	private JButton backButton;
+
 	public UnemploymentDurationLineChartFrame() {
 		setSize(1920, 1080);
 		// You'll never see it coming Sean
@@ -27,9 +24,7 @@ public class UnemploymentDurationLineChartFrame extends JobspectsChartFrame impl
 		//CircularGradientPanel gradientPanel = new CircularGradientPanel();
 		//gradientPanel.setLayout(null);
 		//setContentPane(gradientPanel);
-		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		setAverageCalculationPanel(new AverageCalculationPanel(true));
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		setUpChartNavButtons();
 		
@@ -41,30 +36,40 @@ public class UnemploymentDurationLineChartFrame extends JobspectsChartFrame impl
 		 
 		 SetUpAverageSection();
 		 
-//		 getChartNavButtons();
-//		 
-//		 getCompareCategoryButtons();
-//		 
-//		 getSexButtons();
-//		 
+		 getChartNavButtons();
+		 
+		 getCompareCategoryButtons();
+		 
+		 getSexButtons();
+		 
 		// getTimeRangeTextFields()
 		
+		// Create button
+		backButton = new JButton("<");
+		backButton.addActionListener(this);
+
+		// Set absolute position for button
+		backButton.setBounds(10, 10, 50, 30); // (x, y, width, height)
+
+		// Add button to content pane
+		getContentPane().add(backButton);
 
 		// Create and add label
-		getScreenTitleLabel().setText("    What factors affect the Duration of Employment in Canada?");
+		JLabel titleLabel = new JLabel("What factors affect the Duration of Employment in Canada?");
+		titleLabel.setFont(new Font("Serif", Font.BOLD, 55));
+		titleLabel.setForeground(Color.WHITE); // Set text color to white
 
 		// Set position for label
-//		titleLabel.setBounds(10, 30, 5000, 100); // (x, y, width, height)
+		titleLabel.setBounds(10, 30, 5000, 100); // (x, y, width, height)
 
 		// Add label to content pane
-//		getContentPane().add(titleLabel);
+		getContentPane().add(titleLabel);
 
 		// Set content pane layout to null for absolute positioning
 		getContentPane().setLayout(null);
 
 
-		 //Create and add JTextArea
-		
+		// Create and add JTextArea
 //		JTextArea textArea = new JTextArea();
 //		textArea.setFont(new Font("Serif", Font.PLAIN, 16));
 //		textArea.setForeground(Color.BLACK);
@@ -78,7 +83,7 @@ public class UnemploymentDurationLineChartFrame extends JobspectsChartFrame impl
 		// Set content pane layout to null for absolute positioning
 		getContentPane().setLayout(null);
 		
-		//setVisible(false);
+		setVisible(false);
 
 
 	}
@@ -93,20 +98,7 @@ public class UnemploymentDurationLineChartFrame extends JobspectsChartFrame impl
 
 
 	private void setUpFilterPanel() {
-		//Display the filter "sections" vertically using a box layout
-		filterPanel.setLayout(new BoxLayout(filterPanel, BoxLayout.Y_AXIS));
-		filterPanel.setBounds(FRAME_WIDTH / 2 + 150, 180, FRAME_WIDTH / 2 - 200, FRAME_HEIGHT - 290);
-		filterPanel.setBackground(Color.decode("#fffef7"));
-
-		
-		//Make the filter panel vertically scrollable
-		JScrollPane filterScrollPane = new JScrollPane(filterPanel, 
-				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-	            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		
-		filterScrollPane.setBounds(FRAME_WIDTH / 2 + 150, 180, FRAME_WIDTH / 2 - 200, FRAME_HEIGHT - 290);
-		filterScrollPane.setBackground(Color.WHITE);
-		add(filterScrollPane);
+		// TODO Auto-generated method stub
 		
 	}
 
@@ -165,10 +157,19 @@ public class UnemploymentDurationLineChartFrame extends JobspectsChartFrame impl
 
 
 
+	public void setBackButton(JButton backButton) {
+		this.backButton = backButton;
+	}
+
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
+		if (e.getSource() == backButton) {
+            // Handle button click event
+            System.out.println("Back button clicked");
+            new JobspectsTitleFrame();
+            dispose();
+        }
 	}
 
 }
