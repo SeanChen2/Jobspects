@@ -31,7 +31,7 @@ import view.WagesByEducationScatterplotFrame;
  * Name: Kelvin Nguyen
  * WagesByEducationChartController
  * Group 1
- * Date: May 22nd, 2024
+ * Date: May 17th, 2024
  */
 
 
@@ -61,14 +61,10 @@ public class WagesByEducationChartController extends ChartController implements 
 		return filterDataButton;
 	}
 
+
 	public void setFilterDataButton(JButton filterDataButton) {
 		this.filterDataButton = filterDataButton;
 	}
-
-	@Override
-    public void updateChart() {
-        // TODO Auto-generated method stub
-    }
 
     @Override
     protected ArrayList<Double> getValuesForAverage() {
@@ -167,7 +163,7 @@ public class WagesByEducationChartController extends ChartController implements 
         
         // Create radio buttons for education levels
         String[] educationLevels = {
-        	"Elementary School", "High School", "High School Graduate", 
+            "Elementary School", "High School", "High School Graduate", 
             "University", "Undergraduate Degree", "College Degree", 
             "Community College", "College", "Graduate Degree", 
             "Masters Degree", "All"
@@ -233,35 +229,52 @@ public class WagesByEducationChartController extends ChartController implements 
     }
 
     @Override
-    // When the user submits the filters, retreive what they chose
+    // When the user picks the filters and presses the filter data button, check to see if it is valid and recieve their choices
     public void actionPerformed(ActionEvent e) {
+    	// If user presses the back button, make sure the program does not confuse it with the filter data button
     	super.actionPerformed(e);
     	
-    	// Make sure the program doesnt confuse itself with the back button
     	if (e.getSource() == getFilterDataButton()) {
-	    	
-	    	// Check to see if all the options were filled
-	        if (!isSelectionMade(yearGroup, "year") || !isSelectionMade(educationGroup, "education level") || !isSelectionMade(salaryGroup, "salary")) {
-	                // If they are move on
-	        		return;
-	            }
-	        
-	        // Retrieve selected button texts
-	        String selectedYear = getUserChoice(yearGroup);
-	        String selectedEducation = getUserChoice(educationGroup);
-	        String selectedSalary = getUserChoice(salaryGroup);
-	        
-	        // test
-	        System.out.println("Selected Year: " + selectedYear);
-	        System.out.println("Selected Education Level: " + selectedEducation);
-	        System.out.println("Selected Salary: " + selectedSalary);
+    	    // Check to see if the user selected all fields, if not then call the isSelectionMade method
+    	    if (!isSelectionMade(yearGroup, "Year") || 
+    	        !isSelectionMade(educationGroup, "Education Level") || 
+    	        !isSelectionMade(salaryGroup, "Salary")) {
+    	        // If it is working get out of this group of statements
+    	    	return; 
+    	    }
+		    // Retrieve selected button texts
+		    String selectedYear = getUserChoice(yearGroup);
+		    String selectedEducation = getUserChoice(educationGroup);
+		    String selectedSalary = getUserChoice(salaryGroup);
+		
+		    // test
+		    System.out.println("Selected Year: " + selectedYear);
+		    System.out.println("Selected Education Level: " + selectedEducation);
+		    System.out.println("Selected Salary: " + selectedSalary);
+		    
+		    // Update the chart
+		   
     	}
       
+    }
+    
+ // Method to validate if a selection is made in the ButtonGroup
+    private boolean isSelectionMade(ButtonGroup group, String groupName) {
+    	// If a field is left empty
+        if (getUserChoice(group) == "nothing") {
+            // If there was an empty selection, return an error message
+            javax.swing.JOptionPane.showMessageDialog(null, "Please select a " + groupName + ".", "Input Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            // Return false
+            return false;
+        }
+        // Otherwise if it is no longer empty then return true
+        return true; 
     }
     
     // SOURCE: https://www.javatpoint.com/java-jradiobutton
     // Get the correct field the user selected from the JRadioButton groups
     private String getUserChoice(ButtonGroup group) {
+    	
     	// Get all of the choices for the ButtonGroup
         for (AbstractButton button : java.util.Collections.list(group.getElements())) {
         	// If the button "is selected":
@@ -273,16 +286,10 @@ public class WagesByEducationChartController extends ChartController implements 
         // If none are selected then return false
         return "nothing";
     }
-    
-    // This method ensures that the user chose a filter.
-    private boolean isSelectionMade(ButtonGroup group, String groupName) {
-        if (getUserChoice(group).equals("nothing")) {
-        	// Show an error and return false
-        	javax.swing.JOptionPane.showMessageDialog(null, "Please select a " + groupName + ".", "Input Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-            return false;
 
-        }
-        // If all values are entered return true
-        return true;
-    }
+	@Override
+	public void updateChart() {
+		// TODO Auto-generated method stub
+		
+	}
 }
