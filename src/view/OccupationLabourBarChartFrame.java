@@ -1,11 +1,28 @@
 package view;
-
 import javax.swing.*;
-import java.awt.*;
-import java.awt.geom.Point2D;
 
-public class OccupationLabourBarChartFrame extends JFrame {
+import java.util.*;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.geom.Point2D;
+import java.io.File;
+import java.io.FileNotFoundException;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
+
+import controller.OccupationLabourBarChartController;
+
+import model.Labour;
+
+public class OccupationLabourBarChartFrame extends JobspectsChartFrame {
     private JButton back;
+    private ArrayList<Labour> labourList = new ArrayList<Labour>();
 
     class CircularGradientPanel extends JPanel {
         @Override
@@ -39,37 +56,33 @@ public class OccupationLabourBarChartFrame extends JFrame {
     }
 
     public OccupationLabourBarChartFrame() {
+        setUpFrame(); // Initialize the common frame elements
+
         setSize(1920, 1080);
         setTitle("Title Frame");
+        
+        readFile();
+
         CircularGradientPanel gradientPanel = new CircularGradientPanel();
         gradientPanel.setLayout(null);
         setContentPane(gradientPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Create button
-        back = new JButton("<");
+        back = getBackButton(); // Use the back button from the parent class
 
         // Set absolute position for button
         back.setBounds(10, 10, 50, 30); // (x, y, width, height)
+        getContentPane().add(back); // Add button to content pane
 
-        // Add button to content pane
-        getContentPane().add(back);
+//        // Add ActionListener to the back button
+//        back.addActionListener(e -> {
+//           new OccupationLabourBarChartController();
+//        });
 
         // Create and add label
-        JLabel titleLabel = new JLabel("What are Canada's top jobs? Are there any trends/biases?");
-        titleLabel.setFont(new Font("Serif", Font.BOLD, 55));
-        titleLabel.setForeground(Color.WHITE); // Set text color to white
-
-        // Set position for label
-        titleLabel.setBounds(10, 30, 5000, 100); // (x, y, width, height)
-
-        // Add label to content pane
-        getContentPane().add(titleLabel);
-
-        // Set content pane layout to null for absolute positioning
-        getContentPane().setLayout(null);
-
-        setVisible(true);
+        JLabel titleLabel = getScreenTitleLabel(); // Use the screen title label from the parent class
+        titleLabel.setText("What are Canada's top jobs? Are there any trends/biases?");
+        getContentPane().add(titleLabel); // Add label to content pane
 
         // Create and add JTextArea
         JTextArea textArea = new JTextArea();
@@ -79,25 +92,102 @@ public class OccupationLabourBarChartFrame extends JFrame {
         textArea.setBounds(1500, 500, 400, 300);
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
-        textArea.setText("This is a JTextArea.\n"
-                + "Nothing is written atm for testing purposes only");
+        textArea.setText("This is a JTextArea.\n" + "Nothing is written atm for testing purposes only");
         getContentPane().add(textArea);
 
-        // Set content pane layout to null for absolute positioning
-        getContentPane().setLayout(null);
-    }
-    public class BarChart extends JPanel {
-    	
+        // Create and add the bar chart panel
+        JPanel barChartPanel = createBarChartPanel();
+        barChartPanel.setBounds(50, 150, 800, 600);
+        getContentPane().add(barChartPanel);
+
+        setVisible(true);
     }
 
-    public JButton getBackButton() {
-        return back;
+    //
+    private void readFile() {
+		
+    	Scanner inputFile;
+		
+    	try {
+			inputFile = new Scanner(new File("data/Occupation.csv"));
+			
+
+	    	inputFile.useDelimiter(",|\r\n");
+	    	
+	    	//this skips the first nine lines certain lines from the data to make it more compact/smaller
+	    	for (int skip = 0; skip < 9; skip++) {
+	    		inputFile.nextLine();
+	    	}
+	    	
+	    	int index = 0;
+	    	
+	    	while(inputFile.hasNext()) {
+
+	    		
+	    		labourList.add(index,new Labour());
+	    		
+	    		labourList.get(index).setMonth(inputFile.next());
+	    		labourList.get(index).setGeography(inputFile.next());
+	    		labourList.get(index).setLaborForce(inputFile.next());
+	    		labourList.get(index).setOccupation(inputFile.next());
+	    		labourList.get(index).setAge(inputFile.next());
+	    		labourList.get(index).setBoth(inputFile.next());
+	    		labourList.get(index).setMale(inputFile.next());
+	    		labourList.get(index).setFemale(inputFile.next());
+	    		
+	    		// skips every 7 initial skip
+		    	for (int skip = 0; skip < 7; skip++) {
+		    		inputFile.nextLine();
+		    	}
+
+
+	    		index++;
+	    		
+	    	}
+	    	
+
+	    	
+    		System.out.println(labourList.get(7).getLaborForce());
+    	//	System.out.println(labourList.get(1).getAge());
+    		//System.out.println(labourList.get(2).getAge());
+
+	    	
+		} catch (FileNotFoundException error) {
+			
+			System.out.println(error);
+			
+		}
+
+    	
+		
+	}
+
+	private JPanel createBarChartPanel() {
+        JFreeChart barChart = ChartFactory.createBarChart(
+                "Occupation Labour Statistics", // Chart title
+                "Occupation", // X-axis label
+                "Number of Jobs", // Y-axis label
+                createDataset(), // Dataset
+                PlotOrientation.VERTICAL,
+                true, true, false);
+
+        return new ChartPanel(barChart);
+    }
+
+    private CategoryDataset createDataset() {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+        dataset.addValue(12000, "Jobs", "Software Developer");
+        dataset.addValue(8000, "Jobs", "Data Analyst");
+        dataset.addValue(15000, "Jobs", "Project Manager");
+        // Add more data as needed
+
+        return dataset;
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             OccupationLabourBarChartFrame frame = new OccupationLabourBarChartFrame();
-            new controller.OccupationLabourBarChartController(frame);
             frame.setVisible(true);
         });
     }

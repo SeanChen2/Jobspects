@@ -1,44 +1,38 @@
 package controller;
 
 import view.OccupationLabourBarChartFrame;
+import view. JobspectsMenuFrame; // Import the frame you want to navigate to
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
-
-//data file: scanner
-
-public class OccupationLabourBarChartController implements ActionListener {
+public class OccupationLabourBarChartController {
     private OccupationLabourBarChartFrame frame;
-    
-    //scanner = new Scanner(new file());
-    
-    
-    
 
     public OccupationLabourBarChartController(OccupationLabourBarChartFrame frame) {
         this.frame = frame;
-        this.frame.getBackButton().addActionListener(this);
+        initialize();
     }
-    
-   public void updateChart() {
-	   
-   }
-    
-    
-    static void getValueForAverage(){
-    	
-    	
-    }
-    
 
-    @Override
-    public void actionPerformed(ActionEvent event) {
-        if (event.getSource() == frame.getBackButton()) {
-            // Handle button click event
-            System.out.println("Back button clicked");
-            new view.JobspectsTitleFrame();
-            frame.dispose();
-        }
+    private void initialize() {
+        frame.getBackButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onBackButtonClicked();
+            }
+        });
+    }
+
+    private void onBackButtonClicked() {
+        // Perform action when the back button is clicked
+        System.out.println("Back button clicked!");
+
+        // Navigate to another frame
+        // For example, navigate to AnotherFrame
+        JobspectsMenuFrame anotherFrame = new JobspectsMenuFrame();
+        anotherFrame.setVisible(true);
+
+        // Close the current frame
+        frame.dispose();
     }
 }
