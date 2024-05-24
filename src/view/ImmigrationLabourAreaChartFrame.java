@@ -1,7 +1,10 @@
 package view;
 
+import javax.swing.JLabel;
+
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 
 //This concrete class is a frame that displays the area chart for the immigration
 //labour force sub-topic. All the specific chart filters/features will be added to
@@ -11,6 +14,11 @@ public class ImmigrationLabourAreaChartFrame extends ImmigrationLabourChartFrame
 	//References to GUI panels for the "sections" of chart filters
 	private ImmigrationLabourCompareCategoryPanel compareCategorySection = new ImmigrationLabourCompareCategoryPanel(getFilterPanel());
 	private ImmigrationLabourDatePickerPanel datePickerSection = new ImmigrationLabourDatePickerPanel(getFilterPanel());
+	
+	//Label above the area chart that warns the user of the artificial adjustments made to 2006 and 2020.
+	//Only displays when the chart is displaying aggregated data for all 15 years.
+	private JLabel adjustmentWarningLabel = new JLabel("<html>**The years 2006 and 2020 are missing data for a few months,"
+			+ "<br/>so the aggregated data has been artificially adjusted for those years.</html>");
 
 	//Constructor
 	public ImmigrationLabourAreaChartFrame() {
@@ -24,9 +32,11 @@ public class ImmigrationLabourAreaChartFrame extends ImmigrationLabourChartFrame
 		setUpDatePickerSection();
 		setUpAverageSection();
 		
+		setUpAdjustmentWarningLabel();
+		
 	}
 	
-	//Getters for all the sections of filters
+	//Getters for all the sections of filters, and the adjustment warning label
 	
 	public ImmigrationLabourCompareCategoryPanel getCompareCategorySection() {
 		return compareCategorySection;
@@ -34,6 +44,10 @@ public class ImmigrationLabourAreaChartFrame extends ImmigrationLabourChartFrame
 	
 	public ImmigrationLabourDatePickerPanel getDatePickerSection() {
 		return datePickerSection;
+	}
+	
+	public JLabel getAdjustmentWarningLabel() {
+		return adjustmentWarningLabel;
 	}
 
 	//This method adds a section of category filters that allows the user to
@@ -75,6 +89,18 @@ public class ImmigrationLabourAreaChartFrame extends ImmigrationLabourChartFrame
 	protected void setUpAverageSection() {
 		
 		
+		
+	}
+	
+	//This method sets up a label above the area chart that warns the user of the artificial adjustments 
+	//made to 2006 and 2020. Only displays when the chart is displaying aggregated data for all 15 years.
+	private void setUpAdjustmentWarningLabel() {
+		
+		adjustmentWarningLabel.setBounds(580, 130, 1000, 100);
+		adjustmentWarningLabel.setForeground(Color.WHITE);
+		adjustmentWarningLabel.setFont(new Font("Sans Serif", Font.PLAIN, 14));
+		
+		add(adjustmentWarningLabel);
 		
 	}
 	

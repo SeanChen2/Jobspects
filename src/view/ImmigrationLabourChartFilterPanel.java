@@ -26,7 +26,7 @@ public class ImmigrationLabourChartFilterPanel extends JPanel {
 	private String[] educationLevelOptions = { "No degree, certificate or diploma", "High school graduate", 
 			"Post-secondary certificate or diploma", "Bachelor's degree", "Above bachelor's degree", "Total; all education levels" };
 	private String[] immigrantStatusOptions = { "Born in Canada", "Very recent immigrants; 5 years or less", 
-			"Recent immigrants; 5+ to 10 years", "Established immigrants; 10+ years", "Non-landed immigrants" };
+			"Recent immigrants; 5+ to 10 years", "Established immigrants; 10+ years", "Non-landed immigrants", "Total" };
 	
 	//Arrays that hold the radio buttons for each filter category
 	private JRadioButton[] sexButtons = new JRadioButton[sexOptions.length];
@@ -171,30 +171,6 @@ public class ImmigrationLabourChartFilterPanel extends JPanel {
 		
 		//Add this filter section panel to the container
 		filterSectionContainer.add(filterSectionPanel);
-		
-	}
-	
-	//This method sets up the section that allows the user to filter by employment type.
-	//This includes a section label and the radio buttons for filter selection.
-	private void setUpEmploymentTypeSection() {
-		
-		
-		
-	}
-	
-	//This method sets up the section that allows the user to filter by education level.
-	//This includes a section label and the radio buttons for filter selection.
-	private void setUpEducationLevelSection() {
-		
-		
-		
-	}
-	
-	//This method sets up the section that allows the user to filter by immigrant status.
-	//This includes a section label and the radio buttons for filter selection.
-	private void setUpImmigrantStatusSection() {
-		
-		
 		
 	}
 	

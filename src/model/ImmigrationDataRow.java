@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 //This template class represents a row of data found in the immigration labour force CSV file
@@ -25,11 +27,6 @@ public class ImmigrationDataRow {
 	private double universityDegreeValue;
 	private double bachelorDegreeValue;
 	private double aboveBachelorDegreeValue;
-	
-	//An array of all the numeric values (employment figures) of the row
-	private double[] employmentFigures = { allEducationLevelsValue, noPseValue, noCertificationsValue, highSchoolGradValue,
-			highSchoolGradSomePseValue, pseValue, certificateOrDiplomaValue, withoutHighSchoolGradValue, withHighSchoolGradValue,
-			universityDegreeValue, bachelorDegreeValue, aboveBachelorDegreeValue };
 	
 	//Constructor
 	public ImmigrationDataRow(String month, int year, String province, String immigrantStatus, String employmentType,
@@ -213,14 +210,6 @@ public class ImmigrationDataRow {
 		this.aboveBachelorDegreeValue = aboveBachelorDegreeValue;
 	}
 
-	public double[] getEmploymentFigures() {
-		return employmentFigures;
-	}
-
-	public void setEmploymentFigures(double[] employmentFigures) {
-		this.employmentFigures = employmentFigures;
-	}
-
 	//Generate a String representation of the object to display in the console
 	@Override
 	public String toString() {
@@ -319,9 +308,44 @@ public class ImmigrationDataRow {
 	//This method adds all the numeric values (employment figures) from a given row, to this row
 	public void addAllValues(ImmigrationDataRow addedRow) {
 		
-		//Add all the employment figures in the "added row" to this row
-		for (int employmentFigureIndex = 0; employmentFigureIndex < employmentFigures.length; employmentFigureIndex++)
-			this.employmentFigures[employmentFigureIndex] += addedRow.getEmploymentFigures()[employmentFigureIndex];
+		//Add all the employment figures from the "added row" to this row
+		this.allEducationLevelsValue += addedRow.getAllEducationLevelsValue();
+		this.noPseValue += addedRow.getNoPseValue();
+		this.noCertificationsValue += addedRow.getNoCertificationsValue();
+		this.highSchoolGradValue += addedRow.getHighSchoolGradValue();
+		this.highSchoolGradSomePseValue += addedRow.getHighSchoolGradSomePseValue();
+		this.pseValue += addedRow.getPseValue();
+		this.certificateOrDiplomaValue += addedRow.getCertificateOrDiplomaValue();
+		this.withoutHighSchoolGradValue += addedRow.getWithoutHighSchoolGradValue();
+		this.withHighSchoolGradValue += addedRow.getWithHighSchoolGradValue();
+		this.universityDegreeValue += addedRow.getUniversityDegreeValue();
+		this.bachelorDegreeValue += addedRow.getBachelorDegreeValue();
+		this.aboveBachelorDegreeValue += addedRow.getAboveBachelorDegreeValue();
+		
+	}
+	
+	//This method adjusts the row's aggregated employment figures if the year is missing some months.
+	//For every employment figure: the adjustment formula takes the mean employment figure for one month,
+	//then adds it to the aggregated sum for every missing month (e.g. add the mean 2 times 
+	//if Jan and Feb are missing).
+	public void adjustData(int numProvidedMonths) {
+		
+		//Calculate the number of missing months based on the number of months provided in the data
+		int numMissingMonths = 12 - numProvidedMonths;
+		
+		//Adjust every employment figure in this aggregated row
+		this.allEducationLevelsValue += allEducationLevelsValue / numProvidedMonths * numMissingMonths;
+		this.noPseValue += noPseValue / numProvidedMonths * numMissingMonths;
+		this.noCertificationsValue += noCertificationsValue / numProvidedMonths * numMissingMonths;
+		this.highSchoolGradValue += highSchoolGradValue / numProvidedMonths * numMissingMonths;
+		this.highSchoolGradSomePseValue += highSchoolGradSomePseValue / numProvidedMonths * numMissingMonths;
+		this.pseValue += pseValue / numProvidedMonths * numMissingMonths;
+		this.certificateOrDiplomaValue += certificateOrDiplomaValue / numProvidedMonths * numMissingMonths;
+		this.withoutHighSchoolGradValue += withoutHighSchoolGradValue / numProvidedMonths * numMissingMonths;
+		this.withHighSchoolGradValue += withHighSchoolGradValue / numProvidedMonths * numMissingMonths;
+		this.universityDegreeValue += universityDegreeValue / numProvidedMonths * numMissingMonths;
+		this.bachelorDegreeValue += bachelorDegreeValue / numProvidedMonths * numMissingMonths;
+		this.aboveBachelorDegreeValue += aboveBachelorDegreeValue / numProvidedMonths * numMissingMonths;
 		
 	}
 	

@@ -27,15 +27,30 @@ import org.jfree.chart.ChartPanel;
 public class ImmigrationLabourChartController extends ChartController implements ChangeListener {
 	
 	//Reference to the immigration labour dataset manager
-	private ImmigrationDatasetManager datasetManager = new ImmigrationDatasetManager();
+	private ImmigrationDatasetManager datasetManager;
 	
 	//Constructor
 	public ImmigrationLabourChartController(JobspectsMenuFrame menuFrame) {
 		
 		super(menuFrame);
 		
-		//Open the area chart frame by default
+		//This controller controls the area chart frame by default
 		setChartFrame(new ImmigrationLabourAreaChartFrame());
+		
+	}
+	
+	//Overrided version of the superclass method that shows the chart frame.
+	//To accommodate the long loading time when the data is read, only read the
+	//CSV file data when the chart frame is opened.
+	@Override
+	public void showChartFrame() {
+		
+		//Finally, show the actual chart frame as usual
+		super.showChartFrame();
+		
+		//Additionally, read in the file data by initializing the dataset manager and
+		//adding default filters
+		datasetManager = new ImmigrationDatasetManager();
 		
 		//By default, show the employment figures for the entire labour force in Canada
 		datasetManager.setCategoryColumn("Year");
@@ -53,6 +68,9 @@ public class ImmigrationLabourChartController extends ChartController implements
 		
 		//Listen for when any of the buttons on the chart frame are pressed
 		addActionListeners();
+		
+		//Automatically make the default chart filter buttons selected
+		showDefaultFilters();
 		
 		//Post the initial chart onto the chart panel
 		updateChart();
@@ -95,6 +113,36 @@ public class ImmigrationLabourChartController extends ChartController implements
 				if (filterButton != null)
 					filterButton.addActionListener(this);
 	
+	}
+	
+	//This method automatically "selects" the radio buttons for the default chart filters
+	private void showDefaultFilters() {
+		
+		//Downcast to an immigration labour chart frame (area chart OR histogram) to access the
+		//chart filter buttons
+		ImmigrationLabourChartFrame immigrationChartFrame = (ImmigrationLabourChartFrame) getChartFrame();
+		
+		//Set all the default chart filters to selected
+		immigrationChartFrame.getChartFilterSection().getSexButtons()[2].setSelected(true);	//Both sexes
+		immigrationChartFrame.getChartFilterSection().getEmploymentTypeButtons()[2].setSelected(true);	//Entire labour force
+		
+		//Only the histogram chart frame has the education level and immigrant status filters
+		if (immigrationChartFrame instanceof ImmigrationLabourHistogramFrame) {
+			immigrationChartFrame.getChartFilterSection().getEducationLevelButtons()[5].setSelected(true);	//All education levels
+			immigrationChartFrame.getChartFilterSection().getImmigrantStatusButtons()[5].setSelected(true);	//Total immigrants
+		}
+		
+		//AREA CHART EXCLUSIVE: set the default compare category buttons and date picker buttons to selected
+		if (immigrationChartFrame instanceof ImmigrationLabourAreaChartFrame) {
+			
+			//Downcast to the area chart frame to access its unique radio buttons
+			ImmigrationLabourAreaChartFrame areaChartFrame = (ImmigrationLabourAreaChartFrame) immigrationChartFrame;
+			
+			areaChartFrame.getCompareCategorySection().getCompareCategoryButtons()[0].setSelected(true);	//Compare education levels
+			areaChartFrame.getDatePickerSection().getDateTypePickerButtons()[0].setSelected(true);	//Display all 15 years
+			
+		}
+		
 	}
 	
 	//This method handles what happens when a button in one of the immigration labour
@@ -256,6 +304,10 @@ public class ImmigrationLabourChartController extends ChartController implements
 			areaChartFrame.getDatePickerSection().getYearSlider().setVisible(false);
 			datasetManager.setRequestedYear(-1);
 			datasetManager.setCategoryColumn("Year");
+			
+			//Also, display a warning label for the artificially adjusted years of 2006 and 2020
+			areaChartFrame.getAdjustmentWarningLabel().setVisible(true);
+			
 			updateChart();
 			
 		}
@@ -267,6 +319,10 @@ public class ImmigrationLabourChartController extends ChartController implements
 			areaChartFrame.getDatePickerSection().getYearSlider().setVisible(true);
 			datasetManager.setRequestedYear(areaChartFrame.getDatePickerSection().getYearSlider().getValue());
 			datasetManager.setCategoryColumn("Month");
+			
+			//Also, hide the warning label for 2006 and 2020, since it does not apply to the single year option
+			areaChartFrame.getAdjustmentWarningLabel().setVisible(false);
+			
 			updateChart();
 			
 		}
@@ -318,7 +374,7 @@ public class ImmigrationLabourChartController extends ChartController implements
 			
 			//Create the stacked area chart from the filtered dataset
 			setChart(ChartFactory.createStackedAreaChart("Immigration Labour Force in Canada - " + yearsDisplayed, 
-					"Month", "Number of employed Canadians", filteredDataset, PlotOrientation.VERTICAL, true, true, false));
+					datasetManager.getCategoryColumn(), "Number of employed Canadians", filteredDataset, PlotOrientation.VERTICAL, true, true, false));
 			
 			//Make the stacked area chart continuous (Source: https://stackoverflow.com/a/7716930)
 			getChart().getCategoryPlot().getDomainAxis().setCategoryMargin(0);

@@ -206,9 +206,16 @@ public class ImmigrationDatasetManager {
 				}
 				
 			}
+			
+			//If this year does not contain data for all 12 months, adjust for the missing pieces
+			if (firstMonth > 1 || lastMonth < 12)
+				for (int adjRowIndex = 0; adjRowIndex < yearlyData.get(year).size(); adjRowIndex++)
+					yearlyData.get(year).get(adjRowIndex).adjustData(lastMonth - firstMonth + 1);
+			
 		}
 		
 	}
+	
 	
 	//This method creates a copy of the given immigration data row
 	private ImmigrationDataRow copyOfRow(ImmigrationDataRow originalRow) {
