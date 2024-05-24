@@ -35,7 +35,7 @@ public class JobspectsMainController implements ActionListener {
 		
 		//Fill the chart controller array with 5 chart controllers
 		chartControllers[0] = new OccupationLabourBarChartController(menuFrame);
-		chartControllers[1] = new ImmigrationLabourChartController(menuFrame);
+//		chartControllers[1] = new ImmigrationLabourChartController(menuFrame);
 		chartControllers[2] = new UnemploymentDurationChartController(menuFrame);
 		chartControllers[3] = new WagesByEducationChartController(menuFrame);
 		chartControllers[4] = new TourismEmploymentChartController(menuFrame);
