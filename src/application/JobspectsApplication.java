@@ -1,29 +1,24 @@
 package application;
 
-import controller.ImmigrationLabourChartController;
 import controller.JobspectsMainController;
-import controller.WagesByEducationChartController;
-import view.ImmigrationLabourAreaChartFrame;
-import view.JobspectsMenuFrame;
-import view.JobspectsTitleFrame;
-import view.WagesByEducationScatterplotFrame;
 
 /*
  * Names: Sean (%), Toby (%), Kelvin (%), Randiv (%), Abishan (%)
- * 
+ *
  * Sean:
- * 
+ *
  * Toby:
- * 
- * Kelvin:
- * 
+ *
+ * Kelvin: JobspectsApplication, JobspectsMenuFrame, GUI, DatasetManager, PersonEducationIncome, 
+ * WagesByEducationChartController, WagesByEducationScatterplotFrame, JFreeChart Scatterplot, JobspectsChartFrame
+ *
  * Randiv:
- * 
+ *
  * Abishan:
- * 
+ *
  * Course Code: ICS4U1
  * Teacher: Mr. Fernandes
- * 
+ *
  * Title: Jobspects
  * Description:
  * Areas of Concern:
