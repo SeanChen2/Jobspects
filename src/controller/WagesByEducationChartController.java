@@ -155,7 +155,7 @@ public class WagesByEducationChartController extends ChartController implements 
             yearPanel.add(radioButton);
         }
 
-        // Create an "all" option too
+        // Create an "all" option. too
         JRadioButton button23 = new JRadioButton("All");
         yearGroup.add(button23);
         yearPanel.add(button23);

@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 
 import org.jfree.chart.ChartFactory;
@@ -21,6 +22,7 @@ import model.UnemploymentDataRow;
 public class UnemploymentDurationChartController extends ChartController implements ActionListener{
 	
 	JButton[] chartNavButtons;
+    private ButtonGroup compareGroup;
     private ArrayList<UnemploymentDataRow> unemploymentDuration;
     private ArrayList<PersonEducationIncome> unemploymentDurationUpdated;
 	
