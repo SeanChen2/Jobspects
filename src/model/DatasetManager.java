@@ -82,8 +82,7 @@ public class DatasetManager {
 				double female = Double.parseDouble(data[6]);
 
 				// Add to the ArrayList
-				unemployment
-						.add(new UnemploymentDataRow(month, year, geography, duration, age, bothSexes, male, female));
+				unemployment.add(new UnemploymentDataRow(month, year, geography, duration, age, bothSexes, male, female));
 
 				// Increment index
 				index++;
@@ -188,6 +187,16 @@ public class DatasetManager {
 	public void setPerson(ArrayList<PersonEducationIncome> person) {
 		this.person = person;
 	}
+
+	public ArrayList<UnemploymentDataRow> getUnemployment() {
+		return unemployment;
+	}
+
+	public void setUnemployment(ArrayList<UnemploymentDataRow> unemployment) {
+		this.unemployment = unemployment;
+	}
+	
+	
 	 
 	
 	
