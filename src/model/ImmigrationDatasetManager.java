@@ -6,7 +6,11 @@ import java.io.*;
 
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.Dataset;
+import org.jfree.data.statistics.SimpleHistogramBin;
+import org.jfree.data.statistics.SimpleHistogramDataset;
 
+//
 public class ImmigrationDatasetManager {
 
 	//Fields
@@ -36,6 +40,9 @@ public class ImmigrationDatasetManager {
 	
 	//This list contains the aggregates for each of the 15 years covered in the data
 	private HashMap<Integer, ArrayList<ImmigrationDataRow>> yearlyData = new HashMap<>();
+	
+	//Flag that determines whether to use the yearly, aggregated data (instead of the monthly data)
+	private boolean usingYearlyData;
 	
 	//Field for which year the data is being displayed for.
 	//NOTE: if this value is -1, the dataset will aggregate and include data for each of the 15 years
@@ -117,6 +124,14 @@ public class ImmigrationDatasetManager {
 		this.data = data;
 	}
 	
+	public boolean isUsingYearlyData() {
+		return usingYearlyData;
+	}
+
+	public void setUsingYearlyData(boolean usingYearlyData) {
+		this.usingYearlyData = usingYearlyData;
+	}
+
 	public int getRequestedYear() {
 		return requestedYear;
 	}
@@ -246,25 +261,58 @@ public class ImmigrationDatasetManager {
 	}
 	
 	
-	//This method generates a dataset with all the filters/constraints applied
-	public DefaultCategoryDataset getFilteredDataset() {
+	//This method generates a category dataset with all the filters/constraints applied.
+	//This dataset is used to display the area chart.
+	public DefaultCategoryDataset getFilteredCategoryDataset() {
 		
-		DefaultCategoryDataset filteredDataset = new DefaultCategoryDataset();
+		//
+		DefaultCategoryDataset filteredCategoryDataset = new DefaultCategoryDataset();
 		
 		//If the user wants to see data for all 15 years, filter all the yearly data.
 		//Otherwise, filter the actual data with separate months.
 		if (requestedYear == -1)
 			for (int year = 2006; year <= 2020; year++)
-				addDataPointsFromList(yearlyData.get(year), filteredDataset);
-		else
-			addDataPointsFromList(data.get(requestedYear), filteredDataset);
+				addAreaChartDataFromList(yearlyData.get(year), filteredCategoryDataset);
 		
-		return filteredDataset;
+		//Otherwise, if the user wants to see the aggregated data for a single year, filter the
+		//aggregated data for that year
+		else if (usingYearlyData)
+			addAreaChartDataFromList(yearlyData.get(requestedYear), filteredCategoryDataset);
+		
+		//Otherwise, if the user wants all the monthly data for a single year, filter the
+		//monthly data for that year
+		else
+			addAreaChartDataFromList(data.get(requestedYear), filteredCategoryDataset);
+		
+		return filteredCategoryDataset;
+		
+	}
+	
+	//This method generates a simple histogram dataset with all the filters/constraints applied.
+	//This dataset is used to display the histogram.
+	public SimpleHistogramDataset getFilteredHistogramDataset() {
+		
+		//
+		SimpleHistogramDataset filteredHistogramDataset = new SimpleHistogramDataset("Total employed Canadian immigrants (with filters)");
+		
+		//Make sure the histogram's y-values are integers based on frequency
+		filteredHistogramDataset.setAdjustForBinSize(false);
+		
+		//Create "bins" for the age ranges provided in the data
+		filteredHistogramDataset.addBin(new SimpleHistogramBin(15, 24, true, true));
+		filteredHistogramDataset.addBin(new SimpleHistogramBin(25, 54, true, true));
+		filteredHistogramDataset.addBin(new SimpleHistogramBin(55, 64, true, true));
+		filteredHistogramDataset.addBin(new SimpleHistogramBin(65, 122, true, true));	//122 is the highest age ever lived (Source: https://en.wikipedia.org/wiki/Oldest_people#:~:text=The%20longest%20documented%20and%20verified,women%20predominate%20in%20combined%20records.)
+		
+		//Filter the data for the requested year
+		addHistogramDataFromList(yearlyData.get(requestedYear), filteredHistogramDataset);
+		
+		return filteredHistogramDataset;
 		
 	}
 	
 	//This method adds all the data rows from the given list to the filtered category dataset
-	private void addDataPointsFromList(ArrayList<ImmigrationDataRow> dataRowList, DefaultCategoryDataset filteredDataset) {
+	private void addAreaChartDataFromList(ArrayList<ImmigrationDataRow> dataRowList, DefaultCategoryDataset filteredDataset) {
 		
 		RowIterator:
 		for (ImmigrationDataRow row : dataRowList) {
@@ -289,6 +337,53 @@ public class ImmigrationDatasetManager {
 			}
 			
 		}
+		
+	}
+	
+	//This method adds all the data rows from the given list to the filtered histogram dataset
+	private void addHistogramDataFromList(ArrayList<ImmigrationDataRow> dataRowList, SimpleHistogramDataset filteredDataset) {
+		
+		//Generate a filtered map of employment figures to add as frequencies: 
+		//the key is the age range, and the value is the employment figure
+		HashMap<String, Integer> ageRangeMap = new HashMap<>();
+		
+		RowIterator:
+		for (ImmigrationDataRow row : dataRowList) {
+			
+			//First, disregard this row if it doesn't satisfy the row filters
+			for (Entry<String, ArrayList<String>> filter : filteredRows.entrySet())
+				if (!filter.getValue().contains(row.getValue(filter.getKey())))
+					continue RowIterator;
+			
+			int roundedEmploymentFigure = (int) Math.round(row.getEmploymentFigure(valueColumns.get(0)));
+			ageRangeMap.put(row.getAge(), roundedEmploymentFigure);
+			
+		}
+		
+		//Overlapping ranges require a bit of extra work (i.e. split 25-64 and 55+ into 25-54, 55-64, and 65+)
+		ageRangeMap.put("25-54", ageRangeMap.get("25 Years +") - ageRangeMap.get("55 Years +"));		//{25 to 54} = {25+} - {55+}
+		ageRangeMap.put("55-64", ageRangeMap.get("25-64") - ageRangeMap.get("25-54"));				//{55 to 64} = {25 to 64} - {25 to 54}
+		ageRangeMap.put("65 Years +", ageRangeMap.get("25 Years +") - ageRangeMap.get("25-64"));	//{65+} = {25+} - {25 to 64}
+		
+		//Remove the overlapping age ranges
+		ageRangeMap.remove("25 Years +");
+		ageRangeMap.remove("55 Years +");
+		
+		//Repeat for every entry in the age range-employment figure map (each entry places a bar into the histogram)
+		for (Entry<String, Integer> barPlacement : ageRangeMap.entrySet()) {
+			
+			//To mass-add values under each age group, use a loop to add an arbitrary data point
+			//n times, where n is the employment figure taken from the CSV file
+			
+			//To get the arbitrary data point, take the first value of the age range (first two digits of the age descriptor)
+			int observation = Integer.parseInt(barPlacement.getKey().substring(0, 2));
+			
+			//Add the arbitrary data point n times to create the bar in the histogram
+			for (int frequencyNum = 0; frequencyNum < barPlacement.getValue(); frequencyNum++)
+				filteredDataset.addObservation(observation);
+			
+		}
+		
 		
 	}
 	

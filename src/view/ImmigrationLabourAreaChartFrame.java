@@ -1,6 +1,7 @@
 package view;
 
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,9 +12,8 @@ import java.awt.Font;
 //the filter panel in this class.
 public class ImmigrationLabourAreaChartFrame extends ImmigrationLabourChartFrame {
 	
-	//References to GUI panels for the "sections" of chart filters
+	//Reference to a GUI panel that allows the user to select which category to compare data for
 	private ImmigrationLabourCompareCategoryPanel compareCategorySection = new ImmigrationLabourCompareCategoryPanel(getFilterPanel());
-	private ImmigrationLabourDatePickerPanel datePickerSection = new ImmigrationLabourDatePickerPanel(getFilterPanel());
 	
 	//Label above the area chart that warns the user of the artificial adjustments made to 2006 and 2020.
 	//Only displays when the chart is displaying aggregated data for all 15 years.
@@ -42,10 +42,6 @@ public class ImmigrationLabourAreaChartFrame extends ImmigrationLabourChartFrame
 		return compareCategorySection;
 	}
 	
-	public ImmigrationLabourDatePickerPanel getDatePickerSection() {
-		return datePickerSection;
-	}
-	
 	public JLabel getAdjustmentWarningLabel() {
 		return adjustmentWarningLabel;
 	}
@@ -70,15 +66,20 @@ public class ImmigrationLabourAreaChartFrame extends ImmigrationLabourChartFrame
 		getChartFilterSection().setPreferredSize(new Dimension(1600, 400));
 		getChartFilterSection().setMaximumSize(new Dimension(1600, 400));
 		
+		JPanel filterSectionContainer = getChartFilterSection().getFilterSectionContainer();
+		filterSectionContainer.setSize(new Dimension(filterSectionContainer.getWidth(), 400));
+		
 		getFilterPanel().add(getChartFilterSection());
 		
 	}
 	
 	//This method adds a section of radio buttons and a slider to allow the user to
 	//select which dates (years or months) to display
-	private void setUpDatePickerSection() {
+	@Override
+	protected void setUpDatePickerSection() {
 		
-		getFilterPanel().add(datePickerSection);
+		setDatePickerSection(new ImmigrationLabourDatePickerPanel(getFilterPanel(), true));
+		getFilterPanel().add(getDatePickerSection());
 		
 	}
 	

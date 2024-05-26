@@ -23,8 +23,8 @@ public class ImmigrationLabourChartFilterPanel extends JPanel {
 	//String arrays that hold all the options for each filter category
 	private String[] sexOptions = { "Male", "Female", "Both Sexes" };
 	private String[] employmentTypeOptions = { "Full-time employment", "Part-time employment", "Labour force" };
-	private String[] educationLevelOptions = { "No degree, certificate or diploma", "High school graduate", 
-			"Post-secondary certificate or diploma", "Bachelor's degree", "Above bachelor's degree", "Total; all education levels" };
+	private String[] educationLevelOptions = { "No certifications", "High school graduate", 
+			"Post-secondary certificate or diploma", "Bachelor's degree", "Above bachelor's degree", "All education levels" };
 	private String[] immigrantStatusOptions = { "Born in Canada", "Very recent immigrants; 5 years or less", 
 			"Recent immigrants; 5+ to 10 years", "Established immigrants; 10+ years", "Non-landed immigrants", "Total" };
 	
@@ -79,6 +79,11 @@ public class ImmigrationLabourChartFilterPanel extends JPanel {
 		return filterButtons;
 	}
 	
+	//Getter for the panel that contains all the sections of filters
+	public JPanel getFilterSectionContainer() {
+		return filterSectionContainer;
+	}
+	
 	//This method sets up the header label for all the filter sections
 	private void setUpChartFilterLabel() {
 		
@@ -94,9 +99,9 @@ public class ImmigrationLabourChartFilterPanel extends JPanel {
 			boolean addEducationLevel, boolean addImmigrantStatus) {
 		
 		//Set up a box layout to display all the chart filter sections vertically, then add the
-		//filter section panel under the chart filter label
+		//filter section panel under the chart filter label. NOTE: height will be set later by the controller
 		filterSectionContainer.setLayout(new BoxLayout(filterSectionContainer, BoxLayout.Y_AXIS));
-		filterSectionContainer.setBounds(30, 80, filterPanelTemplate.getWidth() - 60, 600);
+		filterSectionContainer.setBounds(30, 80, filterPanelTemplate.getWidth() - 60, 0);
 		add(filterSectionContainer);
 		
 		//If the current chart frame should allow the user to filter by sex, add this section

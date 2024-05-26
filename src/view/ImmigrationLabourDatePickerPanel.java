@@ -5,9 +5,10 @@ import java.awt.Font;
 
 import javax.swing.*;
 
-//This class is a panel that allows the user to customize the area chart by date, in two different ways:
-//- Select a specific year to display. Then all 12 months will be displayed.
-//- Display all years from 2006-2020. Each year will display the sum of values for all the months
+//This class is a panel that allows the user to customize the area chart or histogram by date, in two different ways:
+//- For the area chart: select a specific year to display. Then all 12 months will be displayed. 
+//		- For the histogram: the aggregated data for that year will be displayed
+//- Area chart exclusive: display all years from 2006-2020. Each year will display its aggregated data (sum of all 12 months)
 public class ImmigrationLabourDatePickerPanel extends JPanel {
 
 	//Fields
@@ -22,8 +23,10 @@ public class ImmigrationLabourDatePickerPanel extends JPanel {
 	//if the user chooses to display the months of a single year
 	private JSlider yearSlider = new JSlider(2006, 2020, 2020);
 	
+	//Flag that determines whether the user can choose between displaying data for 15 years
+	
 	//Constructor
-	public ImmigrationLabourDatePickerPanel(JPanel filterPanelTemplate) {
+	public ImmigrationLabourDatePickerPanel(JPanel filterPanelTemplate, boolean addDateTypePickerButtons) {
 		
 		this.filterPanelTemplate = filterPanelTemplate;
 		
@@ -35,8 +38,11 @@ public class ImmigrationLabourDatePickerPanel extends JPanel {
 		setMaximumSize(new Dimension(1600, 400));
 		
 		setUpDateRangeLabel();
-		setUpDateTypePickerButtons();
-		setUpYearSlider();
+		
+		if (addDateTypePickerButtons)
+			setUpDateTypePickerButtons();
+		
+		setUpYearSlider(addDateTypePickerButtons);
 		
 	}
 	
@@ -92,10 +98,15 @@ public class ImmigrationLabourDatePickerPanel extends JPanel {
 	
 	//This method adds the slider that allows the user to choose which year to display the months for.
 	//Note that this is only used if the user chooses to display data for months of a single year.
-	private void setUpYearSlider() {
+	private void setUpYearSlider(boolean addDateTypePickerButtons) {
 		
-		//Position the year slider directly under the 2 radio buttons
-		yearSlider.setBounds(30, 140, 650, 100);
+		//If the date type picker buttons are being added, position the slider under these buttons
+		if (addDateTypePickerButtons)
+			yearSlider.setBounds(30, 140, 650, 100);
+		
+		//If the date type picker buttons aren't being added, position the slider where the buttons would be
+		else 
+			yearSlider.setBounds(30, 80, 650, 100);
 		
 		yearSlider.setPaintLabels(true);
 		yearSlider.setPaintTicks(true);
