@@ -19,6 +19,9 @@ public class DatasetManager {
 	// Kelvin
 	private ArrayList<PersonEducationIncome> person = new ArrayList<>();
 	
+	//Randiv
+	private ArrayList<UnemploymentDataRow> unemployment = new ArrayList<>();
+	
 
 	
 	public DatasetManager(){
@@ -43,8 +46,56 @@ public class DatasetManager {
 	}
 
 	private void initUnemployment() {
-		//37921
-		
+		// 37921
+		// Create a string variable to hold the value
+		String line = "";
+		// Accumulator
+		int index = 0;
+
+		// Try and catch: if the file cannot be read display and error otherwise read
+		// the file
+		try {
+			// Use a BufferedReader to read the file
+			BufferedReader br = new BufferedReader(new FileReader("data/UnemploymentDuration.csv"));
+
+			// While there is still more data to read
+			while ((line = br.readLine()) != null) {
+				// CSV columns are separated by commas
+				String[] data = line.split(",");
+
+//				        // Extracting data and creating a new PersonEducationIncome object
+//				        int year = Integer.parseInt(data[0]);
+//				        int yearsOfEducation = Integer.parseInt(data[1]);
+//				        double averageIncome = Double.parseDouble(data[2]);
+
+				// String date = dataFile.next();
+				String date = data[0];
+				String month = date.substring(0, 3); // Since each month is a 3-character abbreviation
+				int year = Integer.parseInt(date.substring(3));
+
+				// Input the String values
+				String geography = data[1];
+				String duration = data[2].trim(); // Remove unnecessary leading spaces
+				String age = data[3];
+				double bothSexes = Double.parseDouble(data[4]);
+				double male = Double.parseDouble(data[5]);
+				double female = Double.parseDouble(data[6]);
+
+				// Add to the ArrayList
+				unemployment
+						.add(new UnemploymentDataRow(month, year, geography, duration, age, bothSexes, male, female));
+
+				// Increment index
+				index++;
+			}
+
+			// If the file canont be found or read, print these errors
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	private void initTourism() {

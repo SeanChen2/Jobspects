@@ -12,7 +12,6 @@ import org.jfree.data.statistics.SimpleHistogramDataset;
 
 //
 public class UnemploymentDatasetManager {
-	//=<
 	//Fields
 	private Scanner dataFile;
 	
@@ -49,7 +48,7 @@ public class UnemploymentDatasetManager {
 	private int requestedYear = -1;
 	
 	//Constant for the number of data rows provided for each month
-	private int DATA_ROWS_PER_MONTH = 2400;
+	private int DATA_ROWS_PER_MONTH = 442;
 	
 	//A map that gets the month number given the abbreviated name (e.g. Jan -> 1)
 	private HashMap<String, Integer> monthToNum = new HashMap<>();
@@ -183,7 +182,7 @@ public class UnemploymentDatasetManager {
 			
 			//Input the month, year, and all of the other column values into a data row object
 			data.get(year).add(new UnemploymentDataRow(month, year, geography, 
-					duration, age, bothSexes, male, female);
+					duration, age, bothSexes, male, female));
 			
 		}
 		
