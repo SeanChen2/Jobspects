@@ -25,6 +25,7 @@ public class JobspectsMenuFrame extends JobspectsFrame {
     private JButton[] selectionButtons = new JButton[5];
     private JButton backButton;
     private JButton helpButton;
+
     
     //Field: JButton array for learn more buttons: selectionButtons
     //Getter: getSelectionButtons() for the array
@@ -54,36 +55,42 @@ public class JobspectsMenuFrame extends JobspectsFrame {
         backButton.setOpaque(false);
 		background.add(backButton);
 		
-		// Create the buttons for users to go into our individual frame.
+		// Create the buttons for users to go into our individual frames
         Icon lm1 = new ImageIcon("./images/LearnMore.png");
         JButton learnMore1 = new JButton(lm1);
         learnMore1.setBounds(380, 324, 142, 34);
+        learnMore1.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+		background.add(learnMore1);
 		selectionButtons[0] = learnMore1;
+		
 		
         Icon lm2 = new ImageIcon("./images/LearnMore.png");
         JButton learnMore2 = new JButton(lm2);
         learnMore2.setBounds(380, 547, 142, 34);
+        learnMore2.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+		background.add(learnMore2);
 		selectionButtons[1] = learnMore2;
         
         Icon lm3 = new ImageIcon("./images/LearnMore.png");
         JButton learnMore3 = new JButton(lm3);
         learnMore3.setBounds(378, 767, 142, 34);
+        learnMore3.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+		background.add(learnMore3);
 		selectionButtons[2] = learnMore3;
 		
         Icon lm4 = new ImageIcon("./images/LearnMore.png");
         JButton learnMore4 = new JButton(lm4);
         learnMore4.setBounds(378, 995, 142, 34);
+        learnMore4.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+		background.add(learnMore4);
 		selectionButtons[3] = learnMore4;
 
         Icon lm5 = new ImageIcon("./images/LearnMore.png");
         JButton learnMore5 = new JButton(lm5);
         learnMore5.setBounds(379, 1216, 142, 34);
+        learnMore5.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+		background.add(learnMore5);
 		selectionButtons[4] = learnMore5;
-		
-		for (int i = 0; i < 5; i++) {
-			selectionButtons[i].setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
-			background.add(selectionButtons[i]);
-		}
 		
         Icon hb = new ImageIcon("./images/HelpButton.png");
         helpButton = new JButton(hb);
