@@ -5,12 +5,14 @@ import view. JobspectsMenuFrame; // Import the frame you want to navigate to
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
-public class OccupationLabourBarChartController {
-    private OccupationLabourBarChartFrame frame;
+public class OccupationLabourBarChartController extends ChartController{
+    private OccupationLabourBarChartFrame frame = new OccupationLabourBarChartFrame();;
 
-    public OccupationLabourBarChartController(OccupationLabourBarChartFrame frame) {
-        this.frame = frame;
+    public OccupationLabourBarChartController(JobspectsMenuFrame menuFrame) {
+        super(menuFrame);
+    	setChartFrame(frame);
         initialize();
     }
 
@@ -35,4 +37,16 @@ public class OccupationLabourBarChartController {
         // Close the current frame
         frame.dispose();
     }
+
+	@Override
+	public void updateChart() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected ArrayList<Double> getValuesForAverage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

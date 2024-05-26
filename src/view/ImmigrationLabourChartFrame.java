@@ -18,6 +18,10 @@ public abstract class ImmigrationLabourChartFrame extends JobspectsChartFrame {
 	//Reference to the chart filter section (selects sex, employment type, etc.)
 	private ImmigrationLabourChartFilterPanel chartFilterSection;
 	
+	//Reference to the date picker (selects the year to display data for, with an 
+	//optional choice to display all years at once (only applies to area chart)
+	private ImmigrationLabourDatePickerPanel datePickerSection;
+	
 	//Constructor
 	public ImmigrationLabourChartFrame() {
 		
@@ -50,6 +54,14 @@ public abstract class ImmigrationLabourChartFrame extends JobspectsChartFrame {
 		this.chartFilterSection = chartFilterSection;
 	}
 	
+	public ImmigrationLabourDatePickerPanel getDatePickerSection() {
+		return datePickerSection;
+	}
+
+	public void setDatePickerSection(ImmigrationLabourDatePickerPanel datePickerSection) {
+		this.datePickerSection = datePickerSection;
+	}
+
 	//This method adds the buttons that navigate between the two charts
 	//(area chart and histogram), above the filter panel
 	private void setUpChartNavButtons() {
@@ -97,6 +109,11 @@ public abstract class ImmigrationLabourChartFrame extends JobspectsChartFrame {
 	//a section of chart filters that allows the user to
 	//choose which demographics the area chart represents
 	protected abstract void setUpChartFilterSection();
+	
+	//This abstract method requires concrete classes to define how to set up
+	//the date picker section, which allows the user to decide whether to display data
+	//for all 15 years or a single year
+	protected abstract void setUpDatePickerSection();
 	
 	//This abstract method requires concrete classes to define how to set up
 	//the last section of the filter panel, which calculates the average
