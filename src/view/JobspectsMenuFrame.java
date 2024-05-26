@@ -56,8 +56,6 @@ public class JobspectsMenuFrame extends JobspectsFrame {
 		
 		// Create the buttons for users to go into our individual frames
 		for (int i = 0; i < 5; i++) {
-			selectionButtons[i].setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
-			background.add(selectionButtons[i]);
 			
 	        Icon lm1 = new ImageIcon("./images/LearnMore.png");
 	        JButton learnMore1 = new JButton(lm1);
@@ -83,6 +81,9 @@ public class JobspectsMenuFrame extends JobspectsFrame {
 	        JButton learnMore5 = new JButton(lm5);
 	        learnMore5.setBounds(379, 1216, 142, 34);
 			selectionButtons[4] = learnMore5;
+			
+			selectionButtons[i].setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+			background.add(selectionButtons[i]);
 		}
 		
         Icon hb = new ImageIcon("./images/HelpButton.png");
