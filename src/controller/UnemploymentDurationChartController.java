@@ -13,10 +13,16 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 import view.JobspectsMenuFrame;
 import view.UnemploymentDurationLineChartFrame;
+import model.DatasetManager;
+import model.PersonEducationIncome;
+import model.UnemploymentDataRow;
+
 
 public class UnemploymentDurationChartController extends ChartController implements ActionListener{
 	
 	JButton[] chartNavButtons;
+    private ArrayList<UnemploymentDataRow> unemploymentDuration;
+    private ArrayList<PersonEducationIncome> unemploymentDurationUpdated;
 	
 	
 	public UnemploymentDurationChartController(JobspectsMenuFrame menuFrame) {
@@ -35,6 +41,8 @@ public class UnemploymentDurationChartController extends ChartController impleme
 
 	@Override
 	public void updateChart() {
+		//unemploymentDuration = DatasetManager.getUnemployment();
+
 		
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		dataset.addValue(500, "sdfsdf", "2020");
