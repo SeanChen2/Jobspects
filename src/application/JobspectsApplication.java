@@ -9,7 +9,8 @@ import controller.JobspectsMainController;
  *
  * Toby:
  *
- * Kelvin:
+ * Kelvin: JobspectsApplication, JobspectsMenuFrame, GUI, DatasetManager, PersonEducationIncome, 
+ * WagesByEducationChartController, WagesByEducationScatterplotFrame, JFreeChart Scatterplot, JobspectsChartFrame
  *
  * Randiv:
  *

@@ -265,14 +265,11 @@ public class WagesByEducationChartController extends ChartController implements 
             selectedYear = getUserChoice(yearGroup);
             selectedEducation = getUserChoice(educationGroup);
             
+            // Adjust the type of the variable
             convertedEducation = convertEducation(selectedEducation);
             selectedSalary = getUserChoice(salaryGroup);
 
-            // Test
-            System.out.println("Selected Year: " + selectedYear);
-            System.out.println("Selected Education Level: " + convertedEducation);
-            System.out.println("Selected Salary: " + selectedSalary);
-
+            // Remove all the data that does nto fit within the year the user selects
             for (int i = 0; i < yearsOfEduUpdated.size(); i++) {
                 if (!selectedYear.equals("All")) {
                 	if (yearsOfEduUpdated.get(i).getYear() != Integer.parseInt(selectedYear)) {
@@ -282,29 +279,36 @@ public class WagesByEducationChartController extends ChartController implements 
                 }
             }
             
+            // Remove all the educuation types that the user did not select
+            // Check to see if the user pressed all, if not run the loop
             if (convertedEducation != -1) {
                 for (int i = 0; i < yearsOfEduUpdated.size(); i++) {
                     if (!selectedEducation.equals("All")) {
+                    	// Remove the data if it is not equal
                         if (yearsOfEduUpdated.get(i).getYearsOfEducation() != convertedEducation) {
-                            yearsOfEduUpdated.remove(i);
+                        	yearsOfEduUpdated.remove(i);
+                        	// Decrease the index to check the new index as it has been shortned by one
                         	i--;
                         }
                     }
                 }
             }
 
-            
+            // Convert the salary to an int
             convertSalary(selectedSalary);
             
+         
    		 for (int i = 0; i < yearsOfEduUpdated.size(); i++) {
              System.out.println(yearsOfEduUpdated.get(i).toString());
    		 }
    		 
+   		 // Update the chart
          updateChart();
          
        }
     }
     
+    // Conver the education field from a String to an int
 	private int convertEducation(String selectedEducation) {
 		if (selectedEducation.equals("All"))
 	        return -1;
@@ -323,11 +327,13 @@ public class WagesByEducationChartController extends ChartController implements 
 	       return -1;
 		 }
 
+	// Directy remove data from the dataset here
 	private void convertSalary(String selectedSalary) {
 	    if (selectedSalary.equals("All")) {
 	        return;
 	    }
 	    
+	    // Use the switch case to remove the correct data
 	    for (int i = 0; i < yearsOfEduUpdated.size(); i++) {
 	        double income = yearsOfEduUpdated.get(i).getAverageIncome();
 	        switch (selectedSalary) {
