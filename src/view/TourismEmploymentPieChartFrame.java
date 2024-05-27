@@ -14,7 +14,7 @@ import org.jfree.data.general.*;
 import model.TourismFileInput;
 
 import org.jfree.chart.*;
-public class TourismEmploymentPieChartFrame extends JobspectsChartFrame implements MouseListener{
+public class TourismEmploymentPieChartFrame extends JFrame implements MouseListener{
 
 	//fields
 	JPanel mainPanel = new JPanel();
@@ -37,8 +37,6 @@ public class TourismEmploymentPieChartFrame extends JobspectsChartFrame implemen
 		//title.setText("    Tourism Employment");
 		//title.setBounds(700, 0, 600, 100);
 		//title.setFont(new Font("Arial", Font.BOLD, 50));
-		
-		setAverageCalculationPanel(new AverageCalculationPanel(false));
 		
 		//setting the button as a picture
 		ImageIcon picture = new ImageIcon("images/ForwardButton.png");
@@ -90,7 +88,6 @@ public class TourismEmploymentPieChartFrame extends JobspectsChartFrame implemen
 		//mainPanel.add(tAreaPanel);
 		add(mainPanel);
 		//add(scrollableMainPanel);
-		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
