@@ -36,9 +36,7 @@ public class JobspectsMenuFrame extends JobspectsFrame {
 		// Create the background
         JLabel background = new JLabel(new ImageIcon("images/MainFrame.png"));
         scrollPane = new JScrollPane(background);
-        scrollPane.setBounds(0, 0, 1405, 875);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setBounds(0, 0, 1405, 1080);
         
         // Create a panel on top
         JPanel panel = new JPanel();

@@ -12,14 +12,13 @@ public class TourismEmploymentChartController extends ChartController {
 	TourismEmploymentPieChartFrame pieChart = new TourismEmploymentPieChartFrame();//Hae the frame
 	public TourismEmploymentChartController(JobspectsMenuFrame menuFrame) {
 		super(menuFrame);
-	//	setChartFrame(pieChart);//had to comment this because ScrollPane and gridlayout weren't allowing me to inherit JobspectsChartFrame
-		new TourismEmploymentPieChartFrame();//opens up the frame in case updateChart() is not needed
+		setChartFrame(pieChart);
+		
 	}
 
 	@Override
 	public void updateChart() {
-		new TourismEmploymentPieChartFrame();
-
+		
 		//opens up the frame
 	}
 
