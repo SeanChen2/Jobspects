@@ -39,14 +39,11 @@ public class UnemploymentDurationChartController extends ChartController impleme
 
 	@Override
 	public void updateChart() {
-		System.out.println("PASS");
 		unemploymentDuration = datasetManager.getUnemployment();
 
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		
-		System.out.println("ROWS!!!");
 		for (UnemploymentDataRow row  : unemploymentDuration) {
-			System.out.println(row.getMale());
             dataset.addValue(row.getMale(), "Male", String.valueOf(row.getYear()));
         }
 		
@@ -54,15 +51,10 @@ public class UnemploymentDurationChartController extends ChartController impleme
             dataset.addValue(row.getFemale(), "Female", String.valueOf(row.getYear()));
         }
 		
+
 		
-//		dataset.addValue(500, "sdfsdf", "2020");
-//		dataset.addValue(111, "sdfsdf", "2024");
-//		
-//		dataset.addValue(520, "(trying again)", "1999");
-//		dataset.addValue(1111, "(trying again)", "2024");
+		setChart(ChartFactory.createLineChart("Unemployment in Ontario", "Year", "Number of People", dataset, PlotOrientation.VERTICAL, true, true, false));
 		
-		setChart(ChartFactory.createLineChart("Placeholder", "Date", "Jobless induviduals", dataset, PlotOrientation.VERTICAL, true, true, false));
-		System.out.println("Chart set");
 		
 	}
 	
