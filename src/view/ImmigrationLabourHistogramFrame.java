@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.JPanel;
@@ -19,7 +20,12 @@ public class ImmigrationLabourHistogramFrame extends ImmigrationLabourChartFrame
 		//only displays data based on age ranges
 		setAverageCalculationPanel(new AverageCalculationPanel(false));
 		
+		//Brighten the histogram navigation button to show that this is the current frame
+		getChartNavButtons()[0].setBackground(new Color(196, 153, 188));
+		getChartNavButtons()[1].setBackground(new Color(232, 192, 225));
+		
 		setUpChartFilterSection();
+		setUpDatePickerSection();
 		setUpAverageSection();
 		
 	}

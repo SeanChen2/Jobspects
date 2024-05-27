@@ -140,9 +140,6 @@ public class ImmigrationLabourChartController extends ChartController implements
 			//Add action listeners to the date type picker radio buttons
 			for (JRadioButton dateTypePickerButton : areaChartFrame.getDatePickerSection().getDateTypePickerButtons())
 				dateTypePickerButton.addActionListener(this);
-			
-			//Add a change listener to the year slider
-			areaChartFrame.getDatePickerSection().getYearSlider().addChangeListener(this);
 				
 		}
 		
@@ -151,6 +148,9 @@ public class ImmigrationLabourChartController extends ChartController implements
 			for (JRadioButton filterButton : buttonArray)
 				if (filterButton != null)
 					filterButton.addActionListener(this);
+		
+		//Add a change listener to the year slider
+		immigrationChartFrame.getDatePickerSection().getYearSlider().addChangeListener(this);
 	
 	}
 	
@@ -380,13 +380,12 @@ public class ImmigrationLabourChartController extends ChartController implements
 	public void stateChanged(ChangeEvent event) {
 		
 		//Downcast the chart frame to an area chart frame to access the year slider
-		ImmigrationLabourChartFrame immigrationChartFrame = (ImmigrationLabourAreaChartFrame) getChartFrame();
+		ImmigrationLabourChartFrame immigrationChartFrame = (ImmigrationLabourChartFrame) getChartFrame();
 		
 		//If the slider's value changed, update the chart so that it displays data for the chosen year
 		if (event.getSource() == immigrationChartFrame.getDatePickerSection().getYearSlider()) {
 			
 			datasetManager.setRequestedYear(immigrationChartFrame.getDatePickerSection().getYearSlider().getValue());
-			
 			updateChart();
 			
 		}
@@ -414,7 +413,6 @@ public class ImmigrationLabourChartController extends ChartController implements
 		else if (getChartFrame() instanceof ImmigrationLabourHistogramFrame)
 			createHistogram();
 			
-		
 	}
 	
 	//This method creates a stacked area chart with the current filters
@@ -431,7 +429,7 @@ public class ImmigrationLabourChartController extends ChartController implements
 		setChart(ChartFactory.createStackedAreaChart(
 				"Immigration Labour Force in Canada - " + yearsDisplayed, 
 				datasetManager.getCategoryColumn(), 
-				"Number of employed Canadian immigrants", 
+				"Number of employed Canadians", 
 				filteredDataset, 
 				PlotOrientation.VERTICAL, 
 				true, true, false));
@@ -458,7 +456,7 @@ public class ImmigrationLabourChartController extends ChartController implements
 		setChart(ChartFactory.createHistogram(
 				"Immigration Labour Force in Canada - " + yearDisplayed,
 				datasetManager.getCategoryColumn(), 
-				"Number of employed Canadian immigrants", 
+				"Number of employed Canadians", 
 				filteredDataset, 
 				PlotOrientation.VERTICAL, 
 				true, true, false));

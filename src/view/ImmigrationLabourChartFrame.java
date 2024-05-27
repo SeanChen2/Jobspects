@@ -66,21 +66,23 @@ public abstract class ImmigrationLabourChartFrame extends JobspectsChartFrame {
 	//(area chart and histogram), above the filter panel
 	private void setUpChartNavButtons() {
 		
-		//Set up and add the back button
+		//Set up the area chart and histogram navigation buttons, positioning them above the chart
 		chartNavButtons[0] = new JButton("Area chart (time)");
 		chartNavButtons[0].setBounds(30, 150, 250, 60);
-		chartNavButtons[0].setBackground(new Color(232, 192, 225));
-		chartNavButtons[0].setForeground(JobspectsFrame.DARK_PURPLE);
-		chartNavButtons[0].setFont(new Font("Sans Serif", Font.BOLD, 24));
-		chartNavButtons[0].setFocusPainted(false);
-		add(chartNavButtons[0]);
 		
 		chartNavButtons[1] = new JButton("Histogram (age)");
 		chartNavButtons[1].setBounds(290, 150, 250, 60);
-		chartNavButtons[1].setBackground(new Color(232, 192, 225));
-		chartNavButtons[1].setForeground(JobspectsFrame.DARK_PURPLE);
-		chartNavButtons[1].setFont(new Font("Sans Serif", Font.BOLD, 24));
-		chartNavButtons[1].setFocusPainted(false);
+		
+		//Style both buttons
+		for (JButton navButton : chartNavButtons) {
+			navButton.setBackground(new Color(196, 153, 188));
+			navButton.setForeground(JobspectsFrame.DARK_PURPLE);
+			navButton.setFont(new Font("Sans Serif", Font.BOLD, 24));
+			navButton.setFocusPainted(false);
+		}
+		
+		//Add both navigation buttons to the frame
+		add(chartNavButtons[0]);
 		add(chartNavButtons[1]);
 		
 	}
