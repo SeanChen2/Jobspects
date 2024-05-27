@@ -17,8 +17,10 @@ import view.JobspectsMenuFrame;
 //a controller class to handle any button presses.
 public abstract class ChartController implements ActionListener {
 	
-	//Object references
+	//Reference to the menu frame, so that the chart frame can navigate back to it
 	private JobspectsMenuFrame menuFrame;
+	
+	//Reference to the average calculator object (UNFINISHED)
 	private AverageCalculator averageCalculator;
 	
 	//Reference to the chart screen that this controller is controlling
@@ -27,7 +29,7 @@ public abstract class ChartController implements ActionListener {
 	//Reference to the chart displayed in the chart panel
 	private JFreeChart chart;
 	
-	//Constructor
+	//Constructor: receives and sets the menu frame
 	public ChartController(JobspectsMenuFrame menuFrame) {
 		this.menuFrame = menuFrame;
 		
@@ -43,6 +45,7 @@ public abstract class ChartController implements ActionListener {
 	public void setChart(JFreeChart chart) {
 		this.chart = chart;
 		
+		//Create a panel which contains the chart, and position this panel in front of the chart panel template
 		ChartPanel chartPanel = new ChartPanel(chart);
 		chartPanel.setBounds(0, 0, chartFrame.getChartPanelTemplate().getWidth(), chartFrame.getChartPanelTemplate().getHeight());
 		
@@ -55,11 +58,11 @@ public abstract class ChartController implements ActionListener {
 		return chartFrame;
 	}
 	
-	
 	//Special setter: also adds action listeners to the back button and average calculation button
 	public void setChartFrame(JobspectsChartFrame chartFrame) {
 		this.chartFrame = chartFrame;
 		
+		//Listen for when the back button is pressed (average calculation panel is unfinished)
 		chartFrame.getBackButton().addActionListener(this);
 		chartFrame.getAverageCalculationPanel().getCalculateAverageButton().addActionListener(this);
 	}
@@ -67,6 +70,14 @@ public abstract class ChartController implements ActionListener {
 	//This method shows the chart frame that this controller is controlling
 	public void showChartFrame() {
 		chartFrame.setVisible(true);
+	}
+	
+	protected JobspectsMenuFrame getMenuFrame() {
+		return menuFrame;
+	}
+
+	public void setMenuFrame(JobspectsMenuFrame menuFrame) {
+		this.menuFrame = menuFrame;
 	}
 	
 	//This method handles what happens when a button in this controller's 
@@ -79,23 +90,24 @@ public abstract class ChartController implements ActionListener {
 		//If the chart frame's back button was pressed, navigate to the main menu
 		if (event.getSource() == chartFrame.getBackButton()) {
 			
+			//Hide the chart frame and show the menu frame
 			chartFrame.setVisible(false);
 			menuFrame.setVisible(true);
 			
 		}
 		
-		//If the chart frame's average calculation button was pressed, calculate the average
+		//If the chart frame's average calculation button was pressed, calculate the average (UNFINISHED)
 		if (event.getSource() == chartFrame.getAverageCalculationPanel().getCalculateAverageButton())
 			calculateAverage();
 		
 	}
 	
 	//This abstract method requires concrete classes to define how to initialize
-	//and update the chart data when the filters change
+	//and update the chart data when the filters change (if applicable)
 	public abstract void updateChart();
 	
 	//This abstract method requires concrete classes to return a list of values for
-	//the average calculation
+	//the average calculation (UNFINISHED)
 	protected abstract ArrayList<Double> getValuesForAverage();
 	
 	//This method calculates an average value of the chart data with filters applied.
@@ -108,7 +120,7 @@ public abstract class ChartController implements ActionListener {
 		String averageType = (String) chartFrame.getAverageCalculationPanel().getAverageTypeComboBox().getSelectedItem();
 		ArrayList<Double> data = getValuesForAverage();
 		
-		//Initialize the average calculator object with the list of values
+		//Initialize the average calculator object with the list of values from the data
 		averageCalculator = new AverageCalculator(data);
 		
 		//Based on the requested average type (mean or median), calculate the average
@@ -122,14 +134,6 @@ public abstract class ChartController implements ActionListener {
 		//Post the calculated average (rounded to 2 decimal places) onto the result label
 		chartFrame.getAverageCalculationPanel().getResultLabel().setText(String.format("%.2f", average));
 		
-	}
-
-	protected JobspectsMenuFrame getMenuFrame() {
-		return menuFrame;
-	}
-
-	public void setMenuFrame(JobspectsMenuFrame menuFrame) {
-		this.menuFrame = menuFrame;
 	}
 	
 }

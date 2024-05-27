@@ -18,16 +18,19 @@ import org.jfree.data.general.DefaultPieDataset;
 //common design elements that are defined in this abstract class.
 public abstract class JobspectsChartFrame extends JobspectsFrame {
 	
-	//Object references
+	//Reference to the panel that calculates an average value based on the chart data (UNFINISHED)
 	private AverageCalculationPanel averageCalculationPanel;
 	
-	//Fields
+	//A button that navigates back to the menu frame
 	private JButton backButton;
-	private JLabel screenTitleLabel = new JLabel(" ");
-	private JPanel chartPanelTemplate;
-	private JPanel filterPanelTemplate;
 	
-	//Constructor method:
+	//An empty label that displays a header for the screen
+	private JLabel screenTitleLabel = new JLabel(" ");
+	
+	//An empty panel for the chart to be displayed on
+	private JPanel chartPanelTemplate;
+	
+	//Constructor method: set up the common elements of the chart frame
 	public JobspectsChartFrame() {
 		
 		setUpFrame();
@@ -70,26 +73,17 @@ public abstract class JobspectsChartFrame extends JobspectsFrame {
 		this.chartPanelTemplate = chartPanelTemplate;
 	}
 
-	public JPanel getFilterPanelTemplate() {
-		return filterPanelTemplate;
-	}
-
-	public void setFilterPanelTemplate(JPanel filterPanelTemplate) {
-		this.filterPanelTemplate = filterPanelTemplate;
-	}
-
 	//This method sets up the basic appearance of the chart frame, including:
 	//a back button and a screen title
 	protected void setUpFrame() {
 		
-		// Set up the back button
-        Icon bbb = new ImageIcon("./images/BigBackButton.png");
-        backButton = new JButton(bbb);
+		//Set up the back button with an image, and position it in the top left corner
+        backButton = new JButton(new ImageIcon("./images/BigBackButton.png"));
         backButton.setBounds(30, 30, 70, 70);
-        backButton.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 		add(backButton);
 		
-		// Set up the title label
+		//Set up the title label with a white background and purple text, and position it at the
+		//top of the screen. Use a bold, size 30 font.
 		screenTitleLabel.setBounds(120, 30, FRAME_WIDTH - 180, 70);
 		screenTitleLabel.setBackground(Color.WHITE);
 		screenTitleLabel.setForeground(DARK_PURPLE);
@@ -105,6 +99,8 @@ public abstract class JobspectsChartFrame extends JobspectsFrame {
 		
 		//Set up the chart panel with a null layout, so that the chart can be added with coordinates
 		chartPanelTemplate = new JPanel(null);
+		
+		//Position the chart panel on the left side of the screen with a white background
 		chartPanelTemplate.setBounds(30, 180, FRAME_WIDTH / 2 + 100, FRAME_HEIGHT - 300);
 		chartPanelTemplate.setBackground(Color.WHITE);
 		add(chartPanelTemplate);	

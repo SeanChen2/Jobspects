@@ -12,30 +12,32 @@ import java.awt.Font;
 //the filter panel in this class.
 public class ImmigrationLabourAreaChartFrame extends ImmigrationLabourChartFrame {
 	
-	//Reference to a GUI panel that allows the user to select which category to compare data for
+	//Reference to a GUI panel that allows the user to select which data category each "area" on the chart represents
 	private ImmigrationLabourCompareCategoryPanel compareCategorySection = new ImmigrationLabourCompareCategoryPanel(getFilterPanel());
 	
 	//Label above the area chart that warns the user of the artificial adjustments made to 2006 and 2020.
-	//Only displays when the chart is displaying aggregated data for all 15 years.
+	//Only displays when the chart is displaying aggregate data for all 15 years.
 	private JLabel adjustmentWarningLabel = new JLabel("<html>**The years 2006 and 2020 are missing data for a few months,"
 			+ "<br/>so the aggregated data has been artificially adjusted for those years.</html>");
 
-	//Constructor
+	//Constructor: set up all the filter sections of the area chart frame, as well as the adjustment warning label
 	public ImmigrationLabourAreaChartFrame() {
 		
 		//Use an average calculation panel with a combo box to select which data 
-		//category to calculate the average for
+		//category to calculate the average for (UNFINISHED)
 		setAverageCalculationPanel(new AverageCalculationPanel(true));
 		
 		//Brighten the area chart navigation button to show that this is the current frame
 		getChartNavButtons()[0].setBackground(new Color(232, 192, 225));
 		getChartNavButtons()[1].setBackground(new Color(196, 153, 188));
 		
+		//Add all the sections of filters to the filter panel
 		setUpCompareCategorySection();
 		setUpChartFilterSection();
 		setUpDatePickerSection();
 		setUpAverageSection();
 		
+		//Add a label to warn the user of the artificial adjustments to the data
 		setUpAdjustmentWarningLabel();
 		
 	}
@@ -64,15 +66,18 @@ public class ImmigrationLabourAreaChartFrame extends ImmigrationLabourChartFrame
 	@Override
 	protected void setUpChartFilterSection() {
 		
+		//Create a section of chart filters that only includes sex and employment type
 		setChartFilterSection(new ImmigrationLabourChartFilterPanel(getFilterPanel(), true, true, false, false));
 		
 		//Limit this panel's size to minimize unnecessary blank space between panels
 		getChartFilterSection().setPreferredSize(new Dimension(1600, 400));
 		getChartFilterSection().setMaximumSize(new Dimension(1600, 400));
 		
+		//Adjust the height of the container that holds all the chart filters
 		JPanel filterSectionContainer = getChartFilterSection().getFilterSectionContainer();
 		filterSectionContainer.setSize(new Dimension(filterSectionContainer.getWidth(), 400));
 		
+		//Add the section of chart filters to the filter panel
 		getFilterPanel().add(getChartFilterSection());
 		
 	}
@@ -82,6 +87,7 @@ public class ImmigrationLabourAreaChartFrame extends ImmigrationLabourChartFrame
 	@Override
 	protected void setUpDatePickerSection() {
 		
+		//Set up and add the section of radio buttons and a slider to allow the user to pick the date range
 		setDatePickerSection(new ImmigrationLabourDatePickerPanel(getFilterPanel(), true));
 		getFilterPanel().add(getDatePickerSection());
 		
@@ -93,7 +99,7 @@ public class ImmigrationLabourAreaChartFrame extends ImmigrationLabourChartFrame
 	@Override
 	protected void setUpAverageSection() {
 		
-		
+		//UNFINISHED
 		
 	}
 	
@@ -101,10 +107,12 @@ public class ImmigrationLabourAreaChartFrame extends ImmigrationLabourChartFrame
 	//made to 2006 and 2020. Only displays when the chart is displaying aggregated data for all 15 years.
 	private void setUpAdjustmentWarningLabel() {
 		
+		//Position the label above the area chart with white text and size 14 font
 		adjustmentWarningLabel.setBounds(580, 130, 1000, 100);
 		adjustmentWarningLabel.setForeground(Color.WHITE);
 		adjustmentWarningLabel.setFont(new Font("Sans Serif", Font.PLAIN, 14));
 		
+		//Add the label to the frame
 		add(adjustmentWarningLabel);
 		
 	}

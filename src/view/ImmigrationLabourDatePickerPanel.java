@@ -11,9 +11,8 @@ import javax.swing.*;
 //- Area chart exclusive: display all years from 2006-2020. Each year will display its aggregated data (sum of all 12 months)
 public class ImmigrationLabourDatePickerPanel extends JPanel {
 
-	//Fields
+	//A heading for this section of filters
 	private JLabel dateRangeLabel = new JLabel("Date range:");
-	private JPanel filterPanelTemplate;
 	
 	//An array of 2 radio buttons to allow the user to choose between two area chart types:
 	//displaying data for for all the years, or the months of a single year
@@ -23,11 +22,14 @@ public class ImmigrationLabourDatePickerPanel extends JPanel {
 	//if the user chooses to display the months of a single year
 	private JSlider yearSlider = new JSlider(2006, 2020, 2020);
 	
-	//Flag that determines whether the user can choose between displaying data for 15 years
+	//A field that holds the filter panel template for its size
+	private JPanel filterPanelTemplate;
 	
-	//Constructor
+	//Constructor: Set up the slider that picks the year to display data for, as well as the
+	//radio buttons that pick between displaying 15 years or a single year (if applicable)
 	public ImmigrationLabourDatePickerPanel(JPanel filterPanelTemplate, boolean addDateTypePickerButtons) {
 		
+		//Set the filter panel template
 		this.filterPanelTemplate = filterPanelTemplate;
 		
 		//Use the null layout manager to allow components to be placed on this panel using coordinates
@@ -37,11 +39,14 @@ public class ImmigrationLabourDatePickerPanel extends JPanel {
 		setPreferredSize(new Dimension(1600, 400));
 		setMaximumSize(new Dimension(1600, 400));
 		
+		//Set up the heading for this section
 		setUpDateRangeLabel();
 		
+		//If the radio buttons that pick between displaying 15 years or a single year should be added, add them
 		if (addDateTypePickerButtons)
 			setUpDateTypePickerButtons();
 		
+		//Add a slider that allows the user to pick a year to display data for
 		setUpYearSlider(addDateTypePickerButtons);
 		
 	}
@@ -59,6 +64,7 @@ public class ImmigrationLabourDatePickerPanel extends JPanel {
 	//This method adds the header label for the date range panel
 	private void setUpDateRangeLabel() {
 		
+		//Position the heading at the very top with purple text and size 32 font
 		dateRangeLabel.setBounds(30, 20, 300, 40);
 		dateRangeLabel.setForeground(JobspectsFrame.DARK_PURPLE);
 		dateRangeLabel.setFont(new Font("Sans Serif", Font.BOLD, 32));
@@ -89,7 +95,7 @@ public class ImmigrationLabourDatePickerPanel extends JPanel {
 			dateTypePickerButton.setForeground(JobspectsFrame.DARK_PURPLE);
 			dateTypePickerButton.setFocusPainted(false);
 			
-			//Add the radio buttons to the panel
+			//Add the radio button to the panel
 			add(dateTypePickerButton);
 			
 		}
@@ -108,10 +114,10 @@ public class ImmigrationLabourDatePickerPanel extends JPanel {
 		else 
 			yearSlider.setBounds(30, 80, 650, 100);
 		
+		//Style the slider with ticks at an interval of 2, then add the slider to the panel
 		yearSlider.setPaintLabels(true);
 		yearSlider.setPaintTicks(true);
 		yearSlider.setMajorTickSpacing(2);
-		
 		add(yearSlider);
 		
 		//If the date type picker buttons are being added,
