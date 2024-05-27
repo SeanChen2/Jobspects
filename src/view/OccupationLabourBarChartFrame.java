@@ -175,10 +175,16 @@ public class OccupationLabourBarChartFrame extends JobspectsChartFrame {
 
     private CategoryDataset createDataset() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-
-        dataset.addValue(12000, "Jobs", "Software Developer");
-        dataset.addValue(8000, "Jobs", "Data Analyst");
-        dataset.addValue(15000, "Jobs", "Project Manager");
+        
+        for (Labour row : labourList) {
+        	dataset.addValue((row.getBoth().equals("-")) ? 0.0 : Double.parseDouble(row.getBoth()), "Total", "Both sexes");
+        	dataset.addValue((row.getMale().equals("-")) ? 0.0 : Double.parseDouble(row.getMale()), "Total", "Male");
+        	dataset.addValue((row.getFemale().equals("-")) ? 0.0 : Double.parseDouble(row.getFemale()), "Total", "Female");
+        }
+        
+//        dataset.addValue(12000, "Jobs", "Software Developer");
+//        dataset.addValue(8000, "Jobs", "Data Analyst");
+//        dataset.addValue(15000, "Jobs", "Project Manager");
         // Add more data as needed
 
         return dataset;

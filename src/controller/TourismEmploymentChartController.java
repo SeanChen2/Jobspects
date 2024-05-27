@@ -12,7 +12,6 @@ public class TourismEmploymentChartController extends ChartController {
 	TourismEmploymentPieChartFrame pieChart = new TourismEmploymentPieChartFrame();//Hae the frame
 	public TourismEmploymentChartController(JobspectsMenuFrame menuFrame) {
 		super(menuFrame);
-		setChartFrame(pieChart);
 		
 	}
 
@@ -26,6 +25,14 @@ public class TourismEmploymentChartController extends ChartController {
 	protected ArrayList<Double> getValuesForAverage() {
 		//We scrapped this method since ran out of time
 		return null;
+	}
+	
+	//Temporary fix
+	@Override
+	public void showChartFrame() {
+		
+		pieChart.setVisible(true);
+		
 	}
 
 }

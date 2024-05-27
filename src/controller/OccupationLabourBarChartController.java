@@ -25,22 +25,23 @@ public class OccupationLabourBarChartController extends ChartController{
         });
     }
 
-//    private void onBackButtonClicked() {
-//        // Perform action when the back button is clicked
-//        System.out.println("Back button clicked!");
-//
-//        // Navigate to another frame
-//        // For example, navigate to AnotherFrame
-//        JobspectsMenuFrame anotherFrame = new JobspectsMenuFrame();
-//        anotherFrame.setVisible(true);
-//
-//        // Close the current frame
-//        frame.dispose();
-//    }
+    private void onBackButtonClicked() {
+        // Perform action when the back button is clicked
+        System.out.println("Back button clicked!");
+
+        // Navigate to another frame
+        // For example, navigate to AnotherFrame
+        JobspectsMenuFrame anotherFrame = new JobspectsMenuFrame();
+        anotherFrame.setVisible(true);
+
+        // Close the current frame
+        frame.dispose();
+    }
 
 	@Override
 	public void updateChart() {
-		// TODO Auto-generated method stub
+		
+		
 		
 	}
 
