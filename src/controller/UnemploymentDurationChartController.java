@@ -21,6 +21,7 @@ import model.UnemploymentDataRow;
 
 public class UnemploymentDurationChartController extends ChartController implements ActionListener{
 	
+    private DatasetManager datasetManager = new DatasetManager();
 	JButton[] chartNavButtons;
     private ButtonGroup compareGroup;
     private ArrayList<UnemploymentDataRow> unemploymentDuration;
@@ -42,15 +43,25 @@ public class UnemploymentDurationChartController extends ChartController impleme
 
 	@Override
 	public void updateChart() {
-		//unemploymentDuration = DatasetManager.getUnemployment();
+		System.out.println("PASS");
+		unemploymentDuration = datasetManager.getUnemployment();
 
-		
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		dataset.addValue(500, "sdfsdf", "2020");
-		dataset.addValue(111, "sdfsdf", "2024");
 		
-		dataset.addValue(520, "(trying again)", "1999");
-		dataset.addValue(1111, "(trying again)", "2024");
+		for (UnemploymentDataRow row  : unemploymentDuration) {
+            dataset.addValue(row.getMale(), "Male", String.valueOf(row.getYear()));
+        }
+		
+		for (UnemploymentDataRow row  : unemploymentDuration) {
+            dataset.addValue(row.getFemale(), "Female", String.valueOf(row.getYear()));
+        }
+		
+		
+//		dataset.addValue(500, "sdfsdf", "2020");
+//		dataset.addValue(111, "sdfsdf", "2024");
+//		
+//		dataset.addValue(520, "(trying again)", "1999");
+//		dataset.addValue(1111, "(trying again)", "2024");
 		
 		setChart(ChartFactory.createLineChart("Placeholder", "Date", "Jobless induviduals", dataset, PlotOrientation.VERTICAL, true, true, false));
 		
