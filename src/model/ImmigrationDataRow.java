@@ -7,7 +7,7 @@ import java.util.HashMap;
 //This template class represents a row of data found in the immigration labour force CSV file
 public class ImmigrationDataRow {
 
-	//Fields
+	//Fields representing columns in the CSV data file
 	private String month;
 	private int year;
 	private String province;
@@ -28,7 +28,7 @@ public class ImmigrationDataRow {
 	private double bachelorDegreeValue;
 	private double aboveBachelorDegreeValue;
 	
-	//Constructor
+	//Constructor: sets all the column values of this row
 	public ImmigrationDataRow(String month, int year, String province, String immigrantStatus, String employmentType,
 			String sex, String age, double allEducationLevelsValue, double noPseValue, double noCertificationsValue,
 			double highSchoolGradValue, double highSchoolGradSomePseValue, double pseValue,

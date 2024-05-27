@@ -13,30 +13,30 @@ public class OccupationLabourBarChartController extends ChartController{
     public OccupationLabourBarChartController(JobspectsMenuFrame menuFrame) {
         super(menuFrame);
     	setChartFrame(frame);
-        initialize();
+//        initialize();
     }
 
-    private void initialize() {
-        frame.getBackButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onBackButtonClicked();
-            }
-        });
-    }
-
-    private void onBackButtonClicked() {
-        // Perform action when the back button is clicked
-        System.out.println("Back button clicked!");
-
-        // Navigate to another frame
-        // For example, navigate to AnotherFrame
-        JobspectsMenuFrame anotherFrame = new JobspectsMenuFrame();
-        anotherFrame.setVisible(true);
-
-        // Close the current frame
-        frame.dispose();
-    }
+//    private void initialize() {
+//        frame.getBackButton().addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                onBackButtonClicked();
+//            }
+//        });
+//    }
+//
+//    private void onBackButtonClicked() {
+//        // Perform action when the back button is clicked
+//        System.out.println("Back button clicked!");
+//
+//        // Navigate to another frame
+//        // For example, navigate to AnotherFrame
+//        JobspectsMenuFrame anotherFrame = new JobspectsMenuFrame();
+//        anotherFrame.setVisible(true);
+//
+//        // Close the current frame
+//        frame.dispose();
+//    }
 
 	@Override
 	public void updateChart() {

@@ -140,5 +140,12 @@ public class JobspectsMenuFrame extends JobspectsFrame {
 	
 	
 	
+	public JButton getBackButton() {
+		return backButton;
+	}
+
+	public void setBackButton(JButton backButton) {
+		this.backButton = backButton;
+	}
 	
 }

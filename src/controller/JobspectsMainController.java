@@ -30,10 +30,10 @@ public class JobspectsMainController implements ActionListener {
 	//separate controllers
 	private JobspectsFrame currentFrame;
 	
-	//Constructor
+	//Constructor: set up all the sub-controllers and open the title frame
 	public JobspectsMainController() {
 		
-		//Add action listeners to all the buttons in the frames
+		//Add action listeners to all the buttons in the main frames
 		addActionListeners();
 		
 		//Fill the chart controller array with 5 chart controllers
@@ -52,11 +52,14 @@ public class JobspectsMainController implements ActionListener {
 		
 	}
 	
-	//This method is called whenever one of the buttons in the title frame or menu frame is pressed
+	//This method adds action listeners to the buttons in the title and menu frames
 	private void addActionListeners() {
 		
 		//Listen for when the "start" button in the title frame is pressed
 		titleFrame.getStartButton().addActionListener(this);
+		
+		//Listen for when the back button in the menu frame is pressed
+		menuFrame.getBackButton().addActionListener(this);
 		
 		//Listen for when one of the dataset selection buttons in the menu frame is pressed
 		for (int buttonIndex = 0; buttonIndex < NUM_CHARTS; buttonIndex++)
@@ -70,9 +73,12 @@ public class JobspectsMainController implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
 		
 		//Title frame: if the "Get Started" button was pressed, navigate to the menu frame
-		if (event.getSource() == titleFrame.getStartButton()) {
+		if (event.getSource() == titleFrame.getStartButton())
 			switchToFrame(menuFrame);
-		}
+		
+		//Menu frame: if the back button was pressed, navigate to the title frame
+		else if (event.getSource() == menuFrame.getBackButton())
+			switchToFrame(titleFrame);
 		
 		else {
 			

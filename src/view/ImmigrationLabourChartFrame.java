@@ -11,8 +11,10 @@ import javax.swing.*;
 //area chart and histogram
 public abstract class ImmigrationLabourChartFrame extends JobspectsChartFrame {
 	
-	//Fields
+	//An array of navigation buttons between the area chart and histogram frames
 	private JButton[] chartNavButtons = new JButton[2];
+	
+	//A panel that holds all the filter sections which customize the chart
 	private JPanel filterPanel = new JPanel();
 	
 	//Reference to the chart filter section (selects sex, employment type, etc.)
@@ -22,7 +24,7 @@ public abstract class ImmigrationLabourChartFrame extends JobspectsChartFrame {
 	//optional choice to display all years at once (only applies to area chart)
 	private ImmigrationLabourDatePickerPanel datePickerSection;
 	
-	//Constructor
+	//Constructor: set the title of the chart, then set up the common elements between the area chart and histogram
 	public ImmigrationLabourChartFrame() {
 		
 		//Set the frame title label
@@ -32,12 +34,14 @@ public abstract class ImmigrationLabourChartFrame extends JobspectsChartFrame {
 		JPanel chartPanel = getChartPanelTemplate();
 		getChartPanelTemplate().setBounds(chartPanel.getX(), chartPanel.getY() + 50, chartPanel.getWidth(), chartPanel.getHeight() - 50);
 		
+		//Add the navigation buttons and panel of filters to the frame
 		setUpChartNavButtons();
 		addFilterPanel();
 		
 	}
 	
 	//Necessary getters and setters for GUI elements
+	
 	public JPanel getFilterPanel() {
 		return filterPanel;
 	}
@@ -73,17 +77,16 @@ public abstract class ImmigrationLabourChartFrame extends JobspectsChartFrame {
 		chartNavButtons[1] = new JButton("Histogram (age)");
 		chartNavButtons[1].setBounds(290, 150, 250, 60);
 		
-		//Style both buttons
+		//Style both buttons with a light purple background and dark purple text, and a size 30 font
 		for (JButton navButton : chartNavButtons) {
 			navButton.setBackground(new Color(196, 153, 188));
 			navButton.setForeground(JobspectsFrame.DARK_PURPLE);
 			navButton.setFont(new Font("Sans Serif", Font.BOLD, 24));
 			navButton.setFocusPainted(false);
+			
+			//Add the navigation button to the frame
+			add(navButton);
 		}
-		
-		//Add both navigation buttons to the frame
-		add(chartNavButtons[0]);
-		add(chartNavButtons[1]);
 		
 	}
 	
@@ -101,6 +104,7 @@ public abstract class ImmigrationLabourChartFrame extends JobspectsChartFrame {
 				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 	            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
+		//Position the scrollable filter panel on the right side of the screen with a white background
 		filterScrollPane.setBounds(FRAME_WIDTH / 2 + 150, 180, FRAME_WIDTH / 2 - 200, FRAME_HEIGHT - 290);
 		filterScrollPane.setBackground(Color.WHITE);
 		add(filterScrollPane);
@@ -113,8 +117,8 @@ public abstract class ImmigrationLabourChartFrame extends JobspectsChartFrame {
 	protected abstract void setUpChartFilterSection();
 	
 	//This abstract method requires concrete classes to define how to set up
-	//the date picker section, which allows the user to decide whether to display data
-	//for all 15 years or a single year
+	//the date picker section, which allows the user to pick a year to display
+	//data for
 	protected abstract void setUpDatePickerSection();
 	
 	//This abstract method requires concrete classes to define how to set up

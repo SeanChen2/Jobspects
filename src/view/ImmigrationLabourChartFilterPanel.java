@@ -15,9 +15,10 @@ import javax.swing.border.EmptyBorder;
 //education level, immigrant status
 public class ImmigrationLabourChartFilterPanel extends JPanel {
 	
-	//Fields
+	//A heading for this section of filters
 	private JLabel chartFilterLabel = new JLabel("Filter by:");
 	
+	//A container that holds all the sections of filters (e.g. sex, education level...)
 	private JPanel filterSectionContainer = new JPanel();
 	
 	//String arrays that hold all the options for each filter category
@@ -37,9 +38,10 @@ public class ImmigrationLabourChartFilterPanel extends JPanel {
 	//2D array that holds all the sets of radio buttons in one structure
 	private JRadioButton[][] filterButtons = { sexButtons, employmentTypeButtons, educationLevelButtons, immigrantStatusButtons };
 	
+	//A field that holds the filter panel template for its size
 	private JPanel filterPanelTemplate;
 	
-	//Constructor
+	//Constructor: set up the heading and radio buttons of this filter section
 	public ImmigrationLabourChartFilterPanel(JPanel filterPanelTemplate, boolean addSex, boolean addEmploymentType, 
 			boolean addEducationLevel, boolean addImmigrantStatus) {
 		
@@ -49,10 +51,8 @@ public class ImmigrationLabourChartFilterPanel extends JPanel {
 		//Use the null layout manager to allow components to be placed on this panel using coordinates
 		setLayout(null);
 		
-		//Set up the header label for the chart filters
+		//Set up the heading and radio buttons of the compare category section
 		setUpChartFilterLabel();
-	
-		//Set up the container panel that holds all the chart filter sections
 		setUpFilterSectionContainer(addSex, addEmploymentType, addEducationLevel, addImmigrantStatus);
 		
 	}
@@ -87,6 +87,7 @@ public class ImmigrationLabourChartFilterPanel extends JPanel {
 	//This method sets up the header label for all the filter sections
 	private void setUpChartFilterLabel() {
 		
+		//Position this heading at the very top with purple text and size 32 font
 		chartFilterLabel.setBounds(30, 20, 300, 40);
 		chartFilterLabel.setForeground(JobspectsFrame.DARK_PURPLE);
 		chartFilterLabel.setFont(new Font("Sans Serif", Font.BOLD, 32));
@@ -122,23 +123,26 @@ public class ImmigrationLabourChartFilterPanel extends JPanel {
 		
 	}
 	
-	//This method sets up a filter section with the specified section name, filter categories,
-	//and the array to hold the filter buttons
+	//This method sets up a filter section with the specified section name, width of the section name label,
+	//filter categories, number of buttons placed per row, and the array that holds the filter buttons
 	private void setUpFilterSection(String sectionName, int sectionNameLabelWidth, int buttonsPerRow,
 			String[] filterCategories, JRadioButton[] filterButtonArray) {
 		
 		//Create a panel for this section, using a null layout to place components by coordinates
 		JPanel filterSectionPanel = new JPanel(null);
 		
-		//Calculate how many rows of buttons there will be (given the number of buttons each row holds
+		//Calculate how many rows of buttons there will be (given the number of buttons each row holds)
 		int	numButtonRows = (filterButtonArray.length + (buttonsPerRow - 1)) / buttonsPerRow;
 		
 		//Limit the size of this panel to minimize blank space between filter sections
 		filterSectionPanel.setPreferredSize(new Dimension(1600, 60 + 50 * numButtonRows));
 		filterSectionPanel.setMaximumSize(new Dimension(1600, 60 + 50 * numButtonRows));
 		
-		//Set up the section label, then add it to the filter section panel
+		//Set up the section label with the name of the filter section
 		JLabel sectionNameLabel = new JLabel(sectionName);
+		
+		//Position this section label at the top of the filter section panel, with a light purple background
+		//and dark purple text. Use a size 22 font and add padding around the edges of the label.
 		sectionNameLabel.setBounds(0, 0, sectionNameLabelWidth, 40);
 		sectionNameLabel.setOpaque(true);
 		sectionNameLabel.setForeground(JobspectsFrame.DARK_PURPLE);

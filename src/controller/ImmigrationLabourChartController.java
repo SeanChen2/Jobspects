@@ -26,13 +26,13 @@ import org.jfree.chart.ChartPanel;
 
 //This is the controller class for the immigration labour chart screens.
 //This controller handles the navigation between the area chart and histogram frames,
-//as well as the button presses for both frames.
+//as well as the button presses (including filters) for both frames.
 public class ImmigrationLabourChartController extends ChartController implements ChangeListener {
 	
 	//Reference to the immigration labour dataset manager
 	private ImmigrationDatasetManager datasetManager;
 	
-	//Constructor
+	//Constructor: define which chart frame this controller is controlling by default
 	public ImmigrationLabourChartController(JobspectsMenuFrame menuFrame) {
 		
 		super(menuFrame);
@@ -44,7 +44,7 @@ public class ImmigrationLabourChartController extends ChartController implements
 	
 	//Overrided version of the superclass method that shows the chart frame.
 	//To accommodate the long loading time when the data is read, only read the
-	//CSV file data when the chart frame is opened.
+	//CSV file data when the chart frame is opened (NOT when the app first runs).
 	@Override
 	public void showChartFrame() {
 		
@@ -55,7 +55,8 @@ public class ImmigrationLabourChartController extends ChartController implements
 		//adding default filters
 		datasetManager = new ImmigrationDatasetManager();
 		
-		//By default, show the employment figures for the entire labour force in Canada
+		//By default, show the employment figures for the entire labour force in Canada,
+		//regardless of immigrant status, employment type, or sex
 		datasetManager.addRowRestraint("Province", "Canada");
 		datasetManager.addRowRestraint("Immigrant status", "Total");
 		datasetManager.addRowRestraint("Employment type", "Labour force");
@@ -78,41 +79,6 @@ public class ImmigrationLabourChartController extends ChartController implements
 		
 		//Post the initial chart onto the chart panel
 		updateChart();
-		
-	}
-	
-	//This method prepares the default data filters for the area chart frame
-	private void addAreaChartDataFilters() {
-		
-		//By default, the chart will display data for all 15 years
-		datasetManager.setRequestedYear(-1);
-		
-		datasetManager.setCategoryColumn("Year");
-		datasetManager.addRowRestraint("Age", "15 Years +");
-		
-		//By default, each area on the chart represents a different education level
-		filterEducationLevelColumns();
-		
-	}
-	
-	//This method prepares the default data filters for the histogram frame
-	private void addHistogramDataFilters() {
-		
-		//By default, the chart will display aggregated data for the year 2020
-		datasetManager.setRequestedYear(2020);
-		
-		datasetManager.removeRowRestraint("Age");
-		datasetManager.setCategoryColumn("Age");
-		datasetManager.addRowRestraint("Age", "15-24");
-		datasetManager.addRowRestraint("Age", "25-64");
-		datasetManager.addRowRestraint("Age", "55 Years +");
-		datasetManager.addRowRestraint("Age", "25 Years +");
-		
-		datasetManager.removeRowRestraint("Employment type");
-		datasetManager.addRowRestraint("Employment type", "Labour force");
-		
-		datasetManager.getValueColumns().clear();
-		datasetManager.getValueColumns().add("All education levels");
 		
 	}
 	
@@ -149,9 +115,45 @@ public class ImmigrationLabourChartController extends ChartController implements
 				if (filterButton != null)
 					filterButton.addActionListener(this);
 		
-		//Add a change listener to the year slider
+		//Add a change listener to the year slider, so that the chart updates whenever the slider is moved
 		immigrationChartFrame.getDatePickerSection().getYearSlider().addChangeListener(this);
 	
+	}
+	
+	//This method prepares the default data filters for the area chart frame
+	private void addAreaChartDataFilters() {
+		
+		//By default, the chart will display data for all 15 years, regardless of age
+		datasetManager.setRequestedYear(-1);
+		datasetManager.setCategoryColumn("Year");
+		datasetManager.addRowRestraint("Age", "15 Years +");
+		
+		//By default, each area on the chart represents a different education level
+		filterEducationLevelColumns();
+		
+	}
+	
+	//This method prepares the default data filters for the histogram frame
+	private void addHistogramDataFilters() {
+		
+		//By default, the chart will display aggregated data for the year 2020
+		datasetManager.setRequestedYear(2020);
+		
+		//In the histogram, the categories are the age ranges
+		datasetManager.removeRowRestraint("Age");
+		datasetManager.setCategoryColumn("Age");
+		datasetManager.addRowRestraint("Age", "15-24");
+		datasetManager.addRowRestraint("Age", "25-64");
+		datasetManager.addRowRestraint("Age", "55 Years +");
+		datasetManager.addRowRestraint("Age", "25 Years +");
+		
+		//By default, display data for all employed Canadians regardless of education level
+		datasetManager.removeRowRestraint("Employment type");
+		datasetManager.addRowRestraint("Employment type", "Labour force");
+		
+		datasetManager.getValueColumns().clear();
+		datasetManager.getValueColumns().add("All education levels");
+		
 	}
 	
 	//This method automatically "selects" the radio buttons for the default chart filters
@@ -248,7 +250,7 @@ public class ImmigrationLabourChartController extends ChartController implements
 	//This method adds all the education level columns into the dataset
 	private void filterEducationLevelColumns() {
 		
-		//Display data for all immigrant statuses
+		//Display data for all immigrant statuses. The series are defined by all the education level columns.
 		datasetManager.setSeriesColumn(null);
 		datasetManager.removeRowRestraint("Immigrant status");
 		datasetManager.addRowRestraint("Immigrant status", "Total");
@@ -257,6 +259,7 @@ public class ImmigrationLabourChartController extends ChartController implements
 		ArrayList<String> valueColumns = datasetManager.getValueColumns();
 		valueColumns.clear();
 		
+		//Define which education levels to use
 		valueColumns.add("No certifications");
 		valueColumns.add("High school graduate");
 		valueColumns.add("High school graduate, some post-secondary");
@@ -350,6 +353,7 @@ public class ImmigrationLabourChartController extends ChartController implements
 			//Also, display a warning label for the artificially adjusted years of 2006 and 2020
 			areaChartFrame.getAdjustmentWarningLabel().setVisible(true);
 			
+			//Update the appearance of the chart with the new filters
 			updateChart();
 			
 		}
@@ -368,6 +372,7 @@ public class ImmigrationLabourChartController extends ChartController implements
 			//Make sure to display data for all 12 months - not the aggregated data for this year
 			datasetManager.setUsingYearlyData(false);
 			
+			//Update the appearance of the chart with the new filters
 			updateChart();
 			
 		}
@@ -395,7 +400,7 @@ public class ImmigrationLabourChartController extends ChartController implements
 	//This concrete method returns a list of values to calculate the average of.
 	//For the area chart, the average is calculated over the years, and the category
 	//combo box must be considered. For the histogram, the average is calculated over 
-	//the age groups. 
+	//the age groups. (UNFINISHED)
 	@Override
 	protected ArrayList<Double> getValuesForAverage() {
 		
@@ -408,6 +413,7 @@ public class ImmigrationLabourChartController extends ChartController implements
 	@Override
 	public void updateChart() {
 		
+		//Create a new chart (area chart or histogram, depending on the current type of chart frame)
 		if (getChartFrame() instanceof ImmigrationLabourAreaChartFrame)
 			createStackedAreaChart();
 		else if (getChartFrame() instanceof ImmigrationLabourHistogramFrame)

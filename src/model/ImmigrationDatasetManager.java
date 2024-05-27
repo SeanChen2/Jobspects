@@ -10,10 +10,11 @@ import org.jfree.data.general.Dataset;
 import org.jfree.data.statistics.SimpleHistogramBin;
 import org.jfree.data.statistics.SimpleHistogramDataset;
 
-//
+//This template class inputs and manages the CSV file data by saving the chart filters,
+//and returning a new dataset with the current filters applied.
 public class ImmigrationDatasetManager {
 
-	//Fields
+	//Scanner object that reads the data from the CSV file
 	private Scanner dataFile;
 	
 	//Names of the data column(s) used to display the values (y-axis) and categories (x-axis).
@@ -54,7 +55,8 @@ public class ImmigrationDatasetManager {
 	//A map that gets the month number given the abbreviated name (e.g. Jan -> 1)
 	private HashMap<String, Integer> monthToNum = new HashMap<>();
 	
-	//Constructor
+	//Constructor: read the file and generate aggregate data for when the user
+	//wants to see employment over an entire year (not for each separate month)
 	public ImmigrationDatasetManager() {
 		
 		//Fill the data maps with the years from 2006 to 2020 (as outlined in the CSV file)
@@ -63,7 +65,7 @@ public class ImmigrationDatasetManager {
 			yearlyData.put(year, new ArrayList<ImmigrationDataRow>());
 		}
 		
-		//Fill the month-to-number map with pairs of month names and numbers
+		//Fill the month-to-number map with pairs of month names and corresponding numbers
 		monthToNum.put("Jan", 1);
 		monthToNum.put("Feb", 2);
 		monthToNum.put("Mar", 3);
@@ -77,6 +79,7 @@ public class ImmigrationDatasetManager {
 		monthToNum.put("Nov", 11);
 		monthToNum.put("Dec", 12);
 		
+		//Read the CSV file data, then generate the aggregate data for each entire year
 		importData();
 		aggregateYears();
 		
@@ -232,7 +235,7 @@ public class ImmigrationDatasetManager {
 	}
 	
 	
-	//This method creates a copy of the given immigration data row
+	//This method creates a copy of the given immigration data row with the exact same properties
 	private ImmigrationDataRow copyOfRow(ImmigrationDataRow originalRow) {
 		
 		return new ImmigrationDataRow(originalRow.getMonth(), originalRow.getYear(), originalRow.getProvince(), originalRow.getImmigrantStatus(),
@@ -265,7 +268,7 @@ public class ImmigrationDatasetManager {
 	//This dataset is used to display the area chart.
 	public DefaultCategoryDataset getFilteredCategoryDataset() {
 		
-		//
+		//Create an empty category dataset
 		DefaultCategoryDataset filteredCategoryDataset = new DefaultCategoryDataset();
 		
 		//If the user wants to see data for all 15 years, filter all the yearly data.
@@ -292,7 +295,7 @@ public class ImmigrationDatasetManager {
 	//This dataset is used to display the histogram.
 	public SimpleHistogramDataset getFilteredHistogramDataset() {
 		
-		//
+		//Create an empty histogram dataset
 		SimpleHistogramDataset filteredHistogramDataset = new SimpleHistogramDataset("Total employed Canadian immigrants (with filters)");
 		
 		//Make sure the histogram's y-values are integers based on frequency
@@ -322,7 +325,9 @@ public class ImmigrationDatasetManager {
 				if (!filter.getValue().contains(row.getValue(filter.getKey())))
 					continue RowIterator;
 			
-			//
+			//If there is no single column that determines the data series, then the data series
+			//are spread across multiple columns instead (e.g. all education levels column,
+			//bachelor's degree column)
 			if (seriesColumn == null) {
 				
 				//Add each column series to the appropriate category on the x-axis
@@ -331,7 +336,8 @@ public class ImmigrationDatasetManager {
 				
 			} else {
 
-				//If the series are defined by a certain column, there is guaranteed to be only one value column
+				//If the series are defined by a certain column, there is guaranteed to be only one value column.
+				//Add each column series to the appropriate category on the x-axis
 				filteredDataset.addValue(row.getEmploymentFigure(valueColumns.get(0)), row.getValue(seriesColumn), row.getValue(categoryColumn));
 				
 			}
@@ -355,6 +361,7 @@ public class ImmigrationDatasetManager {
 				if (!filter.getValue().contains(row.getValue(filter.getKey())))
 					continue RowIterator;
 			
+			//Create a mapping for the age range of this row and its rounded employment figure
 			int roundedEmploymentFigure = (int) Math.round(row.getEmploymentFigure(valueColumns.get(0)));
 			ageRangeMap.put(row.getAge(), roundedEmploymentFigure);
 			
@@ -365,7 +372,7 @@ public class ImmigrationDatasetManager {
 		ageRangeMap.put("55-64", ageRangeMap.get("25-64") - ageRangeMap.get("25-54"));				//{55 to 64} = {25 to 64} - {25 to 54}
 		ageRangeMap.put("65 Years +", ageRangeMap.get("25 Years +") - ageRangeMap.get("25-64"));	//{65+} = {25+} - {25 to 64}
 		
-		//Remove the overlapping age ranges
+		//Remove the overlapping age ranges (useless now)
 		ageRangeMap.remove("25 Years +");
 		ageRangeMap.remove("55 Years +");
 		
