@@ -64,17 +64,6 @@ public class UnemploymentDurationLineChartFrame extends JobspectsChartFrame impl
 		// Set content pane layout to null for absolute positioning
 		getContentPane().setLayout(null);
 
-		// Create and add JTextArea
-//		JTextArea textArea = new JTextArea();
-//		textArea.setFont(new Font("Serif", Font.PLAIN, 16));
-//		textArea.setForeground(Color.BLACK);
-//		textArea.setBackground(Color.WHITE); // Set the same color as the middle gradient color
-//		textArea.setBounds(1500, 500, 400, 300);
-//		textArea.setLineWrap(true);
-//		textArea.setWrapStyleWord(true);
-//		textArea.setText("This is a JTextArea.\n" + "Nothing is written atm for testing purposes only");
-//		getContentPane().add(textArea);
-
 		// Set content pane layout to null for absolute positioning
 		getContentPane().setLayout(null);
 
@@ -180,7 +169,7 @@ public class UnemploymentDurationLineChartFrame extends JobspectsChartFrame impl
 
 		// Add the educationPanel to a JScrollPane
 		JScrollPane durationScrollPane = new JScrollPane(durationPanel);
-		durationScrollPane.setPreferredSize(new java.awt.Dimension(960, 690));
+		durationScrollPane.setPreferredSize(new java.awt.Dimension(600, 400));
 
 		// Add the scrollPane to the filterPanelTemplate
 		filterPanel.add(durationScrollPane);
