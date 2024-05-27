@@ -43,7 +43,7 @@ public class UnemploymentDurationLineChartFrame extends JobspectsChartFrame impl
 
 	public UnemploymentDurationLineChartFrame() {
 		setSize(1920, 1080);
-		// You'll never see it coming Sean
+		
 		setTitle("Jobspects😎");
 
 		setAverageCalculationPanel(new AverageCalculationPanel(true));
