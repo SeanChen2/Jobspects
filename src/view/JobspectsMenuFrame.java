@@ -25,6 +25,7 @@ public class JobspectsMenuFrame extends JobspectsFrame {
     private JButton[] selectionButtons = new JButton[5];
     private JButton backButton;
     private JButton helpButton;
+
     
     //Field: JButton array for learn more buttons: selectionButtons
     //Getter: getSelectionButtons() for the array

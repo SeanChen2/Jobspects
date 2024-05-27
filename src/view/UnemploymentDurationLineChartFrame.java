@@ -1,73 +1,67 @@
 package view;
 
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import view.OccupationLabourBarChartFrame.CircularGradientPanel;
 
-public class UnemploymentDurationLineChartFrame extends JFrame implements ActionListener{
-	
-	private JButton backButton;
+public class UnemploymentDurationLineChartFrame extends JobspectsChartFrame implements ActionListener {
+
+	private JPanel filterPanel = new JPanel();
+    private ButtonGroup compareGroup = new ButtonGroup();
+    ButtonGroup sexGroup = new ButtonGroup();
+    private JRadioButton geographyButton;
+    private JRadioButton ageGroupButton;
+    private JRadioButton maleButton;
+    private JRadioButton femaleButton;
+    private JRadioButton allButton;
+    private JTextField startTimeField;
+    private JTextField endTimeField;
+    private JComboBox<String> averageTypeComboBox;
+    private JComboBox<String> ageGroupComboBox;
+    private JLabel averageResultLabel;
+
+
+
 
 	public UnemploymentDurationLineChartFrame() {
 		setSize(1920, 1080);
 		// You'll never see it coming Sean
 		setTitle("Jobspects😎");
-		//CircularGradientPanel gradientPanel = new CircularGradientPanel();
-		//gradientPanel.setLayout(null);
-		//setContentPane(gradientPanel);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
+		setAverageCalculationPanel(new AverageCalculationPanel(true));
+
 		setUpChartNavButtons();
-		
-		 setUpFilterPanel();
-		 
-		 setUpCompareCategorySection();
-		 
-		 setUpFilterSection();
-		 
-		 SetUpAverageSection();
-		 
-		 getChartNavButtons();
-		 
-		 getCompareCategoryButtons();
-		 
-		 getSexButtons();
-		 
-		// getTimeRangeTextFields()
-		
-		// Create button
-		backButton = new JButton("<");
-		backButton.addActionListener(this);
 
-		// Set absolute position for button
-		backButton.setBounds(10, 10, 50, 30); // (x, y, width, height)
+		setUpFilterPanel();
 
-		// Add button to content pane
-		getContentPane().add(backButton);
+		setUpCompareCategorySection();
+
+		setUpFilterSection();
+
+		SetUpAverageSection();
 
 		// Create and add label
-		JLabel titleLabel = new JLabel("What factors affect the Duration of Employment in Canada?");
-		titleLabel.setFont(new Font("Serif", Font.BOLD, 55));
-		titleLabel.setForeground(Color.WHITE); // Set text color to white
-
-		// Set position for label
-		titleLabel.setBounds(10, 30, 5000, 100); // (x, y, width, height)
-
-		// Add label to content pane
-		getContentPane().add(titleLabel);
+		getScreenTitleLabel().setText("    What factors affect the Duration of Employment in Canada?");
 
 		// Set content pane layout to null for absolute positioning
 		getContentPane().setLayout(null);
-
 
 		// Create and add JTextArea
 //		JTextArea textArea = new JTextArea();
@@ -82,57 +76,109 @@ public class UnemploymentDurationLineChartFrame extends JFrame implements Action
 
 		// Set content pane layout to null for absolute positioning
 		getContentPane().setLayout(null);
-		
-		setVisible(false);
 
+		// setVisible(false);
 
 	}
-	
-
 
 	private void setUpChartNavButtons() {
 		// TODO Auto-generated method stub
-		
+
 	}
-
-
 
 	private void setUpFilterPanel() {
-		// TODO Auto-generated method stub
-		
+		// Display the filter "sections" vertically using a box layout
+		filterPanel.setLayout(new BoxLayout(filterPanel, BoxLayout.Y_AXIS));
+		filterPanel.setBounds(FRAME_WIDTH / 2 + 150, 180, FRAME_WIDTH / 2 - 200, FRAME_HEIGHT - 290);
+		// a yellow so light that it just looks white
+		filterPanel.setBackground(Color.decode("#fffef7"));
+
+		// Make the filter panel vertically scrollable
+		JScrollPane filterScrollPane = new JScrollPane(filterPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+		filterScrollPane.setBounds(FRAME_WIDTH / 2 + 150, 180, FRAME_WIDTH / 2 - 200, FRAME_HEIGHT - 290);
+		filterScrollPane.setBackground(Color.WHITE);
+		add(filterScrollPane);
+
 	}
-
-
 
 	private void setUpCompareCategorySection() {
-		// TODO Auto-generated method stub
+		JLabel title = new JLabel();
+		title.setText("Compare by:");
+		title.setFont(new Font("Sans Serif", Font.BOLD, 36));
+		title.setBounds(0, 0, WIDTH, HEIGHT);
+		filterPanel.add(title);
 		
+		geographyButton = new JRadioButton("Geography");
+        ageGroupButton = new JRadioButton("Age Group");
+        compareGroup.add(geographyButton);
+        compareGroup.add(ageGroupButton);
+        filterPanel.add(geographyButton);
+        filterPanel.add(ageGroupButton);
+
 	}
-
-
 
 	private void setUpFilterSection() {
-		// TODO Auto-generated method stub
-		
+		JLabel filterLabel = new JLabel("Filter by:");
+		filterLabel.setFont(new Font("Sans Serif", Font.BOLD, 24));
+		filterPanel.add(filterLabel);
+
+		JLabel sexLabel = new JLabel("Sex:");
+		sexLabel.setFont(new Font("Sans Serif", Font.PLAIN, 20));
+		filterPanel.add(sexLabel);
+
+		maleButton = new JRadioButton("Male");
+		femaleButton = new JRadioButton("Female");
+		allButton = new JRadioButton("All");
+		sexGroup.add(maleButton);
+		sexGroup.add(femaleButton);
+		sexGroup.add(allButton);
+		filterPanel.add(maleButton);
+		filterPanel.add(femaleButton);
+		filterPanel.add(allButton);
+
+		JLabel timeRangeLabel = new JLabel("Time Range:");
+		timeRangeLabel.setFont(new Font("Sans Serif", Font.PLAIN, 20));
+		filterPanel.add(timeRangeLabel);
+
+		JPanel timeRangePanel = new JPanel();
+		startTimeField = new JTextField(4);
+		endTimeField = new JTextField(4);
+		timeRangePanel.add(startTimeField);
+		timeRangePanel.add(new JLabel("to"));
+		timeRangePanel.add(endTimeField);
+		filterPanel.add(timeRangePanel);
+
 	}
-
-
 
 	private void SetUpAverageSection() {
-		// TODO Auto-generated method stub
-		
+//		JLabel averageLabel = new JLabel("Calculate average:");
+//        averageLabel.setFont(new Font("Sans Serif", Font.BOLD, 24));
+//        filterPanel.add(averageLabel);
+//        
+//        averageTypeComboBox = new JComboBox<>(new String[] { "Mean", "Median" });
+//        ageGroupComboBox = new JComboBox<>(new String[] { "All Age Groups", "15-24", "25-54", "55+" });
+//        JPanel averagePanel = new JPanel();
+//        averagePanel.add(averageTypeComboBox);
+//        averagePanel.add(ageGroupComboBox);
+//        filterPanel.add(averagePanel);
+//
+//        JButton calculateButton = new JButton("Calculate");
+//        calculateButton.addActionListener(this);
+//        filterPanel.add(calculateButton);
+//
+//        averageResultLabel = new JLabel("Average: ");
+//        averageResultLabel.setFont(new Font("Sans Serif", Font.PLAIN, 20));
+//        filterPanel.add(averageResultLabel);
+
 	}
 
-
-
-	public  JButton[] getChartNavButtons() {
+	public JButton[] getChartNavButtons() {
 		// TODO Auto-generated method stub
 		return null;
 
-		
 	}
-
-
 
 	private JRadioButton[] getCompareCategoryButtons() {
 		// TODO Auto-generated method stub
@@ -140,36 +186,20 @@ public class UnemploymentDurationLineChartFrame extends JFrame implements Action
 
 	}
 
-
-
 	private JRadioButton[] getSexButtons() {
 		// TODO Auto-generated method stub
 		return null;
 
 	}
 
-
-
 //	private JTextFields[] getTimeRangeTextFields() {
 //		// TODO Auto-generated method stub
 //		return null;
 //	}
 
-
-
-	public void setBackButton(JButton backButton) {
-		this.backButton = backButton;
-	}
-
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == backButton) {
-            // Handle button click event
-            System.out.println("Back button clicked");
-            new JobspectsTitleFrame();
-            dispose();
-        }
+
 	}
 
 }
