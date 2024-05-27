@@ -27,7 +27,8 @@ Randiv Waduge (20%)
 UnemploymentDurationLineChartFrame (100%)
 UnemploymentDurationChartController (100%)
 UnemploymentDataRow (100%)
-DatasetManager (30%)
+DatasetManager (40%)
+HelpFrame (100%)
 
 Kelvin Nguyen (20%)
 -------------------------------------------------------------------------------------------------
@@ -35,11 +36,11 @@ JobspectsApplication (100%), JobspectsTitleFrame (100%),  JobspectsMenuFrame (10
 WagesByEducationChartController (100%), WagesByEducationScatterplotFrame (100%), JFreeChart Scatterplot (100%), 
 DatasetManager (20%), JobspectsChartFrame (5%)
 
-Abishan Shanmuhesan (20%)
+Abishan Shanmuhesan (30%)
 -------------------------------------------------------------------------------------------------
 TourismFileInput(100%, with help from Sean), TourismEmploymentInnerPanel(100%), TourismEmploymentDerivativeInnerPanel(100%), 
 JobspectsFrame(with features by Sean & Toby), TourismEmploymentPieChartFrame(100%), TourismEmploymentDerivativeFrame(100%), 
-TourismEmploymentChartController(100%), DatasetManager(20%)
+TourismEmploymentChartController(100%), DatasetManager(30%)
 
 Toby Yau (20%)
 -------------------------------------------------------------------------------------------------
@@ -146,7 +147,7 @@ TourismEmploymentDerivativeFrame’s backbutton doesn’t re-open the menu frame
 UnemploymentLineChart: Filters on the right panel do not work. Scale on x-axis is incorrect.
 Occupation frame has trouble with his graph/csv file
 Unfinished feature — Average calculation: would allow the user to calculate the average value of a list of data, picking between the mean and median (e.g. for a line chart that displays number of people employed over 15 years, find the average number of people employed per year). Remnants of this feature remain as fields and abstract methods in the code.
-Unfinished feature — Incomplete Help Frame: would explain how to use each chart frame (i.e. filters) and navigate between them
+Incomplete Help Frame: Explains how to use each chart frame (i.e. filters) and navigate between them, button to open it does not work, most explanations are missing
 
 */
 
