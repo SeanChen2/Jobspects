@@ -67,24 +67,24 @@ public class TourismFileInput {
 		
 		try{
 			Scanner inputFile = new Scanner(new File("data/tourismFile.csv"));//Scanner
-			System.out.println("hello");
+			//System.out.println("hello");
 			//reads the tourism employment file
 			inputFile.useDelimiter(",|\n");//how to separate each next()
 			String tourismTitle = inputFile.nextLine();//sets the title
 			inputFile.nextLine();//ignore the next line
 			
 			optionString = inputFile.nextLine();//sets the options
-			System.out.print(options);
+			//System.out.print(options);
 			while(inputFile.hasNextInt()){
 				
 				for(int i = 0; i < touristBusinesses.length; i++){
 					
 					years[i] = inputFile.nextInt();//keeps track of which year it is
-					System.out.println("years = " + years[i]);
+					//System.out.println("years = " + years[i]);
 					for(int in = 0; in < 9; in++) {
 						touristBusinesses[i].add(inputFile.nextInt());//adding the numerical data
 						
-						System.out.println(touristBusinesses[i].get(in));
+						//System.out.println(touristBusinesses[i].get(in));
 					}
 					//adds the # of businesses for each year
 				} 

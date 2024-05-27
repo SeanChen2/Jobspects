@@ -129,6 +129,16 @@ public class JobspectsMenuFrame extends JobspectsFrame {
 	public void setSelectionButtons(JButton[] selectionButtons) {
 		this.selectionButtons = selectionButtons;
 	}
+
+	public JButton getHelpButton() {
+		return helpButton;
+	}
+
+	public void setHelpButton(JButton helpButton) {
+		this.helpButton = helpButton;
+	}
+	
+	
 	
 	
 }

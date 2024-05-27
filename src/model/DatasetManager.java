@@ -70,10 +70,10 @@ public class DatasetManager {
 //				        int yearsOfEducation = Integer.parseInt(data[1]);
 //				        double averageIncome = Double.parseDouble(data[2]);
 
-				// String date = dataFile.next();
+				// String date = dataFile.next();  
 				String date = data[0];
 				String month = date.substring(0, 3); // Since each month is a 3-character abbreviation
-				System.out.println(date);
+				//System.out.println(date);
 				int year = Integer.parseInt(date.substring(3));
 
 				// Input the String values

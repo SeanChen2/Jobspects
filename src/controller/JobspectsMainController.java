@@ -3,6 +3,7 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import view.HelpFrame;
 import view.JobspectsFrame;
 import view.JobspectsMenuFrame;
 import view.JobspectsTitleFrame;
@@ -18,9 +19,11 @@ public class JobspectsMainController implements ActionListener {
 	//An array of references to all of the chart controllers
 	private ChartController[] chartControllers = new ChartController[NUM_CHARTS];
 	
+	
 	//References to all of the main frames (not including the chart frames)
 	private JobspectsTitleFrame titleFrame = new JobspectsTitleFrame();
 	private JobspectsMenuFrame menuFrame = new JobspectsMenuFrame();
+	private HelpFrame helpFrame = new HelpFrame();
 	
 	//A field to keep track of which frame (screen) the user is currently on.
 	//This does NOT include the chart frames, since these are controlled by
@@ -39,6 +42,9 @@ public class JobspectsMainController implements ActionListener {
 		chartControllers[2] = new UnemploymentDurationChartController(menuFrame);
 		chartControllers[3] = new WagesByEducationChartController(menuFrame);
 		chartControllers[4] = new TourismEmploymentChartController(menuFrame);
+		
+		
+		
 		
 		//Show the title frame when the app is opened
 		currentFrame = titleFrame;
@@ -79,6 +85,11 @@ public class JobspectsMainController implements ActionListener {
 					chartControllers[index].showChartFrame();
 				}
 				
+				
+			}
+			
+			if (event.getSource() == menuFrame.getHelpButton()) {
+				switchToFrame(helpFrame);
 			}
 			
 		}
