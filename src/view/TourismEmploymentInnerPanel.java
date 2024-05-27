@@ -1,51 +1,61 @@
-
 package view;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.util.ArrayList;
 
 import javax.swing.*;
 import org.jfree.data.general.*;
-import org.jfree.chart.*;
 
+import model.TourismFileInput;
+
+import org.jfree.chart.*;
+//the inner panel that was displayed inside the scrollpane
 public class TourismEmploymentInnerPanel extends JPanel{
 
-	JFreeChart[] fc = new JFreeChart[7];
+	//fields
+	JFreeChart[] pieChart = new JFreeChart[7];
 	PieDataset[] das = new PieDataset[7]; //= //createDataset();
 	ChartPanel[] cPanel = new ChartPanel[7];
-	//JScrollBar bar = new JScrollBar();
 	
-	public TourismEmploymentInnerPanel() {
+	TourismFileInput file = new TourismFileInput();//grabbing the data from the file reader
+	int[] yearsArray = file.getYears();//getting the years
+	ArrayList<Integer>[]  theData = file.getTouristBusinesses();//getting the number data
+	String[] options = file.getOptions();//getting the files
+
+	
+	public TourismEmploymentInnerPanel() {//constructor
 		setLayout(null);
-		setBackground(Color.lightGray);
-		//setBounds(70, 100, 320, 500);
-        setPreferredSize(new Dimension(300,500));
-	//	bar.setBounds(300, 0, 20, 500);
-		//bar.setOrientation(1);
-		//add(bar);
-		
+		setBackground(JobspectsFrame.DARK_PURPLE);
+        setPreferredSize(new Dimension(300,500));//set size
+	
+		//making each chart in the scrollPane
 		for(int i = 0; i < 7; i ++) {
-			das[i] = createDataset(i);
-			fc[i] = ChartFactory.createPieChart(String.valueOf(2017+i), das[i], true, true, true);
-			cPanel[i] = new ChartPanel(fc[i]);
-			cPanel[i].setBounds(0, i*300, 300, 300);
+			das[i] = createDataset(i);//create the dataset
+			pieChart[i] = ChartFactory.createPieChart(String.valueOf(yearsArray[i]), das[i], true, true, true);//create each piechart
+			cPanel[i] = new ChartPanel(pieChart[i]);//create the pie chart panel
+			cPanel[i].setBounds(100, i*420, 400, 350);
 			add(cPanel[i]);
 
 		}
-		setPreferredSize(new Dimension(300,2150));
+		setPreferredSize(new Dimension(300,2940));//set size of panel
+		
+		
 		
 	}
 
 	private PieDataset createDataset(int index) {
+		//this is where the values are added
 		DefaultPieDataset ds = new DefaultPieDataset();
-		ds.setValue("0", 100);
-		ds.setValue("1-4", 100);
-		ds.setValue("5-9", 100);
-		ds.setValue("10-19", 100);
-		ds.setValue("10-19", 100);
-		ds.setValue("20-49", 100);
-		ds.setValue("50-99", 100);
-		ds.setValue("100-199", 100);
-		ds.setValue("200+", 100);
+		
+		//add each option and its data
+		ds.setValue(options[2], theData[index].get(1));
+		ds.setValue(options[3], theData[index].get(2));
+		ds.setValue(options[4], theData[index].get(3));
+		ds.setValue(options[5], theData[index].get(4));
+		ds.setValue(options[6], theData[index].get(5));
+		ds.setValue(options[7], theData[index].get(6));
+		ds.setValue(options[8], theData[index].get(7));
+		ds.setValue(options[9], theData[index].get(8));
 		return ds;
 	}
 

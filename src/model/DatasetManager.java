@@ -27,7 +27,7 @@ public class DatasetManager {
 	public DatasetManager(){
 		importData();
 		initTourism();
-		initUnemployment();
+//		initUnemployment();
 		initOccupationLabour();
 		initWagesEmployment();
 	}
@@ -58,6 +58,7 @@ public class DatasetManager {
 		try {
 			// Use a BufferedReader to read the file
 			BufferedReader br = new BufferedReader(new FileReader("data/UnemploymentDuration.csv"));
+			br.readLine();
 
 			// While there is still more data to read
 			while ((line = br.readLine()) != null) {
@@ -72,6 +73,7 @@ public class DatasetManager {
 				// String date = dataFile.next();
 				String date = data[0];
 				String month = date.substring(0, 3); // Since each month is a 3-character abbreviation
+				System.out.println(date);
 				int year = Integer.parseInt(date.substring(3));
 
 				// Input the String values

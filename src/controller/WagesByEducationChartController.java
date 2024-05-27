@@ -45,14 +45,14 @@ public class WagesByEducationChartController extends ChartController implements 
     private static final int FRAME_HEIGHT = 1080;
 
     // Fields
-    private DatasetManager datasetManager = new DatasetManager();
+//    private DatasetManager datasetManager = new DatasetManager();
     private JPanel filterPanelTemplate;
     private ButtonGroup yearGroup;
     private ButtonGroup educationGroup;
     private ButtonGroup salaryGroup;
     private JButton filterDataButton;
-    private ArrayList<PersonEducationIncome> yearsOfEdu;
-    private ArrayList<PersonEducationIncome> yearsOfEduUpdated;
+    private ArrayList<PersonEducationIncome> yearsOfEdu = new ArrayList<>();
+    private ArrayList<PersonEducationIncome> yearsOfEduUpdated = new ArrayList<>();
     private String selectedYear;
     private String selectedEducation;
     private String selectedSalary;
@@ -96,7 +96,7 @@ public class WagesByEducationChartController extends ChartController implements 
         XYSeries series = new XYSeries("Data");
 
         // Create an arraylist in this file to easily reference the object
-        yearsOfEdu = datasetManager.getPerson();
+//        yearsOfEdu = datasetManager.getPerson();
 
         // Loop through the array and begin inputting the data into the graph
         for (PersonEducationIncome element : yearsOfEdu) {
