@@ -24,8 +24,8 @@ public class UnemploymentDurationChartController extends ChartController impleme
     private DatasetManager datasetManager = new DatasetManager();
 	JButton[] chartNavButtons;
     private ButtonGroup compareGroup;
-    private ArrayList<UnemploymentDataRow> unemploymentDuration;
-    private ArrayList<PersonEducationIncome> unemploymentDurationUpdated;
+    private ArrayList<UnemploymentDataRow> unemploymentDuration = new ArrayList<>();
+    private ArrayList<PersonEducationIncome> unemploymentDurationUpdated = new ArrayList<>();
 	
 	
 	public UnemploymentDurationChartController(JobspectsMenuFrame menuFrame) {
@@ -35,10 +35,6 @@ public class UnemploymentDurationChartController extends ChartController impleme
 		setChartFrame(new UnemploymentDurationLineChartFrame());
 		
 		updateChart();
-	}
-	
-	public void actionPerformed(ActionEvent e) {
-		
 	}
 
 	@Override

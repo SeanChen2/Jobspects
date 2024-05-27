@@ -61,7 +61,7 @@ public abstract class ChartController implements ActionListener {
 		this.chartFrame = chartFrame;
 		
 		chartFrame.getBackButton().addActionListener(this);
-//		chartFrame.getAverageCalculationPanel().getCalculateAverageButton().addActionListener(this);
+		chartFrame.getAverageCalculationPanel().getCalculateAverageButton().addActionListener(this);
 	}
 	
 	//This method shows the chart frame that this controller is controlling
