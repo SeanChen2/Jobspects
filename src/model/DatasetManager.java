@@ -80,6 +80,8 @@ public class DatasetManager {
 				String geography = data[1];
 				String duration = data[2].trim(); // Remove unnecessary leading spaces
 				String age = data[3];
+				
+				//Input double values
 				double bothSexes = Double.parseDouble(data[4]);
 				double male = Double.parseDouble(data[5]);
 				double female = Double.parseDouble(data[6]);

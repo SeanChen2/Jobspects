@@ -24,24 +24,22 @@ import view.OccupationLabourBarChartFrame.CircularGradientPanel;
 
 public class UnemploymentDurationLineChartFrame extends JobspectsChartFrame implements ActionListener {
 
-    private DatasetManager datasetManager = new DatasetManager();
+	private DatasetManager datasetManager = new DatasetManager();
 
 	private JPanel filterPanel = new JPanel();
-    private ButtonGroup compareGroup = new ButtonGroup();
-    ButtonGroup sexGroup = new ButtonGroup();
-    private JRadioButton geographyButton;
-    private JRadioButton ageGroupButton;
-    private JRadioButton maleButton;
-    private JRadioButton femaleButton;
-    private JRadioButton allButton;
-    private JTextField startTimeField;
-    private JTextField endTimeField;
-    private JComboBox<String> averageTypeComboBox;
-    private JComboBox<String> ageGroupComboBox;
-    private JLabel averageResultLabel;
-
-
-
+	private ButtonGroup compareGroup = new ButtonGroup();
+	private ButtonGroup durationGroup = new ButtonGroup();
+	ButtonGroup sexGroup = new ButtonGroup();
+	private JRadioButton geographyButton;
+	private JRadioButton ageGroupButton;
+	private JRadioButton maleButton;
+	private JRadioButton femaleButton;
+	private JRadioButton allButton;
+	private JTextField startTimeField;
+	private JTextField endTimeField;
+	private JComboBox<String> averageTypeComboBox;
+	private JComboBox<String> ageGroupComboBox;
+	private JLabel averageResultLabel;
 
 	public UnemploymentDurationLineChartFrame() {
 		setSize(1920, 1080);
@@ -112,13 +110,13 @@ public class UnemploymentDurationLineChartFrame extends JobspectsChartFrame impl
 		title.setFont(new Font("Sans Serif", Font.BOLD, 36));
 		title.setBounds(0, 0, WIDTH, HEIGHT);
 		filterPanel.add(title);
-		
+
 		geographyButton = new JRadioButton("Geography");
-        ageGroupButton = new JRadioButton("Age Group");
-        compareGroup.add(geographyButton);
-        compareGroup.add(ageGroupButton);
-        filterPanel.add(geographyButton);
-        filterPanel.add(ageGroupButton);
+		ageGroupButton = new JRadioButton("Age Group");
+		compareGroup.add(geographyButton);
+		compareGroup.add(ageGroupButton);
+		filterPanel.add(geographyButton);
+		filterPanel.add(ageGroupButton);
 
 	}
 
@@ -152,6 +150,40 @@ public class UnemploymentDurationLineChartFrame extends JobspectsChartFrame impl
 		timeRangePanel.add(new JLabel("to"));
 		timeRangePanel.add(endTimeField);
 		filterPanel.add(timeRangePanel);
+		
+		
+		//
+		//
+		//
+		
+		// Create a panel within the filter panel for education levels
+		JPanel durationPanel = new JPanel(new GridLayout(0, 1, 5, 5));
+
+		// Create the title for the education panel
+		JLabel duration = new JLabel();
+		duration.setText("Duration");
+		duration.setFont(new Font("Sans Serif", Font.PLAIN, 24));
+		durationPanel.add(duration);
+
+		// Initialize ButtonGroup for education levels
+
+		// Create radio buttons for education levels
+		String[] durationTypes = { "Total unemployed", "1 - 4 weeks", "5 - 13 weeks", "14 - 25 weeks", "26 weeks",
+				"27 weeks or more", "27 - 51 weeks", "52 weeks", "Average weeks unemployed (no top-code)",
+				"Average weeks unemployed (top-code = 99 weeks)" };
+
+		for (String type : durationTypes) {
+			JRadioButton radioButton = new JRadioButton(type);
+			durationGroup.add(radioButton);
+			durationGroup.add(radioButton);
+		}
+
+		// Add the educationPanel to a JScrollPane
+		JScrollPane durationScrollPane = new JScrollPane(durationPanel);
+		durationScrollPane.setPreferredSize(new java.awt.Dimension(960, 690));
+
+		// Add the scrollPane to the filterPanelTemplate
+		filterPanel.add(durationScrollPane);
 
 	}
 
@@ -180,36 +212,36 @@ public class UnemploymentDurationLineChartFrame extends JobspectsChartFrame impl
 	public JButton[] getChartNavButtons() {
 		// TODO Auto-generated method stub
 		// Create a new JPanel to hold the "Year" label and radio buttons
-        JPanel yearPanel = new JPanel(new GridLayout(0, 3, 5, 5)); // Adjust the columns as needed
+		JPanel yearPanel = new JPanel(new GridLayout(0, 3, 5, 5)); // Adjust the columns as needed
 
-        // Create the category labels
-        JLabel years = new JLabel();
-        years.setText("Year:");
-        years.setFont(new Font("Sans Serif", Font.PLAIN, 20));
-        yearPanel.add(years);
+		// Create the category labels
+		JLabel years = new JLabel();
+		years.setText("Year:");
+		years.setFont(new Font("Sans Serif", Font.PLAIN, 20));
+		yearPanel.add(years);
 
-        // Initialize ButtonGroup for years
-        sexGroup = new ButtonGroup();
+		// Initialize ButtonGroup for years
+		sexGroup = new ButtonGroup();
 
-        // Create radio buttons for years
-        for (int i = 0; i < 23; i++) {
-            JRadioButton radioButton = new JRadioButton(String.valueOf(1997 + i));
-            sexGroup.add(radioButton);
-            yearPanel.add(radioButton);
-        }
+		// Create radio buttons for years
+		for (int i = 0; i < 23; i++) {
+			JRadioButton radioButton = new JRadioButton(String.valueOf(1997 + i));
+			sexGroup.add(radioButton);
+			yearPanel.add(radioButton);
+		}
 
-        // Create an "all" option. too
-        JRadioButton button23 = new JRadioButton("All");
-        sexGroup.add(button23);
-        yearPanel.add(button23);
+		// Create an "all" option. too
+		JRadioButton button23 = new JRadioButton("All");
+		sexGroup.add(button23);
+		yearPanel.add(button23);
 
-        // Add the yearPanel to a JScrollPane
-        JScrollPane scrollPane = new JScrollPane(yearPanel);
-        scrollPane.setPreferredSize(new java.awt.Dimension(250, 150));
+		// Add the yearPanel to a JScrollPane
+		JScrollPane scrollPane = new JScrollPane(yearPanel);
+		scrollPane.setPreferredSize(new java.awt.Dimension(250, 150));
 
-        // Add the scrollPane to the filterPanelTemplate
-        filterPanel.add(scrollPane);
-        return null;
+		// Add the scrollPane to the filterPanelTemplate
+		filterPanel.add(scrollPane);
+		return null;
 
 	}
 
