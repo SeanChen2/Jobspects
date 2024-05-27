@@ -27,6 +27,10 @@ public class ImmigrationLabourAreaChartFrame extends ImmigrationLabourChartFrame
 		//category to calculate the average for
 		setAverageCalculationPanel(new AverageCalculationPanel(true));
 		
+		//Brighten the area chart navigation button to show that this is the current frame
+		getChartNavButtons()[0].setBackground(new Color(232, 192, 225));
+		getChartNavButtons()[1].setBackground(new Color(196, 153, 188));
+		
 		setUpCompareCategorySection();
 		setUpChartFilterSection();
 		setUpDatePickerSection();

@@ -114,8 +114,10 @@ public class ImmigrationLabourDatePickerPanel extends JPanel {
 		
 		add(yearSlider);
 		
-		//Make the year slider invisible initially; it will only appear when the user selects "Single year"
-		yearSlider.setVisible(false);
+		//If the date type picker buttons are being added,
+		//set the year slider invisible initially; it will only appear when the user selects "Single year"
+		if (addDateTypePickerButtons)
+			yearSlider.setVisible(false);
 		
 	}
 	
