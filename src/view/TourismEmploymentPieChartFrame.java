@@ -11,12 +11,10 @@ import java.util.ArrayList;
 import javax.swing.*;
 import org.jfree.data.general.*;
 
-import com.lowagie.text.Image;
-
 import model.TourismFileInput;
 
 import org.jfree.chart.*;
-public class TourismEmploymentPieChartFrame extends JFrame implements MouseListener{
+public class TourismEmploymentPieChartFrame extends JobspectsChartFrame implements MouseListener{
 
 	//fields
 	JPanel mainPanel = new JPanel();
@@ -39,6 +37,8 @@ public class TourismEmploymentPieChartFrame extends JFrame implements MouseListe
 		//title.setText("    Tourism Employment");
 		//title.setBounds(700, 0, 600, 100);
 		//title.setFont(new Font("Arial", Font.BOLD, 50));
+		
+		setAverageCalculationPanel(new AverageCalculationPanel(false));
 		
 		//setting the button as a picture
 		ImageIcon picture = new ImageIcon("images/ForwardButton.png");

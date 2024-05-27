@@ -1,5 +1,6 @@
 package view;
 import java.awt.Color;
+
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -13,12 +14,11 @@ import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.*;
 
-import com.lowagie.text.Image;
-
 import model.TourismFileInput;
 
 import org.jfree.chart.*;
 import org.jfree.chart.plot.PlotOrientation;
+
 //the frame for th derivative graph showing the rates of change in new and dissolved businesses
 public class TourismEmploymentDerivativeFrame extends JFrame implements MouseListener{
 
