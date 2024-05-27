@@ -33,7 +33,6 @@ public class UnemploymentDurationChartController extends ChartController impleme
 		super(menuFrame);
 		
 		setChartFrame(new UnemploymentDurationLineChartFrame());
-		showChartFrame();
 		
 		updateChart();
 	}

@@ -48,7 +48,7 @@ public class JobspectsTitleFrame extends JobspectsFrame {
 			// Create the button
 	        Icon gs = new ImageIcon("./images/GetStarted.png");
 	        startButton = new JButton(gs);
-	        startButton.setBounds(44, 639, 301, 70);
+	        startButton.setBounds(44, 650, 301, 70);
 	        startButton.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 			add(startButton);
 			
