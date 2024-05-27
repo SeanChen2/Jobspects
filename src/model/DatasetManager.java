@@ -27,7 +27,7 @@ public class DatasetManager {
 	public DatasetManager(){
 		importData();
 		initTourism();
-		initUnemployment();
+//		initUnemployment();
 		initOccupationLabour();
 		initWagesEmployment();
 	}
