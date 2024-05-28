@@ -60,6 +60,8 @@ public class JobspectsMainController implements ActionListener {
 		
 		//Listen for when the back button in the menu frame is pressed
 		menuFrame.getBackButton().addActionListener(this);
+		menuFrame.getHelpButton().addActionListener(this);
+		helpFrame.getBackButton().addActionListener(this);
 		
 		//Listen for when one of the dataset selection buttons in the menu frame is pressed
 		for (int buttonIndex = 0; buttonIndex < NUM_CHARTS; buttonIndex++)
@@ -79,6 +81,10 @@ public class JobspectsMainController implements ActionListener {
 		//Menu frame: if the back button was pressed, navigate to the title frame
 		else if (event.getSource() == menuFrame.getBackButton())
 			switchToFrame(titleFrame);
+		else if (event.getSource() == helpFrame.getBackButton()) {
+			switchToFrame(menuFrame);
+			
+		}
 		
 		else {
 			
@@ -111,6 +117,7 @@ public class JobspectsMainController implements ActionListener {
 		//Set the current frame to the new frame, then show the new frame
 		currentFrame = newFrame;
 		currentFrame.setVisible(true);
+	System.out.println("hello0");
 		
 	}
 	

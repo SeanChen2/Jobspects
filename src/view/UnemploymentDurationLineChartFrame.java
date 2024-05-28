@@ -22,10 +22,13 @@ import javax.swing.JTextField;
 import model.DatasetManager;
 import view.OccupationLabourBarChartFrame.CircularGradientPanel;
 
-public class UnemploymentDurationLineChartFrame extends JobspectsChartFrame implements ActionListener {
-
+public class UnemploymentDurationLineChartFrame extends JobspectsChartFrame {
+	
+	//Create instance of dataset Manager to access information from CSV file
 	private DatasetManager datasetManager = new DatasetManager();
-
+	
+	
+	//fields
 	private JPanel filterPanel = new JPanel();
 	private ButtonGroup compareGroup = new ButtonGroup();
 	private ButtonGroup durationGroup = new ButtonGroup();
@@ -43,7 +46,7 @@ public class UnemploymentDurationLineChartFrame extends JobspectsChartFrame impl
 
 	public UnemploymentDurationLineChartFrame() {
 		setSize(1920, 1080);
-		
+
 		setTitle("Jobspects😎");
 
 		setAverageCalculationPanel(new AverageCalculationPanel(true));
@@ -58,7 +61,7 @@ public class UnemploymentDurationLineChartFrame extends JobspectsChartFrame impl
 
 		SetUpAverageSection();
 
-		// Create and add label
+		// Create and add title
 		getScreenTitleLabel().setText("    What factors affect the Duration of Employment in Canada?");
 
 		// Set content pane layout to null for absolute positioning
@@ -75,7 +78,8 @@ public class UnemploymentDurationLineChartFrame extends JobspectsChartFrame impl
 		// TODO Auto-generated method stub
 
 	}
-
+	
+	//Setup filter panel on right side of screen to hold filters
 	private void setUpFilterPanel() {
 		// Display the filter "sections" vertically using a box layout
 		filterPanel.setLayout(new BoxLayout(filterPanel, BoxLayout.Y_AXIS));
@@ -89,23 +93,25 @@ public class UnemploymentDurationLineChartFrame extends JobspectsChartFrame impl
 
 		filterScrollPane.setBounds(FRAME_WIDTH / 2 + 150, 180, FRAME_WIDTH / 2 - 200, FRAME_HEIGHT - 290);
 		filterScrollPane.setBackground(Color.WHITE);
+		//add to frame
 		add(filterScrollPane);
 
 	}
-
+	
+	//Add Comparison section to filter Panel
 	private void setUpCompareCategorySection() {
-		//Create panel to hold comparison factors for graph
-        JPanel comparePanel = new JPanel(new GridLayout(3, 1));
-        comparePanel.setBackground(Color.decode("#fffef7"));
+		// Create panel to hold comparison factors for graph
+		JPanel comparePanel = new JPanel(new GridLayout(3, 1));
+		comparePanel.setBackground(Color.decode("#fffef7"));
 
-        //create heading
+		// create heading
 		JLabel title = new JLabel();
 		title.setText("Compare by:");
 		title.setFont(new Font("Sans Serif", Font.BOLD, 36));
 		title.setBounds(0, 0, WIDTH, HEIGHT);
 		comparePanel.add(title);
 
-		//create radiobuttons
+		// create radiobuttons
 		geographyButton = new JRadioButton("Geography");
 		geographyButton.setBackground(Color.decode("#fffef7"));
 		ageGroupButton = new JRadioButton("Age Group");
@@ -114,44 +120,53 @@ public class UnemploymentDurationLineChartFrame extends JobspectsChartFrame impl
 		compareGroup.add(ageGroupButton);
 		comparePanel.add(geographyButton);
 		comparePanel.add(ageGroupButton);
-		
-		//Add to panel
+
+		// Add to panel
 		filterPanel.add(comparePanel);
 
 	}
-
+	
+	//Add filters section to filter Panel
 	private void setUpFilterSection() {
-        JPanel filterSectionPanel = new JPanel(new GridLayout(7, 1));
-        filterSectionPanel.setBackground(Color.decode("#fffef7"));
+		// Create panel to hold filter buttons for graph
+		JPanel filterSectionPanel = new JPanel(new GridLayout(7, 1));
+		filterSectionPanel.setBackground(Color.decode("#fffef7"));
 
+		// create heading
 		JLabel filterLabel = new JLabel("Filter by:");
 		filterLabel.setFont(new Font("Sans Serif", Font.BOLD, 36));
-        filterSectionPanel.add(filterLabel);
-
+		filterSectionPanel.add(filterLabel);
+		
+		// create subheading
 		JLabel sexLabel = new JLabel("Sex:");
 		sexLabel.setFont(new Font("Sans Serif", Font.PLAIN, 24));
-        filterSectionPanel.add(sexLabel);
+		filterSectionPanel.add(sexLabel);
 
+		// create radiobuttons
 		maleButton = new JRadioButton("Male");
 		maleButton.setBackground(Color.decode("#fffef7"));
 		femaleButton = new JRadioButton("Female");
 		femaleButton.setBackground(Color.decode("#fffef7"));
 		allButton = new JRadioButton("All");
 		allButton.setBackground(Color.decode("#fffef7"));
+		//Add to buttongroup
 		sexGroup.add(maleButton);
 		sexGroup.add(femaleButton);
 		sexGroup.add(allButton);
 
+		//add buttons to section panel
 		filterSectionPanel.add(maleButton);
 		filterSectionPanel.add(femaleButton);
 		filterSectionPanel.add(allButton);
-
+		
+		//create subheading
 		JLabel timeRangeLabel = new JLabel("Time Range:");
 		timeRangeLabel.setFont(new Font("Sans Serif", Font.PLAIN, 24));
 		filterSectionPanel.add(timeRangeLabel);
 
+		//Create section panel & textfields
 		JPanel timeRangePanel = new JPanel();
-        timeRangePanel.setBackground(Color.decode("#fffef7"));
+		timeRangePanel.setBackground(Color.decode("#fffef7"));
 		startTimeField = new JTextField(4);
 		endTimeField = new JTextField(4);
 		timeRangePanel.add(startTimeField);
@@ -159,21 +174,21 @@ public class UnemploymentDurationLineChartFrame extends JobspectsChartFrame impl
 		timeRangePanel.add(endTimeField);
 		filterSectionPanel.add(timeRangePanel);
 		
-        filterPanel.add(filterSectionPanel);
+		//add section to filter Panel!
+		filterPanel.add(filterSectionPanel);
 
-		// Create a panel within the filter panel for education levels
+		// Create a panel within the filter panel for durations
 		JPanel durationPanel = new JPanel(new GridLayout(0, 1, 5, 5));
-        durationPanel.setBackground(Color.decode("#fffef7"));
+		durationPanel.setBackground(Color.decode("#fffef7"));
 
-		// Create the title for the education panel
+		// Create the title for the duration section
 		JLabel duration = new JLabel();
 		duration.setText("Duration");
 		duration.setFont(new Font("Sans Serif", Font.PLAIN, 24));
 		durationPanel.add(duration);
 
-		// Initialize ButtonGroup for education levels
 
-		// Create radio buttons for education levels
+		// Create radio buttons for durations
 		String[] durationTypes = { "Total unemployed", "1 - 4 weeks", "5 - 13 weeks", "14 - 25 weeks", "26 weeks",
 				"27 weeks or more", "27 - 51 weeks", "52 weeks", "Average weeks unemployed (no top-code)",
 				"Average weeks unemployed (top-code = 99 weeks)" };
@@ -185,52 +200,20 @@ public class UnemploymentDurationLineChartFrame extends JobspectsChartFrame impl
 			durationPanel.add(radioButton);
 		}
 
-		// Add the educationPanel to a JScrollPane
+		// Add the durationPanel to a JScrollPane
 		JScrollPane durationScrollPane = new JScrollPane(durationPanel);
 		durationScrollPane.setPreferredSize(new java.awt.Dimension(500, 200));
 
-		// Add the scrollPane to the filterPanelTemplate
+		// Add the scrollPane to the filterPanel
 		filterPanel.add(durationScrollPane);
 
 	}
 
 	private void SetUpAverageSection() {
 
-
 	}
 
 	public JButton[] getChartNavButtons() {
-//		// TODO Auto-generated method stub
-//		// Create a new JPanel to hold the "Year" label and radio buttons
-//		JPanel yearPanel = new JPanel(new GridLayout(0, 3, 5, 5)); // Adjust the columns as needed
-//
-//		// Create the category labels
-//		JLabel years = new JLabel();
-//		years.setText("Year:");
-//		years.setFont(new Font("Sans Serif", Font.PLAIN, 20));
-//		yearPanel.add(years);
-//
-//		// Initialize ButtonGroup for years
-//		sexGroup = new ButtonGroup();
-//
-//		// Create radio buttons for years
-//		for (int i = 0; i < 23; i++) {
-//			JRadioButton radioButton = new JRadioButton(String.valueOf(1997 + i));
-//			sexGroup.add(radioButton);
-//			yearPanel.add(radioButton);
-//		}
-//
-//		// Create an "all" option. too
-//		JRadioButton button23 = new JRadioButton("All");
-//		sexGroup.add(button23);
-//		yearPanel.add(button23);
-//
-//		// Add the yearPanel to a JScrollPane
-//		JScrollPane scrollPane = new JScrollPane(yearPanel);
-//		scrollPane.setPreferredSize(new java.awt.Dimension(250, 150));
-//
-//		// Add the scrollPane to the filterPanelTemplate
-//		filterPanel.add(scrollPane);
 		return null;
 
 	}
@@ -247,16 +230,28 @@ public class UnemploymentDurationLineChartFrame extends JobspectsChartFrame impl
 
 	}
 
-//	private JTextFields[] getTimeRangeTextFields() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+	public JRadioButton getMaleButton() {
+		return maleButton;
+	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		
-		
+	public void setMaleButton(JRadioButton maleButton) {
+		this.maleButton = maleButton;
+	}
 
+	public JRadioButton getFemaleButton() {
+		return femaleButton;
+	}
+
+	public void setFemaleButton(JRadioButton femaleButton) {
+		this.femaleButton = femaleButton;
+	}
+
+	public JRadioButton getAllButton() {
+		return allButton;
+	}
+
+	public void setAllButton(JRadioButton allButton) {
+		this.allButton = allButton;
 	}
 
 }

@@ -8,7 +8,7 @@ Name(s):
 
 Sean Chen (20%)
 -------------------------------------------------------------------------------------------------
-JobspectsMainController (100%)
+JobspectsMainController (97%)
 ChartController (100%)
 JobspectsChartFrame (95%)
 ImmigrationLabourChartFrame (100%)
@@ -29,10 +29,12 @@ UnemploymentDurationChartController (100%)
 UnemploymentDataRow (100%)
 DatasetManager (40%)
 HelpFrame (100%)
+JobspectsMenuFrame(4%)
+JobspectsMainController(3%)
 
 Kelvin Nguyen (20%)
 -------------------------------------------------------------------------------------------------
-JobspectsApplication (100%), JobspectsTitleFrame (100%),  JobspectsMenuFrame (100%), PersonEducationIncome  (100%), 
+JobspectsApplication (100%), JobspectsTitleFrame (100%),  JobspectsMenuFrame (96%), PersonEducationIncome  (100%), 
 WagesByEducationChartController (100%), WagesByEducationScatterplotFrame (100%), JFreeChart Scatterplot (100%), 
 DatasetManager (20%), JobspectsChartFrame (5%)
 
@@ -107,13 +109,15 @@ genders/age’s working in that specific job, it uses JText area as a little des
 -------------------------------------------------------------------------------------------------
 
 
-UnemploymentDurationLineChart, UnemploymentDurationChartController, UnemploymentDataRow (Randiv):
+UnemploymentDurationLineChart, UnemploymentDurationChartController, UnemploymentDataRow, HelpFrame (Randiv):
 --------------------------------------------------------------------------------------------------
 - Unemployment chart utilizes the JFreeChart Library to display a line graph that displays the number of unemployed individuals over 
 several years
-- To the right is a filter panel that was meant to allow the user to filter the line graph by duration, range and gender. As well as if 
-it was being compared by age or by geography.
+- To the right is a filter panel that allows the user to filter the line graph by duration, range and gender by clicking on Radiobuttons
+and entering numbers into Textboxes. As well as allowing them to compared data by age or by geography. (see partial solutions for detail)
 - Contains a back button to return to menu and a title containing the page’s topic
+- Help Frame can be accessed from the main menu, it allows the user to see a basic layout for each Frame, along with an explaination of 
+that each component means and/or how to use it.
 
 ================================================================================================
 Major Skills:
@@ -144,10 +148,9 @@ Some charts will take awhile to load. Please allow up to 10 seconds for every sc
 Incomplete/partial solutions:
 -------------------------------------------------------------------------------------------------
 TourismEmploymentDerivativeFrame’s backbutton doesn’t re-open the menu frame, this frame is almost completed as an additional feature
-UnemploymentLineChart: Filters on the right panel do not work. Scale on x-axis is incorrect.
+UnemploymentDurationLineChart: Only the Gender filters work, the others do not. Scale on y-axis is incorrect.
 Occupation frame has trouble with his graph/csv file
 Unfinished feature — Average calculation: would allow the user to calculate the average value of a list of data, picking between the mean and median (e.g. for a line chart that displays number of people employed over 15 years, find the average number of people employed per year). Remnants of this feature remain as fields and abstract methods in the code.
-Incomplete Help Frame: Explains how to use each chart frame (i.e. filters) and navigate between them, button to open it does not work, most explanations are missing
 
 */
 
